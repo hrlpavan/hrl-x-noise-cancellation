@@ -1,7 +1,8 @@
 """
 DSP algorithms and audio signal utilities for HRL X Noise Cancellation.
 Includes Boll Spectral Subtraction, NLMS, Filtered-X LMS (FxLMS), Adaptive EQ,
-180° Anti-Phase Destructive Wave Cancellation, and Acoustic Echo Cancellation (AEC).
+180° Anti-Phase Destructive Wave Cancellation, Acoustic Echo Cancellation (AEC),
+and Fan Noise Vacuum Annihilation.
 """
 
 from .spectral import SpectralSubtraction, SpectralGate
@@ -10,6 +11,7 @@ from .fxlms import FxLMSFilter
 from .adaptive_eq import AdaptiveEQ, PsychoacousticMasker
 from .anti_phase import AntiPhaseInverter
 from .echo_cancellation import AcousticEchoKiller
+from .fan_vacuum import FanNoiseVacuum
 from .audio_io import AudioIO, generate_synthetic_benchmark, calculate_snr
 
 __all__ = [
@@ -21,6 +23,7 @@ __all__ = [
     "PsychoacousticMasker",
     "AntiPhaseInverter",
     "AcousticEchoKiller",
+    "FanNoiseVacuum",
     "AudioIO",
     "generate_synthetic_benchmark",
     "calculate_snr",

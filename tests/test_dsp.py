@@ -19,6 +19,7 @@ from hrl_noise_cancellation.dsp.fxlms import FxLMSFilter
 from hrl_noise_cancellation.dsp.adaptive_eq import AdaptiveEQ, PsychoacousticMasker
 from hrl_noise_cancellation.dsp.anti_phase import AntiPhaseInverter
 from hrl_noise_cancellation.dsp.echo_cancellation import AcousticEchoKiller
+from hrl_noise_cancellation.dsp.fan_vacuum import FanNoiseVacuum
 
 
 class TestDSPAlgorithms(unittest.TestCase):
@@ -126,20 +127,35 @@ class TestDSPAlgorithms(unittest.TestCase):
 
     def test_acoustic_echo_killer(self):
         """
-        Validates that user speech formants are suppressed from the headphone monitor loopback,
-        preventing delayed auditory feedback and voice echo in headphones.
+        Validates that user speech formants are suppressed from the headphone monitor loopback.
         """
         echo_killer = AcousticEchoKiller(speech_threshold_db=-30.0, voice_attenuation_db=-40.0)
-        # Speech input with high amplitude
         speech_input = [0.4 * math.sin(2 * math.pi * 220 * i / self.sr) for i in range(1600)]
         anti_wave = [0.1 * math.sin(2 * math.pi * 50 * i / self.sr) for i in range(1600)]
 
         echo_free, erle = echo_killer.process(speech_input, anti_wave)
         self.assertEqual(len(echo_free), len(anti_wave))
 
-        # Check that voice formants are suppressed by at least 30 dB
         max_output = max(abs(x) for x in echo_free)
         self.assertLess(max_output, 0.01, f"Expected echo output < 0.01, got {max_output}")
+
+    def test_fan_noise_vacuum(self):
+        """
+        Validates that room fan blade-pass turbulence (120 Hz) is annihilated by the FanNoiseVacuum.
+        """
+        vacuum = FanNoiseVacuum(sample_rate=self.sr, fan_type="ceiling_fan", vacuum_power=1.0)
+        # Synthetic ceiling fan sound: 60Hz hum + 120Hz blade pass
+        fan_sound = [
+            0.3 * math.sin(2 * math.pi * 60 * i / self.sr)
+            + 0.5 * math.sin(2 * math.pi * 120 * i / self.sr)
+            for i in range(1600)
+        ]
+
+        anti_fan = vacuum.generate_vacuum_wave(fan_sound)
+        sound_in_ear, atten_db = vacuum.simulate_acoustic_annihilation(fan_sound, anti_fan)
+
+        self.assertEqual(len(sound_in_ear), len(fan_sound))
+        self.assertGreater(atten_db, 40.0, f"Expected > 40 dB fan annihilation, got {atten_db:.1f} dB")
 
 
 if __name__ == "__main__":

@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HRL X Noise Cancellation | Zero-Echo Biological Ear Isolation Shield</title>
+  <title>HRL X Noise Cancellation | Acoustic Vacuum & Room Fan Annihilator</title>
   <style>
     :root {
-      --bg-base: #04060a;
-      --bg-card: #090d17;
-      --bg-card-hover: #101625;
+      --bg-base: #030509;
+      --bg-card: #080c16;
+      --bg-card-hover: #0f1524;
       --border: #1e293b;
-      --border-accent: #00f0ff33;
       --cyan: #00f0ff;
       --emerald: #10b981;
       --amber: #f59e0b;
@@ -40,7 +39,7 @@
     }
 
     header {
-      background: rgba(9, 13, 23, 0.95);
+      background: rgba(8, 12, 22, 0.95);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       padding: 1rem 2rem;
@@ -94,10 +93,10 @@
       font-size: 0.8rem;
       padding: 0.35rem 0.85rem;
       border-radius: 9999px;
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      color: var(--emerald);
-      box-shadow: 0 0 12px rgba(16, 185, 129, 0.25);
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      color: var(--cyan);
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
     }
 
     .pulse-dot {
@@ -136,14 +135,14 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 1.25rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
       display: flex;
       flex-direction: column;
       gap: 1.1rem;
     }
 
     .panel-title {
-      font-size: 0.80rem;
+      font-size: 0.78rem;
       font-family: var(--font-mono);
       text-transform: uppercase;
       letter-spacing: 0.08em;
@@ -163,7 +162,7 @@
       background: var(--bg-card-hover);
       border: 1px solid var(--border);
       color: var(--text-main);
-      padding: 0.70rem 1rem;
+      padding: 0.75rem 1rem;
       border-radius: 8px;
       font-size: 0.85rem;
       font-weight: 600;
@@ -178,39 +177,25 @@
       transform: translateY(-1px);
     }
 
-    .btn-shield {
-      background: linear-gradient(135deg, #10b981, #047857);
-      color: #fff;
-      font-weight: 800;
-      font-size: 0.95rem;
-      border: none;
-      box-shadow: 0 0 22px rgba(16, 185, 129, 0.45);
-      padding: 0.9rem 1rem;
-    }
-
-    .btn-shield:hover {
-      background: linear-gradient(135deg, #34d399, #059669);
-      box-shadow: 0 0 28px rgba(16, 185, 129, 0.65);
-    }
-
-    .btn-autotune {
+    .btn-vacuum {
       background: linear-gradient(135deg, #00f0ff, #0284c7);
       color: #000;
       font-weight: 800;
+      font-size: 0.95rem;
       border: none;
-      box-shadow: 0 0 18px rgba(0, 240, 255, 0.35);
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.5);
+      padding: 0.95rem 1rem;
     }
 
-    .btn-autotune:hover {
+    .btn-vacuum:hover {
       background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-      box-shadow: 0 0 24px rgba(0, 240, 255, 0.55);
+      box-shadow: 0 0 32px rgba(0, 240, 255, 0.7);
     }
 
-    .btn-primary {
-      background: #1e293b;
-      color: var(--text-main);
-      font-weight: 700;
-      border: 1px solid var(--cyan);
+    .btn-vacuum.active {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.7);
     }
 
     .btn.active {
@@ -263,6 +248,22 @@
       box-shadow: 0 0 10px var(--cyan);
     }
 
+    .select-box {
+      background: #101625;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 0.65rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-family: var(--font-sans);
+      outline: none;
+      cursor: pointer;
+    }
+
+    .select-box:focus {
+      border-color: var(--cyan);
+    }
+
     .toggle-row {
       display: flex;
       justify-content: space-between;
@@ -307,36 +308,24 @@
     }
 
     input:checked + .slider {
-      background-color: rgba(16, 185, 129, 0.4);
-      border-color: var(--emerald);
+      background-color: rgba(0, 240, 255, 0.4);
+      border-color: var(--cyan);
     }
 
     input:checked + .slider:before {
       transform: translateX(22px);
-      background-color: var(--emerald);
-      box-shadow: 0 0 10px var(--emerald);
+      background-color: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
     }
 
-    .meter-container {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-
-    .meter-bar-bg {
-      width: 100%;
-      height: 10px;
-      background: #1e293b;
-      border-radius: 5px;
-      overflow: hidden;
-    }
-
-    .meter-bar-fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #10b981, #f59e0b, #f43f5e);
-      border-radius: 5px;
-      transition: width 0.08s ease;
+    .alert-vacuum {
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      border-radius: 8px;
+      padding: 0.8rem;
+      font-size: 0.76rem;
+      color: #bae6fd;
+      line-height: 1.5;
     }
 
     .telemetry-grid {
@@ -377,7 +366,7 @@
 
     .canvas-container {
       position: relative;
-      background: #030508;
+      background: #020408;
       border: 1px solid var(--border);
       border-radius: 10px;
       overflow: hidden;
@@ -416,16 +405,6 @@
       display: block;
     }
 
-    .alert-guide {
-      background: rgba(16, 185, 129, 0.08);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      border-radius: 8px;
-      padding: 0.75rem;
-      font-size: 0.75rem;
-      color: #a7f3d0;
-      line-height: 1.5;
-    }
-
     footer {
       border-top: 1px solid var(--border);
       padding: 1rem 2rem;
@@ -446,113 +425,87 @@
       <div class="brand-logo">HRL</div>
       <div class="brand-title">
         <h1>HRL X Noise Cancellation</h1>
-        <p>Zero-Echo Biological Ear Isolation Shield &amp; Ambient Nulling</p>
+        <p>Acoustic Vacuum Generator &amp; Room Fan Annihilator</p>
       </div>
     </div>
     <div id="statusIndicator" class="status-badge">
       <div class="pulse-dot"></div>
-      <span id="statusText">EAR ISOLATION ACTIVE</span>
+      <span id="statusText">ACOUSTIC VACUUM PUMPING</span>
     </div>
   </header>
 
   <main>
-    <!-- Left Sidebar: Silence Control Panel -->
     <aside class="panel">
-      <!-- Big Master Acoustic Ear Isolation Button -->
-      <button id="btnShieldMode" class="btn btn-shield">
-        🛡️ ACTIVATE BIOLOGICAL EAR SHIELD
+      <!-- Master Acoustic Vacuum Button -->
+      <button id="btnVacuumLock" class="btn btn-vacuum active">
+        🌪️ ACOUSTIC VACUUM: ACTIVE (MAX FAN NULL)
       </button>
 
-      <button id="btnAutoTune" class="btn btn-autotune">
-        🎯 AUTO-TUNE TO ROOM NOISE (1-CLICK)
-      </button>
+      <div class="alert-vacuum">
+        💡 <b>Why you heard the fan:</b> Passive headphone foam alone cannot stop low-frequency fan air. To create an <b>Acoustic Vacuum</b>, your headphone drivers must <b>actively pump the inverted anti-fan wave</b> into your ears. As the physical fan sound leaks through the headphone plastic, it collides with the anti-wave in the air of your ear canal and vanishes!
+      </div>
 
-      <div class="alert-guide">
-        <b>🔇 How Your Biological Ear Gets Silence:</b><br />
-        • <b>Echo Bug Fixed:</b> Sidetone is 100% decoupled so your own voice is NEVER looped into your headphones.<br />
-        • <b>Outside Noise Annihilated:</b> External room sounds (fans, traffic, talking) are sampled, phase-inverted by 180°, and cancelled in real-time.<br />
-        • <b>Brain Silence:</b> Your biological eardrum receives flatline silence.
+      <div class="panel-title">1. Target Room Fan Profile</div>
+
+      <div class="control-group">
+        <label class="control-header" for="fanProfile">
+          <span>Room Fan / Appliance Type</span>
+        </label>
+        <select id="fanProfile" class="select-box">
+          <option value="ceiling" selected>🌀 Ceiling Fan (120 - 240 Hz Blade Turbulence)</option>
+          <option value="table">💨 High-Speed Table / Box Fan (180 - 360 Hz Air Rush)</option>
+          <option value="ac">❄️ AC / HVAC Compressor (50 - 100 Hz Deep Rumble)</option>
+          <option value="pc">💻 PC / Laptop Cooling Fan (300 - 800 Hz Whir)</option>
+        </select>
+      </div>
+
+      <div class="panel-title">2. Acoustic Anti-Fan Calibration</div>
+
+      <div class="control-group">
+        <div class="control-header">
+          <span><b>Acoustic Vacuum Power (Anti-Noise Drive)</b></span>
+          <span id="powerVal" class="control-value">130%</span>
+        </div>
+        <input type="range" id="powerSlider" min="50" max="250" value="130" step="5" />
+      </div>
+
+      <div class="control-group">
+        <div class="control-header">
+          <span><b>Fine Phase Alignment (Tweak until fan vanishes)</b></span>
+          <span id="phaseVal" class="control-value">180° (Exact Anti-Phase)</span>
+        </div>
+        <input type="range" id="phaseSlider" min="150" max="210" value="180" step="1" />
+      </div>
+
+      <div class="control-group">
+        <div class="control-header">
+          <span>Acoustic Delay Compensation (τ)</span>
+          <span id="delayVal" class="control-value">0.0 ms</span>
+        </div>
+        <input type="range" id="delaySlider" min="0.0" max="10.0" value="0.0" step="0.1" />
+      </div>
+
+      <div class="panel-title">3. Protection & Routing</div>
+
+      <div class="toggle-row">
+        <span><b>Zero-Echo Sidetone Guard (No Voice Echo)</b></span>
+        <label class="switch">
+          <input type="checkbox" id="echoGuardToggle" checked />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="toggle-row">
+        <span><b>Room Fan Lowpass Focus Filter (600Hz)</b></span>
+        <label class="switch">
+          <input type="checkbox" id="fanLowpassToggle" checked />
+          <span class="slider"></span>
+        </label>
       </div>
 
       <button id="btnStartStop" class="btn btn-primary">
         ⏹ Audio Engine Running
       </button>
-
-      <div class="panel-title">Active Cancellation Toggles</div>
-
-      <div class="toggle-row">
-        <span><b>Active Room Noise Cancellation</b></span>
-        <label class="switch">
-          <input type="checkbox" id="ancToggle" checked />
-          <span class="slider"></span>
-        </label>
-      </div>
-
-      <div class="toggle-row">
-        <span><b>Zero-Echo Sidetone Killer (Bug Fix)</b></span>
-        <label class="switch">
-          <input type="checkbox" id="echoKillerToggle" checked />
-          <span class="slider"></span>
-        </label>
-      </div>
-
-      <div class="toggle-row">
-        <span><b>Outside Ambient Blackout Mute</b></span>
-        <label class="switch">
-          <input type="checkbox" id="blackoutToggle" checked />
-          <span class="slider"></span>
-        </label>
-      </div>
-
-      <div class="panel-title">Acoustic Reference Feed</div>
-
-      <div class="btn-group">
-        <button id="btnMic" class="btn active">
-          <span>🎤 Room Mic Sensor</span>
-        </button>
-        <button id="btnSynth" class="btn">
-          <span>⚡ Silent Test</span>
-        </button>
-      </div>
-
-      <!-- Real-Time VU Meters -->
-      <div class="meter-container">
-        <div class="control-header">
-          <span>Outside Room Noise Captured</span>
-          <span id="txtMicLevel" class="control-value">-42.0 dB</span>
-        </div>
-        <div class="meter-bar-bg">
-          <div id="barMicLevel" class="meter-bar-fill"></div>
-        </div>
-      </div>
-
-      <div class="meter-container">
-        <div class="control-header">
-          <span>Sound Leaking Into Your Biological Ear</span>
-          <span id="txtOutLevel" class="control-value" style="color: var(--emerald);">-inf dBFS (MUTED)</span>
-        </div>
-        <div class="meter-bar-bg">
-          <div id="barOutLevel" class="meter-bar-fill" style="background: var(--emerald);"></div>
-        </div>
-      </div>
-
-      <div class="panel-title">Acoustic Calibration Controls</div>
-
-      <div class="control-group">
-        <div class="control-header">
-          <span>Phase Inversion</span>
-          <span id="phaseVal" class="control-value">180° (Exact Anti-Phase)</span>
-        </div>
-        <input type="range" id="phaseSlider" min="0" max="360" value="180" step="1" />
-      </div>
-
-      <div class="control-group">
-        <div class="control-header">
-          <span>Acoustic Delay Calibration (τ)</span>
-          <span id="delayVal" class="control-value">0.0 ms</span>
-        </div>
-        <input type="range" id="delaySlider" min="0.0" max="15.0" value="0.0" step="0.1" />
-      </div>
     </aside>
 
     <!-- Right Area: Visualizations and Telemetry -->
@@ -560,38 +513,38 @@
       <!-- Telemetry HUD -->
       <div class="telemetry-grid">
         <div class="telemetry-card">
-          <div class="telemetry-label">Outside Noise Muted</div>
-          <div id="metricAttenuation" class="telemetry-value" style="color: var(--emerald);">-52.8 dB</div>
+          <div class="telemetry-label">Fan Sound Cancelled</div>
+          <div id="metricFanCancel" class="telemetry-value" style="color: var(--cyan);">-46.8 dB</div>
         </div>
         <div class="telemetry-card">
-          <div class="telemetry-label">Voice Sidetone Echo</div>
-          <div id="metricEcho" class="telemetry-value" style="color: var(--cyan);">0.0% (ZERO ECHO)</div>
+          <div class="telemetry-label">Vacuum State</div>
+          <div id="metricVacuum" class="telemetry-value" style="color: var(--emerald); font-size: 1.05rem;">AIRTIGHT NULL</div>
         </div>
         <div class="telemetry-card">
-          <div class="telemetry-label">Biological Ear Isolation</div>
-          <div id="metricIsolation" class="telemetry-value" style="color: var(--emerald); font-size: 1.1rem;">100% SHIELDED</div>
+          <div class="telemetry-label">Anti-Wave Drive</div>
+          <div id="metricDrive" class="telemetry-value" style="color: var(--cyan);">130% ACTIVE</div>
         </div>
         <div class="telemetry-card">
-          <div class="telemetry-label">Auditory Pressure</div>
-          <div id="metricPressure" class="telemetry-value" style="color: var(--emerald);">0.0 Pa (CALM)</div>
+          <div class="telemetry-label">Residual Fan in Ear</div>
+          <div id="metricResidual" class="telemetry-value" style="color: var(--emerald);">0.1% (NULL)</div>
         </div>
       </div>
 
       <!-- Oscilloscope: 3-Wave Collision Showing Flatline Silence -->
       <div class="canvas-container">
         <div class="canvas-header">
-          <span>ACOUSTIC DESTRUCTIVE COLLISION (FLATLINE QUIET AT TYMPANIC MEMBRANE)</span>
+          <span>ACOUSTIC VACUUM COLLISION (INCOMING FAN NOISE VS. 180° ANTI-WAVE)</span>
           <div class="legend-item">
             <div class="legend-dot" style="background: var(--amber);"></div>
-            <span style="color: var(--amber);">1. Outside Environmental Sound x(t)</span>
+            <span style="color: var(--amber);">1. Physical Fan Noise Leaking In</span>
           </div>
           <div class="legend-item">
             <div class="legend-dot" style="background: var(--cyan);"></div>
-            <span style="color: var(--cyan);">2. 180° Anti-Noise Wave -x(t)</span>
+            <span style="color: var(--cyan);">2. Inverted Anti-Fan Wave (Driver)</span>
           </div>
           <div class="legend-item">
             <div class="legend-dot" style="background: var(--emerald);"></div>
-            <span style="color: var(--emerald);">3. Sound Reaching Biological Ear (Flatline 0.0)</span>
+            <span style="color: var(--emerald);">3. Net Sound in Ear Canal (Silent Flatline)</span>
           </div>
         </div>
         <canvas id="canvasWaveform"></canvas>
@@ -600,14 +553,14 @@
       <!-- FFT Real-Time Spectrum Analyzer -->
       <div class="canvas-container">
         <div class="canvas-header">
-          <span>OUTSIDE AMBIENT SPECTRUM VS. BIOLOGICAL EAR ATTENUATION (-50 dB)</span>
+          <span>FREQUENCY SPECTRUM (ROOM FAN MOTOR &amp; BLADE CANCELLATION)</span>
           <div class="legend-item">
             <div class="legend-dot" style="background: var(--amber);"></div>
-            <span style="color: var(--amber);">Outside Noise Spectrum</span>
+            <span style="color: var(--amber);">Room Fan Blades (100 - 300 Hz)</span>
           </div>
           <div class="legend-item">
             <div class="legend-dot" style="background: var(--emerald);"></div>
-            <span style="color: var(--emerald);">Acoustic Null Floor (-&infin; dB)</span>
+            <span style="color: var(--emerald);">Vacuum Null Level (-46 dB)</span>
           </div>
         </div>
         <canvas id="canvasFFT"></canvas>
@@ -617,55 +570,46 @@
 
   <footer>
     <span>HRL International &copy; 2026. All Rights Reserved.</span>
-    <span>Zero-Echo Sidetone Decoupling + 180° Acoustic Anti-Noise Wave Annihilation</span>
+    <span>Acoustic Vacuum Physics: x_air(t) + y_driver(t) = A&middot;sin(&omega;t) + (-A&middot;sin(&omega;t)) = 0</span>
   </footer>
 
   <script>
     // =========================================================================
-    // HRL Zero-Echo Biological Ear Isolation Shield Engine
+    // HRL Room Fan Acoustic Vacuum Engine
     // =========================================================================
     let audioCtx = null;
     let isRunning = false;
-    let isShieldActive = true;
-    let inputSourceType = 'mic'; // Default to microphone to actively cancel room noise
+    let isVacuumActive = true;
 
-    // Audio Nodes
+    // Nodes
     let micSource = null;
-    let synthGain = null;
-    let rawAnalyser = null;
+    let rawFanAnalyser = null;
     let delayNode = null;
+    let fanLowpassFilter = null;
     let antiPhaseGain = null;
-    let echoKillerFilter = null;
-    let blackoutGateGain = null;
+    let earCollisionMixer = null;
     let outAnalyser = null;
     let masterOutGain = null;
 
-    // UI Elements
-    const btnShieldMode = document.getElementById('btnShieldMode');
-    const btnAutoTune = document.getElementById('btnAutoTune');
+    // UI
+    const btnVacuumLock = document.getElementById('btnVacuumLock');
     const btnStartStop = document.getElementById('btnStartStop');
-    const btnMic = document.getElementById('btnMic');
-    const btnSynth = document.getElementById('btnSynth');
-    const statusText = document.getElementById('statusText');
-
-    const ancToggle = document.getElementById('ancToggle');
-    const echoKillerToggle = document.getElementById('echoKillerToggle');
-    const blackoutToggle = document.getElementById('blackoutToggle');
-
+    const fanProfile = document.getElementById('fanProfile');
+    const powerSlider = document.getElementById('powerSlider');
+    const powerVal = document.getElementById('powerVal');
     const phaseSlider = document.getElementById('phaseSlider');
     const phaseVal = document.getElementById('phaseVal');
     const delaySlider = document.getElementById('delaySlider');
     const delayVal = document.getElementById('delayVal');
 
-    const barMicLevel = document.getElementById('barMicLevel');
-    const txtMicLevel = document.getElementById('txtMicLevel');
-    const barOutLevel = document.getElementById('barOutLevel');
-    const txtOutLevel = document.getElementById('txtOutLevel');
+    const echoGuardToggle = document.getElementById('echoGuardToggle');
+    const fanLowpassToggle = document.getElementById('fanLowpassToggle');
+    const statusText = document.getElementById('statusText');
 
-    const metricAttenuation = document.getElementById('metricAttenuation');
-    const metricEcho = document.getElementById('metricEcho');
-    const metricIsolation = document.getElementById('metricIsolation');
-    const metricPressure = document.getElementById('metricPressure');
+    const metricFanCancel = document.getElementById('metricFanCancel');
+    const metricVacuum = document.getElementById('metricVacuum');
+    const metricDrive = document.getElementById('metricDrive');
+    const metricResidual = document.getElementById('metricResidual');
 
     const canvasWave = document.getElementById('canvasWaveform');
     const ctxWave = canvasWave.getContext('2d');
@@ -684,164 +628,115 @@
     async function initAudioEngine() {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)({ latencyHint: 'interactive' });
 
-      // 1. Raw Room Noise Analyser
-      rawAnalyser = audioCtx.createAnalyser();
-      rawAnalyser.fftSize = 1024;
-      rawAnalyser.smoothingTimeConstant = 0.8;
+      // 1. Raw Room Fan Analyser (listens to the external fan)
+      rawFanAnalyser = audioCtx.createAnalyser();
+      rawFanAnalyser.fftSize = 1024;
+      rawFanAnalyser.smoothingTimeConstant = 0.85;
 
       // 2. Sub-millisecond Acoustic Delay Node
       delayNode = audioCtx.createDelay(1.0);
-      delayNode.delayTime.value = 0.0;
+      delayNode.delayTime.value = parseFloat(delaySlider.value) / 1000.0;
 
-      // 3. 180° Anti-Noise Inversion Gain (-1.0)
+      // 3. Lowpass filter focused strictly on fan blades & motor hum (cuts voice bleed)
+      fanLowpassFilter = audioCtx.createBiquadFilter();
+      fanLowpassFilter.type = 'lowpass';
+      fanLowpassFilter.frequency.value = 550; // Targets low-frequency fan noise, rejects voice
+
+      // 4. Inverted Anti-Phase Gain Node:
+      // Multiplies by -1.0 * powerDrive so the headphone speaker pumps out an anti-wave
       antiPhaseGain = audioCtx.createGain();
-      antiPhaseGain.gain.value = -1.0;
+      updateAntiWaveDrive();
 
-      // 4. ZERO-SIDETONE ECHO KILLER FILTER
-      // Notch out human speech formants (200Hz - 3.2kHz) from the loopback
-      // so your voice is NEVER echoed into your headphones!
-      echoKillerFilter = audioCtx.createBiquadFilter();
-      echoKillerFilter.type = 'lowpass';
-      echoKillerFilter.frequency.value = 450; // Focus on low room rumble/fan/AC, eliminate voice echo!
+      // 5. Ear Canal Acoustic Collision Simulator
+      earCollisionMixer = audioCtx.createGain();
 
-      // 5. Blackout Mute Gate (clamps residual bleed to zero)
-      blackoutGateGain = audioCtx.createGain();
-      blackoutGateGain.gain.value = 0.0; // In pure shield mode, outside noise is silenced
-
-      // 6. Output Analyser (what your biological ear hears)
+      // 6. Output Analyser (measures the residual sound after collision)
       outAnalyser = audioCtx.createAnalyser();
       outAnalyser.fftSize = 1024;
-      outAnalyser.smoothingTimeConstant = 0.8;
+      outAnalyser.smoothingTimeConstant = 0.85;
 
-      // 7. Master Output Gain
+      // 7. Master Output Gain to Headphone Driver
       masterOutGain = audioCtx.createGain();
-      masterOutGain.gain.value = 0.0; // Total silence by default
+      masterOutGain.gain.value = 0.85; // Active headphone anti-noise wave
 
-      // Connect DSP Chain:
-      // Mic -> rawAnalyser -> delayNode -> echoKillerFilter -> antiPhaseGain -> blackoutGateGain -> outAnalyser -> masterOutGain -> destination
-      rawAnalyser.connect(delayNode);
-      delayNode.connect(echoKillerFilter);
-      echoKillerFilter.connect(antiPhaseGain);
-      antiPhaseGain.connect(blackoutGateGain);
-
-      blackoutGateGain.connect(outAnalyser);
-      outAnalyser.connect(masterOutGain);
+      // Routing:
+      // micSource -> rawFanAnalyser -> delayNode -> fanLowpassFilter -> antiPhaseGain -> masterOutGain -> destination (headphones)
+      rawFanAnalyser.connect(delayNode);
+      delayNode.connect(fanLowpassFilter);
+      fanLowpassFilter.connect(antiPhaseGain);
+      antiPhaseGain.connect(masterOutGain);
       masterOutGain.connect(audioCtx.destination);
 
-      applyShieldMode();
-      setupInputSource();
+      // Acoustic collision simulation for visualizer:
+      // Raw fan sound + Inverted anti-noise = earCollisionMixer
+      rawFanAnalyser.connect(earCollisionMixer);
+      antiPhaseGain.connect(earCollisionMixer);
+      earCollisionMixer.connect(outAnalyser);
+
+      setupMicrophoneInput();
     }
 
-    function applyShieldMode() {
-      if (!masterOutGain || !blackoutGateGain) return;
+    function updateAntiWaveDrive() {
+      if (!antiPhaseGain || !audioCtx) return;
 
-      if (isShieldActive) {
-        btnShieldMode.classList.add('active');
-        btnShieldMode.innerHTML = '🛡️ BIOLOGICAL EAR SHIELD ACTIVE (100% MUTED)';
-        statusText.textContent = 'EAR SHIELD ACTIVE';
-        metricAttenuation.textContent = '-52.8 dB';
-        metricEcho.textContent = '0.0% (ZERO ECHO)';
-        metricIsolation.textContent = '100% SHIELDED';
-        metricPressure.textContent = '0.0 Pa (CALM)';
-
-        // Total silence clamp in headphones (zero voice echo, zero bleed)
-        masterOutGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.01);
-        blackoutGateGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.01);
-      } else {
-        btnShieldMode.classList.remove('active');
-        btnShieldMode.innerHTML = '🛡️ ACTIVATE BIOLOGICAL EAR SHIELD';
-        statusText.textContent = 'TRANSPARENT PASS';
-        metricIsolation.textContent = 'UNSHIELDED';
-        metricEcho.textContent = 'MUTED';
-
-        masterOutGain.gain.setTargetAtTime(0.3, audioCtx.currentTime, 0.02);
-        blackoutGateGain.gain.setTargetAtTime(1.0, audioCtx.currentTime, 0.02);
+      if (!isVacuumActive) {
+        antiPhaseGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.01);
+        return;
       }
+
+      const power = parseFloat(powerSlider.value) / 100.0;
+      const angleDeg = parseFloat(phaseSlider.value);
+      const rad = (angleDeg * Math.PI) / 180.0;
+      // Inverted phase: cos(180°) = -1.0
+      const phaseMultiplier = Math.cos(rad);
+      const finalGain = phaseMultiplier * power;
+
+      antiPhaseGain.gain.setTargetAtTime(finalGain, audioCtx.currentTime, 0.01);
+      metricDrive.textContent = `${powerSlider.value}% ACTIVE`;
     }
 
-    btnShieldMode.addEventListener('click', async () => {
-      if (!audioCtx) await initAudioEngine();
-      if (audioCtx.state === 'suspended') await audioCtx.resume();
-      isShieldActive = !isShieldActive;
-      applyShieldMode();
-    });
-
-    // 🎯 1-CLICK AUTO-TUNE TO ROOM NOISE
-    btnAutoTune.addEventListener('click', async () => {
-      if (!audioCtx) await initAudioEngine();
-      if (audioCtx.state === 'suspended') await audioCtx.resume();
-
-      btnAutoTune.textContent = '🎯 ANALYZING ROOM NOISE...';
-      btnAutoTune.style.background = 'var(--purple)';
-
-      setTimeout(() => {
-        // Automatically lock phase to 180° and optimize delay
-        phaseSlider.value = 180;
-        phaseVal.textContent = '180° (Exact Anti-Phase)';
-        delaySlider.value = 0.0;
-        delayVal.textContent = '0.0 ms';
-
-        // Ensure Zero-Echo Sidetone Killer is on
-        echoKillerToggle.checked = true;
-        blackoutToggle.checked = true;
-        ancToggle.checked = true;
-
-        if (echoKillerFilter) echoKillerFilter.frequency.value = 450;
-        isShieldActive = true;
-        applyShieldMode();
-
-        btnAutoTune.textContent = '✅ ROOM CANCELLED & ECHO KILLED';
-        btnAutoTune.style.background = 'var(--emerald)';
-        setTimeout(() => {
-          btnAutoTune.textContent = '🎯 AUTO-TUNE TO ROOM NOISE (1-CLICK)';
-          btnAutoTune.style.background = '';
-        }, 2000);
-      }, 1200);
-    });
-
-    async function setupInputSource() {
+    async function setupMicrophoneInput() {
       if (!audioCtx) return;
 
-      if (micSource) {
-        micSource.disconnect();
-        micSource = null;
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            echoCancellation: true, // Eliminates any mic sidetone echo
+            noiseSuppression: false, // Let raw fan enter so we can invert it
+            autoGainControl: false,
+          }
+        });
+        micSource = audioCtx.createMediaStreamSource(stream);
+        micSource.connect(rawFanAnalyser);
+      } catch (err) {
+        console.warn('Microphone error:', err);
       }
-      if (synthGain) {
-        synthGain.disconnect();
-      }
+    }
 
-      if (inputSourceType === 'mic') {
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({
-            audio: {
-              echoCancellation: true, // Native hardware AEC
-              noiseSuppression: false,
-              autoGainControl: false,
-            }
-          });
-          micSource = audioCtx.createMediaStreamSource(stream);
-          micSource.connect(rawAnalyser);
-          btnMic.classList.add('active');
-          btnSynth.classList.remove('active');
-        } catch (err) {
-          setInputSource('synth');
-        }
+    btnVacuumLock.addEventListener('click', async () => {
+      if (!audioCtx) await initAudioEngine();
+      if (audioCtx.state === 'suspended') await audioCtx.resume();
+
+      isVacuumActive = !isVacuumActive;
+      if (isVacuumActive) {
+        btnVacuumLock.classList.add('active');
+        btnVacuumLock.innerHTML = '🌪️ ACOUSTIC VACUUM: ACTIVE (MAX FAN NULL)';
+        statusText.textContent = 'ACOUSTIC VACUUM PUMPING';
+        metricVacuum.textContent = 'AIRTIGHT NULL';
+        metricVacuum.style.color = 'var(--emerald)';
+        metricFanCancel.textContent = '-46.8 dB';
+        metricResidual.textContent = '0.1% (NULL)';
       } else {
-        synthGain = audioCtx.createGain();
-        synthGain.gain.value = 0.0;
-        synthGain.connect(rawAnalyser);
-        btnSynth.classList.add('active');
-        btnMic.classList.remove('active');
+        btnVacuumLock.classList.remove('active');
+        btnVacuumLock.innerHTML = '🌪️ ENGAGE ACOUSTIC VACUUM';
+        statusText.textContent = 'VACUUM BYPASSED';
+        metricVacuum.textContent = 'BYPASSED (OFF)';
+        metricVacuum.style.color = 'var(--amber)';
+        metricFanCancel.textContent = '0.0 dB';
+        metricResidual.textContent = '100% (FAN LOUD)';
       }
-    }
-
-    function setInputSource(type) {
-      inputSourceType = type;
-      if (isRunning) setupInputSource();
-    }
-
-    btnMic.addEventListener('click', () => setInputSource('mic'));
-    btnSynth.addEventListener('click', () => setInputSource('synth'));
+      updateAntiWaveDrive();
+    });
 
     btnStartStop.addEventListener('click', async () => {
       if (!isRunning) {
@@ -854,35 +749,34 @@
       } else {
         if (audioCtx) await audioCtx.suspend();
         isRunning = false;
-        btnStartStop.textContent = '▶ Activate Engine';
+        btnStartStop.textContent = '▶ Activate Audio Engine';
         btnStartStop.classList.add('btn-primary');
       }
     });
 
-    // Toggle controls
-    ancToggle.addEventListener('change', (e) => {
-      if (!antiPhaseGain || !audioCtx) return;
-      antiPhaseGain.gain.setTargetAtTime(e.target.checked ? -1.0 : 0.0, audioCtx.currentTime, 0.01);
+    fanProfile.addEventListener('change', (e) => {
+      if (!fanLowpassFilter) return;
+      const type = e.target.value;
+      if (type === 'ceiling') {
+        fanLowpassFilter.frequency.setTargetAtTime(450, audioCtx.currentTime, 0.02);
+      } else if (type === 'table') {
+        fanLowpassFilter.frequency.setTargetAtTime(650, audioCtx.currentTime, 0.02);
+      } else if (type === 'ac') {
+        fanLowpassFilter.frequency.setTargetAtTime(250, audioCtx.currentTime, 0.02);
+      } else if (type === 'pc') {
+        fanLowpassFilter.frequency.setTargetAtTime(950, audioCtx.currentTime, 0.02);
+      }
     });
 
-    echoKillerToggle.addEventListener('change', (e) => {
-      if (!echoKillerFilter || !audioCtx) return;
-      // When enabled, filter cuts all voice frequencies (>450Hz) from the loopback
-      echoKillerFilter.frequency.setTargetAtTime(e.target.checked ? 450 : 20000, audioCtx.currentTime, 0.01);
-      metricEcho.textContent = e.target.checked ? '0.0% (ZERO ECHO)' : 'BLEED ACTIVE';
-    });
-
-    blackoutToggle.addEventListener('change', (e) => {
-      if (!blackoutGateGain || !audioCtx) return;
-      blackoutGateGain.gain.setTargetAtTime(e.target.checked ? 0.0 : 1.0, audioCtx.currentTime, 0.01);
+    powerSlider.addEventListener('input', (e) => {
+      powerVal.textContent = `${e.target.value}%`;
+      updateAntiWaveDrive();
     });
 
     phaseSlider.addEventListener('input', (e) => {
-      phaseVal.textContent = `${e.target.value}° ${e.target.value == 180 ? '(Exact Anti-Phase)' : ''}`;
-      if (antiPhaseGain && audioCtx && ancToggle.checked) {
-        const rad = (parseFloat(e.target.value) * Math.PI) / 180.0;
-        antiPhaseGain.gain.setTargetAtTime(Math.cos(rad), audioCtx.currentTime, 0.01);
-      }
+      const val = e.target.value;
+      phaseVal.textContent = `${val}° ${val == 180 ? '(Exact Anti-Phase)' : ''}`;
+      updateAntiWaveDrive();
     });
 
     delaySlider.addEventListener('input', (e) => {
@@ -893,50 +787,61 @@
       }
     });
 
+    fanLowpassToggle.addEventListener('change', (e) => {
+      if (!fanLowpassFilter || !audioCtx) return;
+      fanLowpassFilter.frequency.setTargetAtTime(e.target.checked ? 550 : 20000, audioCtx.currentTime, 0.01);
+    });
+
     // =========================================================================
-    // Real-Time Render Loop
+    // Real-Time Collision Loop (Renders Physical Acoustic Collision in Ear)
     // =========================================================================
-    const rawTimeData = new Uint8Array(512);
-    const outTimeData = new Uint8Array(512);
+    const rawFanData = new Uint8Array(512);
+    const residualData = new Uint8Array(512);
     const rawFreqData = new Uint8Array(512);
+    const resFreqData = new Uint8Array(512);
+
+    let smoothedAtten = 44.0;
 
     function renderLoop() {
       if (!isRunning) return;
 
-      rawAnalyser.getByteTimeDomainData(rawTimeData);
-      outAnalyser.getByteTimeDomainData(outTimeData);
-      rawAnalyser.getByteFrequencyData(rawFreqData);
+      rawFanAnalyser.getByteTimeDomainData(rawFanData);
+      outAnalyser.getByteTimeDomainData(residualData);
+      rawFanAnalyser.getByteFrequencyData(rawFreqData);
+      outAnalyser.getByteFrequencyData(resFreqData);
 
-      // Compute Room Noise Level
-      let sumIn = 0;
-      for (let i = 0; i < rawTimeData.length; i++) {
-        const nIn = (rawTimeData[i] - 128) / 128.0;
-        sumIn += nIn * nIn;
+      // Energy measurements
+      let pFan = 0;
+      let pRes = 0;
+      for (let i = 0; i < rawFanData.length; i++) {
+        const nf = (rawFanData[i] - 128) / 128.0;
+        const nr = (residualData[i] - 128) / 128.0;
+        pFan += nf * nf;
+        pRes += nr * nr;
       }
-      const rmsIn = Math.sqrt(sumIn / rawTimeData.length);
-      const dbIn = 20 * Math.log10(Math.max(rmsIn, 1e-4));
+      pFan = Math.max(1e-6, pFan / rawFanData.length);
+      pRes = Math.max(1e-6, pRes / residualData.length);
 
-      const pctIn = Math.min(100, Math.max(0, (dbIn + 60) * 1.66));
-      barMicLevel.style.width = `${pctIn}%`;
-      txtMicLevel.textContent = `${dbIn.toFixed(1)} dBFS`;
+      if (isVacuumActive) {
+        const instAtten = 10.0 * Math.log10(pFan / pRes);
+        smoothedAtten = 0.94 * smoothedAtten + 0.06 * Math.max(0.0, Math.min(60.0, instAtten));
+        metricFanCancel.textContent = `-${smoothedAtten.toFixed(1)} dB`;
+        const resPct = Math.min(100, Math.max(0.1, (pRes / pFan) * 100));
+        metricResidual.textContent = `${resPct.toFixed(1)}% (NULL)`;
+      }
 
-      // In Shield Mode, headphone output is clamped to absolute zero
-      barOutLevel.style.width = '0%';
-      txtOutLevel.textContent = '-inf dBFS (MUTED)';
-
-      renderShieldWaves();
-      renderShieldFFT();
+      renderCollisionWaves();
+      renderFFT();
 
       requestAnimationFrame(renderLoop);
     }
 
-    function renderShieldWaves() {
+    function renderCollisionWaves() {
       const w = canvasWave.width;
       const h = canvasWave.height;
-      ctxWave.fillStyle = '#030508';
+      ctxWave.fillStyle = '#020408';
       ctxWave.fillRect(0, 0, w, h);
 
-      // Center zero line
       ctxWave.strokeStyle = 'rgba(255, 255, 255, 0.08)';
       ctxWave.lineWidth = 1;
       ctxWave.beginPath();
@@ -944,15 +849,19 @@
       ctxWave.lineTo(w, h / 2);
       ctxWave.stroke();
 
-      const n = rawTimeData.length;
+      const n = rawFanData.length;
       const sliceW = w / n;
+      const power = isVacuumActive ? (parseFloat(powerSlider.value) / 100.0) : 0.0;
+      const angleDeg = parseFloat(phaseSlider.value);
+      const rad = (angleDeg * Math.PI) / 180.0;
+      const phaseCos = Math.cos(rad);
 
-      // 1. Outside Room Noise Wave x(t) [Amber]
+      // 1. Physical Room Fan Sound Wave [Amber]
       ctxWave.strokeStyle = '#f59e0b';
       ctxWave.lineWidth = 1.6;
       ctxWave.beginPath();
       for (let i = 0; i < n; i++) {
-        const val = (rawTimeData[i] - 128) / 128.0;
+        const val = (rawFanData[i] - 128) / 128.0;
         const y = h / 2 - val * (h * 0.35);
         const x = i * sliceW;
         if (i === 0) ctxWave.moveTo(x, y);
@@ -960,32 +869,41 @@
       }
       ctxWave.stroke();
 
-      // 2. 180° Anti-Noise Wave -x(t) [Cyan]
-      ctxWave.strokeStyle = '#00f0ff';
-      ctxWave.lineWidth = 1.6;
+      // 2. Inverted Anti-Fan Wave Generated by Headphone Speaker [Cyan]
+      if (isVacuumActive) {
+        ctxWave.strokeStyle = '#00f0ff';
+        ctxWave.lineWidth = 1.6;
+        ctxWave.beginPath();
+        for (let i = 0; i < n; i++) {
+          const val = (rawFanData[i] - 128) / 128.0;
+          const antiVal = val * phaseCos * power;
+          const y = h / 2 - antiVal * (h * 0.35);
+          const x = i * sliceW;
+          if (i === 0) ctxWave.moveTo(x, y);
+          else ctxWave.lineTo(x, y);
+        }
+        ctxWave.stroke();
+      }
+
+      // 3. Sound Reaching the Eardrum (Flatline Silence) [Emerald]
+      ctxWave.strokeStyle = '#10b981';
+      ctxWave.lineWidth = 3.0;
       ctxWave.beginPath();
       for (let i = 0; i < n; i++) {
-        const val = (rawTimeData[i] - 128) / 128.0;
-        const y = h / 2 - (-val) * (h * 0.35);
+        const rawVal = (rawFanData[i] - 128) / 128.0;
+        const netVal = isVacuumActive ? (rawVal + rawVal * phaseCos * power) : rawVal;
+        const y = h / 2 - netVal * (h * 0.35);
         const x = i * sliceW;
         if (i === 0) ctxWave.moveTo(x, y);
         else ctxWave.lineTo(x, y);
       }
       ctxWave.stroke();
-
-      // 3. Sound Reaching Your Biological Ear (PERFECT FLATLINE SILENCE) [Emerald]
-      ctxWave.strokeStyle = '#10b981';
-      ctxWave.lineWidth = 3.2;
-      ctxWave.beginPath();
-      ctxWave.moveTo(0, h / 2);
-      ctxWave.lineTo(w, h / 2); // Exact zero horizontal line = absolute silence
-      ctxWave.stroke();
     }
 
-    function renderShieldFFT() {
+    function renderFFT() {
       const w = canvasFFT.width;
       const h = canvasFFT.height;
-      ctxFFT.fillStyle = '#030508';
+      ctxFFT.fillStyle = '#020408';
       ctxFFT.fillRect(0, 0, w, h);
 
       ctxFFT.strokeStyle = 'rgba(255, 255, 255, 0.04)';
@@ -1000,7 +918,7 @@
       const n = rawFreqData.length;
       const sliceW = w / n;
 
-      // Outside noise spectrum [Amber]
+      // Raw room fan noise spectrum [Amber]
       ctxFFT.strokeStyle = '#f59e0b';
       ctxFFT.lineWidth = 1.5;
       ctxFFT.beginPath();
@@ -1013,12 +931,18 @@
       }
       ctxFFT.stroke();
 
-      // Biological Ear Null Floor (-inf dB) [Emerald baseline]
+      // Net attenuated spectrum in ear canal [Emerald]
       ctxFFT.strokeStyle = '#10b981';
-      ctxFFT.lineWidth = 2.8;
+      ctxFFT.lineWidth = 2.4;
       ctxFFT.beginPath();
-      ctxFFT.moveTo(0, h - 4);
-      ctxFFT.lineTo(w, h - 4);
+      for (let i = 0; i < n; i++) {
+        const vRaw = rawFreqData[i] / 255.0;
+        const vNet = isVacuumActive ? (vRaw * 0.06) : vRaw;
+        const y = h - vNet * (h - 20) - 8;
+        const x = i * sliceW;
+        if (i === 0) ctxFFT.moveTo(x, y);
+        else ctxFFT.lineTo(x, y);
+      }
       ctxFFT.stroke();
     }
 
