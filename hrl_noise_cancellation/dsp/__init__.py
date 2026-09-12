@@ -14,6 +14,7 @@ from .echo_cancellation import AcousticEchoKiller
 from .fan_vacuum import FanNoiseVacuum
 from .boat_rockerz_411 import BoatRockerz411ANC
 from .acoustic_barrier import AcousticBlackoutBarrier
+from .predictive_anc import UltraFastPredictiveANC
 from .audio_io import AudioIO, generate_synthetic_benchmark, calculate_snr
 
 __all__ = [
@@ -28,6 +29,7 @@ __all__ = [
     "FanNoiseVacuum",
     "BoatRockerz411ANC",
     "AcousticBlackoutBarrier",
+    "UltraFastPredictiveANC",
     "AudioIO",
     "generate_synthetic_benchmark",
     "calculate_snr",
