@@ -4,11 +4,13 @@ High-performance Digital Signal Processing & Real-Time Noise Suppression Engine.
 Copyright (c) 2026 HRL International.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __author__ = "HRL International"
 
 from .dsp.spectral import SpectralSubtraction, SpectralGate
 from .dsp.adaptive import NLMSFilter
+from .dsp.fxlms import FxLMSFilter
+from .dsp.adaptive_eq import AdaptiveEQ, PsychoacousticMasker
 from .dsp.audio_io import AudioIO, generate_synthetic_benchmark, calculate_snr
 
 __all__ = [
@@ -16,6 +18,9 @@ __all__ = [
     "SpectralSubtraction",
     "SpectralGate",
     "NLMSFilter",
+    "FxLMSFilter",
+    "AdaptiveEQ",
+    "PsychoacousticMasker",
     "AudioIO",
     "generate_synthetic_benchmark",
     "calculate_snr",
