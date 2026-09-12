@@ -457,6 +457,28 @@
         <span class="badge-lock" style="color: var(--cyan); background: rgba(0, 240, 255, 0.1); border-color: rgba(0, 240, 255, 0.3);">&lt; 12.5 μs (PRE-EMPTIVE)</span>
       </div>
 
+      <div class="panel-title">4. Branch Education Blueprint</div>
+
+      <div class="control-group">
+        <button id="btnToggleMusic" class="btn" style="background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.4); color: #c084fc; font-weight: 700;">
+          ▶ Test Superposition Music (A4 Triad)
+        </button>
+        <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.4rem; line-height: 1.4;">
+          Demonstrates linear superposition: Music plays into your ears with 100% fidelity while outer room noise is cancelled.
+        </p>
+      </div>
+
+      <div class="control-group">
+        <div class="control-header">
+          <span><b>Acoustic Frequency vs λ</b></span>
+          <span id="wavelengthVal" class="control-value">120 Hz (λ = 2.86 m)</span>
+        </div>
+        <input type="range" id="wavelengthFreqSlider" min="40" max="3500" value="120" step="10" />
+        <div id="coherenceStatus" style="font-size: 0.70rem; font-family: var(--font-mono); margin-top: 0.35rem; color: var(--emerald);">
+          ✓ DESTRUCTIVE ZONE: Spatial Error Δθ = 5.7° &lt; 60° (Net: -20.1 dB)
+        </div>
+      </div>
+
       <button id="btnStartStop" class="btn btn-primary">
         ⏹ Audio Engine Running
       </button>
@@ -519,6 +541,26 @@
         </div>
         <canvas id="canvasFFT"></canvas>
       </div>
+
+      <!-- Branch Education Air Molecule Compressions & Rarefactions Visualizer -->
+      <div class="canvas-container">
+        <div class="canvas-header">
+          <span>📐 BRANCH EDUCATION AIR MOLECULE SIMULATION (COMPRESSIONS &amp; RAREFACTIONS)</span>
+          <div class="legend-item">
+            <div class="legend-dot" style="background: #f43f5e;"></div>
+            <span style="color: #f43f5e;">Ambient Compressions (+P)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background: var(--cyan);"></div>
+            <span style="color: var(--cyan);">Driver Rarefactions (-P)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background: var(--emerald);"></div>
+            <span style="color: var(--emerald);">Ear Canal Equilibrium (P0 Flatline)</span>
+          </div>
+        </div>
+        <canvas id="canvasParticles"></canvas>
+      </div>
     </section>
   </main>
 
@@ -546,6 +588,11 @@
     let oscGain = null;
     let masterOutGain = null;
     let outAnalyser = null;
+    let isMusicPlaying = false;
+    let musicGain = null;
+    let musicOscA = null;
+    let musicOscC = null;
+    let musicOscE = null;
 
     // DOM Elements
     const btnVacuumLock = document.getElementById('btnVacuumLock');
@@ -567,12 +614,22 @@
     const ctxWave = canvasWave.getContext('2d');
     const canvasFFT = document.getElementById('canvasFFT');
     const ctxFFT = canvasFFT.getContext('2d');
+    const canvasParticles = document.getElementById('canvasParticles');
+    const ctxParticles = canvasParticles.getContext('2d');
+
+    const btnToggleMusic = document.getElementById('btnToggleMusic');
+    const wavelengthFreqSlider = document.getElementById('wavelengthFreqSlider');
+    const wavelengthVal = document.getElementById('wavelengthVal');
+    const coherenceStatus = document.getElementById('coherenceStatus');
 
     function resizeCanvases() {
-      canvasWave.width = canvasWave.parentElement.clientWidth;
+      const containerW = canvasWave.parentElement.clientWidth;
+      canvasWave.width = containerW;
       canvasWave.height = 185;
-      canvasFFT.width = canvasFFT.parentElement.clientWidth;
+      canvasFFT.width = containerW;
       canvasFFT.height = 185;
+      canvasParticles.width = containerW;
+      canvasParticles.height = 185;
     }
     window.addEventListener('resize', resizeCanvases);
     resizeCanvases();
@@ -631,14 +688,38 @@
 
       sineOsc.connect(oscGain);
 
-      // 4. Master Output to Headphone Drivers
+      // 4. Linear Superposition Music Generator (A4 Triad: 440 Hz, 554.37 Hz, 659.25 Hz)
+      musicGain = audioCtx.createGain();
+      musicGain.gain.value = 0.0;
+
+      musicOscA = audioCtx.createOscillator();
+      musicOscA.type = 'sine';
+      musicOscA.frequency.value = 440.0; // A4
+
+      musicOscC = audioCtx.createOscillator();
+      musicOscC.type = 'sine';
+      musicOscC.frequency.value = 554.37; // C#5
+
+      musicOscE = audioCtx.createOscillator();
+      musicOscE.type = 'sine';
+      musicOscE.frequency.value = 659.25; // E5
+
+      const musicSubMix = audioCtx.createGain();
+      musicSubMix.gain.value = 0.12;
+      musicOscA.connect(musicSubMix);
+      musicOscC.connect(musicSubMix);
+      musicOscE.connect(musicSubMix);
+      musicSubMix.connect(musicGain);
+
+      // 5. Master Output to Headphone Drivers
       masterOutGain = audioCtx.createGain();
       masterOutGain.gain.value = 1.0;
 
       shieldGain.connect(masterOutGain);
       oscGain.connect(masterOutGain);
+      musicGain.connect(masterOutGain);
 
-      // 5. Output Analyser (measures synthesized output)
+      // 6. Output Analyser (measures synthesized output)
       outAnalyser = audioCtx.createAnalyser();
       outAnalyser.fftSize = 1024;
       masterOutGain.connect(outAnalyser);
@@ -649,6 +730,9 @@
       // Start internal generators
       noiseBufferNode.start();
       sineOsc.start();
+      musicOscA.start();
+      musicOscC.start();
+      musicOscE.start();
 
       updateShieldDrive();
       setupMicrophoneSensor();
@@ -831,9 +915,146 @@
 
       renderWaveforms();
       renderFFT();
+      renderAirParticles();
 
       requestAnimationFrame(renderLoop);
     }
+
+    // =========================================================================
+    // Branch Education Air Molecule Simulation & Superposition Physics
+    // =========================================================================
+    btnToggleMusic.addEventListener('click', async () => {
+      if (!audioCtx) await initAudioEngine();
+      if (audioCtx.state === 'suspended') await audioCtx.resume();
+
+      isMusicPlaying = !isMusicPlaying;
+      if (isMusicPlaying) {
+        if (musicGain && audioCtx) {
+          musicGain.gain.setTargetAtTime(0.35, audioCtx.currentTime, 0.05);
+        }
+        btnToggleMusic.textContent = '⏸ Pause Superposition Music';
+        btnToggleMusic.style.background = 'rgba(168, 85, 247, 0.35)';
+      } else {
+        if (musicGain && audioCtx) {
+          musicGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.05);
+        }
+        btnToggleMusic.textContent = '▶ Test Superposition Music (A4 Triad)';
+        btnToggleMusic.style.background = 'rgba(168, 85, 247, 0.15)';
+      }
+    });
+
+    function updateWavelengthPhysics() {
+      const f = parseFloat(wavelengthFreqSlider.value);
+      const c = 343.0; // Speed of sound in room air m/s
+      const lambda = c / f;
+      wavelengthVal.textContent = `${f} Hz (λ = ${lambda.toFixed(2)} m)`;
+
+      const delay_s = 131.2e-6; // 4.5 cm boAt stem mic to 40mm driver
+      const d_theta_deg = (360.0 * f * delay_s).toFixed(1);
+      const p_ratio = 4.0 * Math.pow(Math.sin((Math.PI * f * delay_s)), 2);
+      const db = (10.0 * Math.log10(Math.max(p_ratio, 1e-6))).toFixed(1);
+
+      if (f <= 1270) {
+        coherenceStatus.innerHTML = `✓ <span style="color: var(--emerald);">DESTRUCTIVE ZONE:</span> Δθ = ${d_theta_deg}° &lt; 60° (Net: ${db} dB attenuation)`;
+      } else {
+        coherenceStatus.innerHTML = `⚠️ <span style="color: var(--amber);">CONSTRUCTIVE RISK (+2P):</span> Δθ = ${d_theta_deg}° &gt; 60° (${db > 0 ? '+' : ''}${db} dB) &rarr; <span style="color: var(--cyan);">Passive Foam Filter Engaged</span>`;
+      }
+    }
+    wavelengthFreqSlider.addEventListener('input', updateWavelengthPhysics);
+
+    // Initialize Air Molecules Grid (240 particles)
+    const airParticles = [];
+    const pCols = 32;
+    const pRows = 8;
+    for (let r = 0; r < pRows; r++) {
+      for (let c = 0; c < pCols; c++) {
+        airParticles.push({
+          xNorm: (c + 0.5) / pCols,
+          yNorm: (r + 0.5) / pRows,
+        });
+      }
+    }
+
+    let pSimTime = 0.0;
+    function renderAirParticles() {
+      const w = canvasParticles.width;
+      const h = canvasParticles.height;
+      ctxParticles.fillStyle = '#020408';
+      ctxParticles.fillRect(0, 0, w, h);
+
+      pSimTime += 0.045;
+      const barrierX = w * 0.44;
+      const f = parseFloat(wavelengthFreqSlider.value);
+      const freqRatio = Math.min(f / 120.0, 3.5);
+
+      // Draw 40mm Driver Barrier
+      ctxParticles.strokeStyle = '#00f0ff';
+      ctxParticles.lineWidth = 2.0;
+      ctxParticles.setLineDash([5, 4]);
+      ctxParticles.beginPath();
+      ctxParticles.moveTo(barrierX, 28);
+      ctxParticles.lineTo(barrierX, h - 8);
+      ctxParticles.stroke();
+      ctxParticles.setLineDash([]);
+
+      // Section Labels
+      ctxParticles.font = '10px ui-monospace, monospace';
+      ctxParticles.fillStyle = '#00f0ff';
+      ctxParticles.fillText('boAt 40mm DRIVER', barrierX - 44, h - 12);
+
+      ctxParticles.fillStyle = 'rgba(255, 255, 255, 0.4)';
+      ctxParticles.fillText('← AMBIENT COMPRESSIONS (+P/-P)', 15, h - 12);
+      ctxParticles.fillText('EAR CANAL (DESTINATIVE SILENCE) →', barrierX + 15, h - 12);
+
+      // Draw all air molecules
+      for (let i = 0; i < airParticles.length; i++) {
+        const p = airParticles[i];
+        const baseX = p.xNorm * w;
+        const baseY = p.yNorm * (h - 48) + 32;
+
+        let disp = 0;
+        let color = '#ffffff';
+
+        if (baseX < barrierX) {
+          // Ambient Room Noise Wave: traveling longitudinal compression/rarefaction
+          disp = 14.0 * Math.sin(p.xNorm * 16.0 * freqRatio - pSimTime * 3.2);
+          if (disp > 2.5) {
+            color = '#f43f5e'; // Compression (+P)
+          } else if (disp < -2.5) {
+            color = '#f59e0b'; // Rarefaction (-P)
+          } else {
+            color = '#94a3b8';
+          }
+        } else {
+          // Inside Ear Canal
+          if (isShieldActive) {
+            if (isMusicPlaying) {
+              // Superposition: Pure clean music vibration inside ear canal
+              disp = 9.0 * Math.sin(p.xNorm * 22.0 - pSimTime * 5.0);
+              color = '#c084fc'; // Music purple
+            } else {
+              // Complete Silence: Molecules return to rest at P0 atmospheric equilibrium
+              disp = 0.3 * Math.sin(pSimTime * 2.0);
+              color = '#10b981'; // Equilibrium emerald
+            }
+          } else {
+            // Uncancelled noise enters ear canal
+            disp = 14.0 * Math.sin(p.xNorm * 16.0 * freqRatio - pSimTime * 3.2);
+            color = disp > 0 ? '#f43f5e' : '#f59e0b';
+          }
+        }
+
+        ctxParticles.fillStyle = color;
+        ctxParticles.beginPath();
+        ctxParticles.arc(baseX + disp, baseY, 2.5, 0, Math.PI * 2);
+        ctxParticles.fill();
+      }
+    }
+
+    // Auto-init on load
+    window.addEventListener('DOMContentLoaded', () => {
+      initAudioEngine();
+    });
 
     function renderWaveforms() {
       const w = canvasWave.width;

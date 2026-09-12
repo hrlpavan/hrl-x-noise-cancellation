@@ -5,9 +5,11 @@ Supports:
 - process: Cleans an external WAV audio file.
 - benchmark: Measures processing latency and Real-Time Factor (RTF).
 - web: Launches local interactive real-time visualizer dashboard.
+- blueprint: Runs Branch Education acoustic physics & superposition analysis.
 """
 
 import argparse
+import math
 import os
 import sys
 import time
@@ -136,6 +138,54 @@ def run_benchmark(args: argparse.Namespace) -> int:
     return 0
 
 
+def run_blueprint() -> int:
+    """Runs Branch Education Acoustic Physics analysis and displays wavelength/superposition tables."""
+    from .dsp.branch_physics import BranchAcousticPhysics
+
+    print("=" * 72)
+    print("   ANUSH X HRL // BRANCH EDUCATION ACOUSTIC PHYSICS BLUEPRINT")
+    print("=" * 72)
+    print("• Reference  : YouTube (Branch Education) - How Do Noise Canceling Headphones Work?")
+    print("• Target HW  : boAt Rockerz 411 (40mm Drivers, 4.5cm Mic-to-Ear Delay: 131.2 μs)")
+    print("• Physical c : 343.0 m/s (Speed of sound in room air @ 20°C)")
+    print("-" * 72)
+    print("1. FREQUENCY VS WAVELENGTH & CONSTRUCTIVE INTERFERENCE BOUNDARY:")
+    print("-" * 72)
+    print(f"{'Frequency':<11} | {'Wavelength (λ)':<15} | {'Phase Error (Δθ)':<18} | {'Interference Regime':<18}")
+    print("-" * 72)
+    delay_s = 131.2e-6
+    test_freqs = [60, 120, 250, 500, 1000, 1270, 2000, 3810, 5000]
+    for f in test_freqs:
+        wl = BranchAcousticPhysics.calculate_wavelength(f)
+        d_theta_rad = BranchAcousticPhysics.calculate_phase_error(f, delay_s)
+        d_theta_deg = math.degrees(d_theta_rad)
+        regime, p_ratio, db = BranchAcousticPhysics.calculate_interference_power(f, delay_s)
+        regime_str = f"{regime} ({db:+.1f} dB)"
+        print(f"{f:>5} Hz    | {wl:>6.2f} m ({wl*100:>5.1f} cm) | {d_theta_deg:>6.1f}°           | {regime_str:<18}")
+
+    print("-" * 72)
+    coherence_limit = BranchAcousticPhysics.calculate_coherence_limit(delay_s, max_phase_error_deg=60.0)
+    print(f"[*] Critical Active Cancellation Ceiling: {coherence_limit:.1f} Hz")
+    print(f"[*] Frequencies < {coherence_limit:.0f} Hz : Active Anti-Wave Destructive Annihilation (Up to -40 dB)")
+    print(f"[*] Frequencies > {coherence_limit:.0f} Hz : Handed off to Passive On-Ear Foam Isolation (Prevents +2P doubling)")
+    print("-" * 72)
+    print("2. LINEAR ACOUSTIC SUPERPOSITION VERIFICATION (MUSIC + NOISE COLLISION):")
+    print("-" * 72)
+    sr = 48000
+    n_samples = 48000
+    t = [i / sr for i in range(n_samples)]
+    music = [0.5 * math.sin(2.0 * math.pi * 440.0 * ti) for ti in t]
+    fan_noise = [0.4 * math.sin(2.0 * math.pi * 120.0 * ti) for ti in t]
+    anti_noise = [-fn for fn in fan_noise]
+
+    mix_result = BranchAcousticPhysics.superposition_audio_mix(music, fan_noise, anti_noise)
+    print(f"• Input Ambient Fan Power  : 100% (0.00 dB)")
+    print(f"• Net Residual Noise Power : {mix_result['ambient_noise_attenuation_db']:.2f} dB (Complete Annihilation)")
+    print(f"• Delivered Music Fidelity : {mix_result['music_fidelity_snr_db']:.2f} dB SNR (Crystal Clear Audio)")
+    print("=" * 72)
+    return 0
+
+
 def run_web(args: argparse.Namespace) -> int:
     """Launches the interactive web visualizer dashboard."""
     from .server import start_server
@@ -151,6 +201,9 @@ def main() -> None:
 
     # Demo command
     subparsers.add_parser("demo", help="Run synthetic audio noise cancellation demo")
+
+    # Blueprint command (Branch Education)
+    subparsers.add_parser("blueprint", help="Run Branch Education acoustic physics & superposition report")
 
     # Process command
     proc_parser = subparsers.add_parser("process", help="Denoise an audio file")
@@ -180,6 +233,8 @@ def main() -> None:
 
     if args.command == "demo":
         sys.exit(run_demo())
+    elif args.command == "blueprint":
+        sys.exit(run_blueprint())
     elif args.command == "process":
         sys.exit(run_process(args))
     elif args.command == "benchmark":

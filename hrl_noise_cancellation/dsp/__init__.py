@@ -15,6 +15,7 @@ from .fan_vacuum import FanNoiseVacuum
 from .boat_rockerz_411 import BoatRockerz411ANC
 from .acoustic_barrier import AcousticBlackoutBarrier
 from .predictive_anc import UltraFastPredictiveANC
+from .branch_physics import BranchAcousticPhysics
 from .audio_io import AudioIO, generate_synthetic_benchmark, calculate_snr
 
 __all__ = [
@@ -30,6 +31,7 @@ __all__ = [
     "BoatRockerz411ANC",
     "AcousticBlackoutBarrier",
     "UltraFastPredictiveANC",
+    "BranchAcousticPhysics",
     "AudioIO",
     "generate_synthetic_benchmark",
     "calculate_snr",

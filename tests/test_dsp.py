@@ -23,6 +23,7 @@ from hrl_noise_cancellation.dsp.fan_vacuum import FanNoiseVacuum
 from hrl_noise_cancellation.dsp.boat_rockerz_411 import BoatRockerz411ANC
 from hrl_noise_cancellation.dsp.acoustic_barrier import AcousticBlackoutBarrier
 from hrl_noise_cancellation.dsp.predictive_anc import UltraFastPredictiveANC
+from hrl_noise_cancellation.dsp.branch_physics import BranchAcousticPhysics
 from hrl_noise_cancellation.silicon.h1_chip import H1AudioSilicon
 
 
@@ -280,6 +281,57 @@ class TestDSPAlgorithms(unittest.TestCase):
         sound_at_eardrum, atten_db = pred_anc.pre_emptive_collision(fan_sound, anti_wave)
         self.assertEqual(len(sound_at_eardrum), len(fan_sound))
         self.assertGreater(atten_db, 15.0)
+
+    def test_branch_acoustic_physics_and_superposition(self):
+        """
+        Validates the Branch Education acoustic physics blueprint:
+        1. Wavelength λ = c / f accurately calculated (100 Hz -> 3.43 m, 1000 Hz -> 0.343 m)
+        2. Phase error and destructive vs constructive boundary (131.2 μs delay -> f_crit ≈ 1270 Hz)
+        3. Lowpass anti-constructive guard attenuates high frequencies above coherence limit
+        4. Linear acoustic superposition proves music fidelity is preserved while noise is destroyed
+        """
+        # 1. Wavelength
+        wl_100 = BranchAcousticPhysics.calculate_wavelength(100.0)
+        self.assertAlmostEqual(wl_100, 3.43, places=2)
+        wl_1000 = BranchAcousticPhysics.calculate_wavelength(1000.0)
+        self.assertAlmostEqual(wl_1000, 0.343, places=3)
+
+        # 2. Phase error and interference power
+        delay_s = 131.2e-6
+        # Low frequency (120 Hz fan) -> Destructive
+        regime_120, p_ratio_120, db_120 = BranchAcousticPhysics.calculate_interference_power(120.0, delay_s)
+        self.assertEqual(regime_120, "DESTRUCTIVE")
+        self.assertLess(p_ratio_120, 0.05)
+        self.assertLess(db_120, -15.0)
+
+        # High frequency (3810 Hz) -> Phase error ≈ 180° -> Constructive (+2P doubling)
+        regime_3810, p_ratio_3810, db_3810 = BranchAcousticPhysics.calculate_interference_power(3810.0, delay_s)
+        self.assertEqual(regime_3810, "CONSTRUCTIVE")
+        self.assertGreater(p_ratio_3810, 3.8)  # Near 4.0 (+6 dB)
+        self.assertGreater(db_3810, 5.5)
+
+        # Critical coherence limit
+        f_crit = BranchAcousticPhysics.calculate_coherence_limit(delay_s, max_phase_error_deg=60.0)
+        self.assertAlmostEqual(f_crit, 1270.3, delta=2.0)
+
+        # 3. Anti-constructive filter
+        sr = 48000
+        # 4000 Hz test tone should be heavily attenuated by 1200 Hz cutoff
+        high_freq_tone = [math.sin(2.0 * math.pi * 4000.0 * i / sr) for i in range(2400)]
+        filtered = BranchAcousticPhysics.anti_constructive_filter(high_freq_tone, sr, cutoff_hz=1200.0)
+        self.assertEqual(len(filtered), len(high_freq_tone))
+        # After settling (skip first 200 samples), peak amplitude should be < 0.25 (down from 1.0)
+        max_steady_amp = max(abs(x) for x in filtered[200:])
+        self.assertLess(max_steady_amp, 0.25)
+
+        # 4. Superposition audio mix
+        music = [0.5 * math.sin(2.0 * math.pi * 440.0 * i / sr) for i in range(4800)]
+        noise = [0.3 * math.sin(2.0 * math.pi * 120.0 * i / sr) for i in range(4800)]
+        anti_noise = [-x for x in noise]
+
+        mix = BranchAcousticPhysics.superposition_audio_mix(music, noise, anti_noise)
+        self.assertLess(mix["ambient_noise_attenuation_db"], -100.0)  # Complete cancellation
+        self.assertGreater(mix["music_fidelity_snr_db"], 100.0)  # Unaltered music
 
 
 if __name__ == "__main__":
