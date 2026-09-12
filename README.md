@@ -1,7 +1,7 @@
-# HRL X Noise Cancellation
+# Anush X HRL
 
 > **High-Performance Acoustic Noise Suppression & Real-Time DSP Audio Processing Engine**  
-> Engineered by HRL International. Built with zero required third-party dependencies, mathematical spectral subtraction, normalized adaptive filtering (NLMS/ALE), dynamic multi-band spectral gating, and an interactive real-time Web Audio visualizer.
+> Engineered by Anush & HRL International. Built with zero required third-party dependencies, mathematical spectral subtraction, normalized adaptive filtering (NLMS/ALE), dynamic multi-band spectral gating, ultra-fast predictive lookahead noise cancellation, and an interactive real-time Web Audio visualizer.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)

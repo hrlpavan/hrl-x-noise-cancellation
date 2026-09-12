@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 set -e
 
-# HRL International - HRL X Noise Cancellation
+# Anush X HRL Noise Cancellation
 # Automated Verification, Commit & Push Pipeline
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_DIR"
 
 echo "=================================================================="
-echo "⚡ HRL X Noise Cancellation — Automated Pipeline"
+echo "⚡ Anush X HRL — Automated Pipeline"
 echo "=================================================================="
 
 # 1. Run automated verification suite
@@ -34,7 +34,7 @@ if [ -n "$STATUS" ]; then
     COMMIT_MSG="$1"
     if [ -z "$COMMIT_MSG" ]; then
         TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
-        COMMIT_MSG="chore(auto-sync): synchronized HRL X Noise Cancellation ($TIMESTAMP)"
+        COMMIT_MSG="chore(auto-sync): synchronized Anush X HRL ($TIMESTAMP)"
     fi
 
     echo "✍️  Creating commit: $COMMIT_MSG"

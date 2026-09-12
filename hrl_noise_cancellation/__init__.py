@@ -1,11 +1,11 @@
 """
-HRL X Noise Cancellation
+Anush X HRL
 High-performance Digital Signal Processing & Real-Time Noise Suppression Engine.
-Copyright (c) 2026 HRL International.
+Copyright (c) 2026 Anush & HRL International.
 """
 
-__version__ = "0.9.0"
-__author__ = "HRL International"
+__version__ = "1.0.0"
+__author__ = "Anush & HRL International"
 
 from .dsp.spectral import SpectralSubtraction, SpectralGate
 from .dsp.adaptive import NLMSFilter

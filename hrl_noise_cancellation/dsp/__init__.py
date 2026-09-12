@@ -1,5 +1,5 @@
 """
-DSP algorithms and audio signal utilities for HRL X Noise Cancellation.
+DSP algorithms and audio signal utilities for Anush X HRL.
 Includes Boll Spectral Subtraction, NLMS, Filtered-X LMS (FxLMS), Adaptive EQ,
 180° Anti-Phase Destructive Wave Cancellation, Acoustic Echo Cancellation (AEC),
 and Fan Noise Vacuum Annihilation.

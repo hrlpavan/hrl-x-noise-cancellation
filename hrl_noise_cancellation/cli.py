@@ -1,5 +1,5 @@
 """
-Unified CLI for HRL X Noise Cancellation.
+Unified CLI for Anush X HRL.
 Supports:
 - demo: Synthesizes noisy test audio and demonstrates spectral/adaptive denoising.
 - process: Cleans an external WAV audio file.
@@ -19,7 +19,7 @@ from .dsp.adaptive import NLMSFilter
 def run_demo() -> int:
     """Runs end-to-end synthetic audio denoising benchmark and prints SNR gain."""
     print("=" * 68)
-    print("      HRL X NOISE CANCELLATION // SYNTHETIC DSP BENCHMARK")
+    print("      ANUSH X HRL // SYNTHETIC DSP BENCHMARK")
     print("=" * 68)
 
     sample_rate = 16000
@@ -145,7 +145,7 @@ def run_web(args: argparse.Namespace) -> int:
 def main() -> None:
     parser = argparse.ArgumentParser(
         prog="hrl_noise_cancellation",
-        description="HRL X Noise Cancellation: High-performance audio noise suppression engine.",
+        description="Anush X HRL: High-performance audio noise suppression engine.",
     )
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 

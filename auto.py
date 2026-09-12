@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-HRL X Noise Cancellation - Unified Automated Pipeline Runner (auto.py)
+Anush X HRL - Unified Automated Pipeline Runner (auto.py)
 Executes:
 1. Automated unit test suite.
 2. Synthetic speech + noise benchmark with SNR gain evaluation.
@@ -20,7 +20,7 @@ sys.path.insert(0, str(ROOT_DIR))
 
 def run_section(title: str):
     print("\n" + "=" * 68)
-    print(f"⚡ HRL AUTO PIPELINE // {title.upper()}")
+    print(f"⚡ ANUSH X HRL AUTO PIPELINE // {title.upper()}")
     print("=" * 68)
 
 

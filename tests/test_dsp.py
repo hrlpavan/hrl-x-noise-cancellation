@@ -1,5 +1,5 @@
 """
-Unit tests and DSP validation suite for HRL X Noise Cancellation.
+Unit tests and DSP validation suite for Anush X HRL.
 Runs with standard Python unittest (zero dependencies required).
 """
 

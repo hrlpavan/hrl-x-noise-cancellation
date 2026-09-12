@@ -1,5 +1,5 @@
 """
-Lightweight HTTP server serving the HRL X Noise Cancellation Web Dashboard.
+Lightweight HTTP server serving the Anush X HRL Web Dashboard.
 Built using standard library http.server (zero third-party dependencies).
 """
 
