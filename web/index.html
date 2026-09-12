@@ -3,30 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Anush X HRL | Active Noise Cancellation</title>
+  <title>Anush Atmos × HRL | Active Noise Cancellation</title>
   <style>
     /* =========================================================================
-       Apple Human Interface Guidelines (HIG) Minimalist Design System
+       Apple Human Interface Guidelines (HIG) Minimalist White Design System
        ========================================================================= */
     :root {
-      --bg: #000000;
-      --card: rgba(28, 28, 30, 0.72);
-      --card-hover: rgba(44, 44, 46, 0.85);
-      --border: rgba(255, 255, 255, 0.12);
-      --border-light: rgba(255, 255, 255, 0.07);
-      --border-strong: rgba(255, 255, 255, 0.22);
+      --bg: #ffffff;
+      --bg-page: #fbfbfd;
+      --card: #ffffff;
+      --card-hover: #f5f5f7;
+      --card-subtle: #f5f5f7;
+      --border: rgba(0, 0, 0, 0.08);
+      --border-light: rgba(0, 0, 0, 0.05);
+      --border-strong: rgba(0, 0, 0, 0.16);
       
-      /* Apple Colors */
-      --blue: #0a84ff;
-      --green: #30d158;
-      --yellow: #ffd60a;
-      --red: #ff453a;
-      --purple: #bf5af2;
-      --cyan: #64d2ff;
+      /* Apple HIG System Colors (Optimized for Pristine White Surfaces) */
+      --blue: #0071e3;
+      --blue-hover: #0077ed;
+      --green: #34c759;
+      --yellow: #d97706; /* High-contrast warm amber */
+      --red: #d60000;    /* HRL / Atmos brand crimson */
+      --purple: #af52de;
+      --cyan: #0071e3;   /* Signature Apple Blue */
 
-      --text: #f5f5f7;
-      --text-sec: #86868b;
-      --text-ter: #6e6e73;
+      --text: #1d1d1f;
+      --text-sec: #6e6e73;
+      --text-ter: #86868b;
       
       --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
       --font-mono: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
@@ -36,6 +39,10 @@
       --radius-lg: 18px;
       --radius-pill: 9999px;
       --spring: cubic-bezier(0.32, 0.72, 0, 1);
+      
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+      --shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.02);
     }
 
     * {
@@ -47,8 +54,8 @@
     }
 
     body {
-      background-color: var(--bg);
-      background-image: radial-gradient(circle at 50% -20%, rgba(10, 132, 255, 0.15) 0%, rgba(0, 0, 0, 0) 65%);
+      background-color: var(--bg-page);
+      background-image: radial-gradient(circle at 50% 0%, rgba(0, 113, 227, 0.035) 0%, rgba(251, 251, 253, 0) 70%);
       color: var(--text);
       font-family: var(--font);
       min-height: 100vh;
@@ -58,13 +65,13 @@
       letter-spacing: -0.014em;
     }
 
-    /* Apple Minimal Frosted Header */
+    /* Apple Minimal Frosted Header (Light Mode) */
     header {
-      background: rgba(0, 0, 0, 0.72);
-      backdrop-filter: blur(40px) saturate(190%);
-      -webkit-backdrop-filter: blur(40px) saturate(190%);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(30px) saturate(180%);
+      -webkit-backdrop-filter: blur(30px) saturate(180%);
       border-bottom: 0.5px solid var(--border);
-      padding: 0.85rem 2rem;
+      padding: 0.75rem 2.2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -79,38 +86,36 @@
       gap: 0.85rem;
     }
 
-    .brand-icon {
-      width: 34px;
-      height: 34px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 100%);
-      border: 0.5px solid rgba(255, 255, 255, 0.3);
-      border-radius: 9px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      color: #ffffff;
-      font-size: 0.82rem;
-      letter-spacing: -0.02em;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), inset 0 0.5px 0 rgba(255, 255, 255, 0.4);
+    .brand-logo-anush {
+      height: 30px;
+      width: auto;
+      object-fit: contain;
+      display: block;
     }
 
-    .brand-title {
+    .brand-divider {
+      color: var(--text-ter);
+      font-weight: 300;
       font-size: 0.95rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
+      user-select: none;
+    }
+
+    .brand-logo-hrl {
+      height: 19px;
+      width: auto;
+      object-fit: contain;
+      display: block;
     }
 
     .brand-hw-badge {
-      font-size: 0.65rem;
+      font-size: 0.68rem;
       font-weight: 500;
-      padding: 0.15rem 0.45rem;
-      border-radius: 4px;
-      background: rgba(255, 255, 255, 0.08);
+      padding: 0.18rem 0.55rem;
+      border-radius: var(--radius-pill);
+      background: #f5f5f7;
+      border: 0.5px solid var(--border);
       color: var(--text-sec);
+      letter-spacing: -0.01em;
     }
 
     /* Dynamic Island Capsule */
@@ -122,12 +127,10 @@
       font-weight: 500;
       padding: 0.35rem 0.95rem;
       border-radius: var(--radius-pill);
-      background: rgba(28, 28, 30, 0.85);
-      border: 0.5px solid var(--border-strong);
+      background: #ffffff;
+      border: 0.5px solid var(--border);
       color: var(--text);
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), inset 0 0.5px 0 rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
 
     .pulse-dot {
@@ -135,13 +138,13 @@
       height: 7px;
       border-radius: 50%;
       background: var(--green);
-      box-shadow: 0 0 8px var(--green);
+      box-shadow: 0 0 6px rgba(52, 199, 89, 0.5);
       animation: applePulse 2s infinite ease-in-out;
     }
 
     @keyframes applePulse {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
+      50% { opacity: 0.45; transform: scale(0.88); }
     }
 
     /* Main Container: Focused & Centered */
@@ -150,10 +153,10 @@
       max-width: 1100px;
       width: 100%;
       margin: 0 auto;
-      padding: 2rem 1.5rem 3rem;
+      padding: 2.2rem 1.5rem 3.5rem;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1.6rem;
     }
 
     /* =========================================================================
@@ -163,20 +166,18 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.9rem;
+      gap: 1rem;
       margin-bottom: 0.5rem;
     }
 
     .segmented-hero {
-      background: rgba(28, 28, 30, 0.85);
-      backdrop-filter: blur(40px) saturate(180%);
-      -webkit-backdrop-filter: blur(40px) saturate(180%);
-      border: 0.5px solid var(--border);
+      background: #f5f5f7;
+      border: 0.5px solid var(--border-light);
       border-radius: var(--radius-pill);
       padding: 4px;
       display: inline-flex;
       gap: 4px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0.5px 0 rgba(255, 255, 255, 0.12);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
     }
 
     .hero-tab {
@@ -207,34 +208,34 @@
     }
 
     .hero-tab.active {
-      background: rgba(255, 255, 255, 0.16);
-      color: #ffffff;
+      background: #ffffff;
+      color: var(--text);
       font-weight: 600;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35), inset 0 0.5px 0 rgba(255, 255, 255, 0.25);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 0.5px 1px rgba(0, 0, 0, 0.04);
     }
 
     /* Master On/Off Toggle Button */
     .btn-anc-toggle {
-      background: linear-gradient(180deg, #30d158 0%, #24a843 100%);
+      background: var(--green);
       color: #ffffff;
       font-size: 0.85rem;
       font-weight: 600;
       letter-spacing: -0.01em;
-      border: 0.5px solid rgba(255, 255, 255, 0.35);
+      border: none;
       border-radius: var(--radius-pill);
       padding: 0.65rem 1.8rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 0.55rem;
-      box-shadow: 0 4px 18px rgba(48, 209, 88, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      box-shadow: 0 4px 14px rgba(52, 199, 89, 0.35);
       transition: all 0.18s var(--spring);
       font-family: var(--font);
     }
 
     .btn-anc-toggle:hover {
       transform: translateY(-0.5px);
-      box-shadow: 0 6px 22px rgba(48, 209, 88, 0.45);
+      box-shadow: 0 6px 20px rgba(52, 199, 89, 0.45);
     }
 
     .btn-anc-toggle:active {
@@ -242,9 +243,8 @@
     }
 
     .btn-anc-toggle.off {
-      background: rgba(255, 255, 255, 0.08);
+      background: #e5e5ea;
       color: var(--text-sec);
-      border-color: var(--border);
       box-shadow: none;
     }
 
@@ -252,13 +252,11 @@
        Unified Studio Visualizer Stage (Clean Tabbed Switcher)
        ========================================================================= */
     .studio-card {
-      background: var(--card);
-      backdrop-filter: blur(40px) saturate(190%);
-      -webkit-backdrop-filter: blur(40px) saturate(190%);
+      background: #ffffff;
       border: 0.5px solid var(--border);
       border-radius: var(--radius-lg);
       overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0.5px 0 rgba(255, 255, 255, 0.12);
+      box-shadow: var(--shadow-card);
       display: flex;
       flex-direction: column;
     }
@@ -269,13 +267,14 @@
       justify-content: space-between;
       align-items: center;
       border-bottom: 0.5px solid var(--border-light);
+      background: #ffffff;
     }
 
     .studio-title-group {
       display: flex;
       align-items: center;
       gap: 0.6rem;
-      font-size: 0.86rem;
+      font-size: 0.88rem;
       font-weight: 600;
       color: var(--text);
     }
@@ -288,7 +287,7 @@
       justify-content: center;
       gap: 1.6rem;
       padding: 0.55rem 1.4rem;
-      background: rgba(14, 14, 16, 0.65);
+      background: #fafafc;
       border-bottom: 0.5px solid var(--border-light);
       font-size: 0.72rem;
       color: var(--text-sec);
@@ -312,7 +311,7 @@
 
     /* View Switcher Pills */
     .view-switcher {
-      background: rgba(0, 0, 0, 0.4);
+      background: #f5f5f7;
       border: 0.5px solid var(--border-light);
       border-radius: var(--radius-pill);
       padding: 2px;
@@ -334,16 +333,16 @@
     }
 
     .view-tab.active {
-      background: rgba(255, 255, 255, 0.16);
-      color: #ffffff;
+      background: #ffffff;
+      color: var(--text);
       font-weight: 600;
-      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
     }
 
     /* Canvas Area */
     .canvas-viewport {
       position: relative;
-      background: #08080a;
+      background: #fafafc;
       width: 100%;
       height: 220px;
     }
@@ -367,7 +366,7 @@
       grid-template-columns: repeat(4, 1fr);
       padding: 0.85rem 1.4rem;
       border-top: 0.5px solid var(--border-light);
-      background: rgba(0, 0, 0, 0.2);
+      background: #fbfbfd;
     }
 
     @media (max-width: 680px) {
@@ -414,13 +413,11 @@
     }
 
     .dock-card {
-      background: var(--card);
-      backdrop-filter: blur(35px) saturate(180%);
-      -webkit-backdrop-filter: blur(35px) saturate(180%);
+      background: #ffffff;
       border: 0.5px solid var(--border);
       border-radius: var(--radius-lg);
       padding: 1.25rem;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), inset 0 0.5px 0 rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow-card);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -440,7 +437,7 @@
 
     /* Mini Segmented Bar */
     .mini-segmented {
-      background: rgba(0, 0, 0, 0.35);
+      background: #f5f5f7;
       border: 0.5px solid var(--border-light);
       border-radius: var(--radius-md);
       padding: 3px;
@@ -467,10 +464,10 @@
     }
 
     .mini-tab.active {
-      background: rgba(255, 255, 255, 0.15);
-      color: #ffffff;
+      background: #ffffff;
+      color: var(--text);
       font-weight: 600;
-      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
     }
 
     /* Sleek Slider */
@@ -499,7 +496,7 @@
       appearance: none;
       width: 100%;
       height: 5px;
-      background: rgba(255, 255, 255, 0.14);
+      background: #e5e5ea;
       border-radius: var(--radius-pill);
       outline: none;
     }
@@ -512,7 +509,7 @@
       border-radius: 50%;
       background: #ffffff;
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
       border: 0.5px solid rgba(0, 0, 0, 0.08);
       transition: transform 0.12s var(--spring);
     }
@@ -523,9 +520,9 @@
 
     /* Apple Music Superposition Button */
     .btn-superposition {
-      background: rgba(191, 90, 242, 0.12);
-      border: 0.5px solid rgba(191, 90, 242, 0.35);
-      color: #df9eff;
+      background: #f5f5f7;
+      border: 0.5px solid var(--border);
+      color: var(--text);
       padding: 0.65rem 1rem;
       border-radius: var(--radius-md);
       font-size: 0.8rem;
@@ -541,28 +538,25 @@
     }
 
     .btn-superposition:hover {
-      background: rgba(191, 90, 242, 0.2);
-      border-color: rgba(191, 90, 242, 0.5);
+      background: #ebebec;
     }
 
     .btn-superposition.playing {
-      background: rgba(191, 90, 242, 0.28);
-      border-color: rgba(191, 90, 242, 0.6);
-      color: #ffffff;
-      box-shadow: 0 0 16px rgba(191, 90, 242, 0.3);
+      background: #f3e8ff;
+      border-color: #d8b4fe;
+      color: #7e22ce;
+      box-shadow: 0 0 12px rgba(175, 82, 222, 0.15);
     }
 
     footer {
       border-top: 0.5px solid var(--border);
       padding: 1.25rem 2rem;
       font-size: 0.75rem;
-      color: var(--text-sec);
+      color: var(--text-ter);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: #ffffff;
     }
   </style>
 </head>
@@ -571,11 +565,10 @@
   <!-- Minimal Apple Frosted Header -->
   <header>
     <div class="brand">
-      <div class="brand-icon">AXH</div>
-      <div class="brand-title">
-        <span>Anush X HRL</span>
-        <span class="brand-hw-badge">boAt Rockerz 411</span>
-      </div>
+      <img src="assets/anush_atmos_tight.png" alt="Anush Atmos" class="brand-logo-anush" />
+      <span class="brand-divider">×</span>
+      <img src="assets/hrl_logo_tight.png" alt="HRL" class="brand-logo-hrl" />
+      <span class="brand-hw-badge">boAt Rockerz 411</span>
     </div>
     
     <div class="capsule-hud">
@@ -875,22 +868,22 @@
       if (!legend) return;
       if (view === 'waveform') {
         legend.innerHTML = `
-          <div class="legend-item"><span class="legend-dot" style="background: #ffd60a; box-shadow: 0 0 6px #ffd60a;"></span><span>Ambient Room Noise</span></div>
-          <div class="legend-item"><span class="legend-dot" style="background: #64d2ff; box-shadow: 0 0 6px #64d2ff;"></span><span>Anti-Wave Inversion (180°)</span></div>
-          <div class="legend-item"><span class="legend-dot" style="background: #30d158; box-shadow: 0 0 6px #30d158;"></span><span>Eardrum Destructive Annihilation</span></div>
+          <div class="legend-item"><span class="legend-dot" style="background: #d97706; box-shadow: 0 0 6px rgba(217, 119, 6, 0.4);"></span><span>Ambient Room Noise</span></div>
+          <div class="legend-item"><span class="legend-dot" style="background: #0071e3; box-shadow: 0 0 6px rgba(0, 113, 227, 0.4);"></span><span>Anti-Wave Inversion (180°)</span></div>
+          <div class="legend-item"><span class="legend-dot" style="background: #34c759; box-shadow: 0 0 6px rgba(52, 199, 89, 0.4);"></span><span>Eardrum Destructive Annihilation</span></div>
         `;
       } else if (view === 'spectrum') {
         legend.innerHTML = `
-          <div class="legend-item"><span class="legend-dot" style="background: #ffd60a; box-shadow: 0 0 6px #ffd60a;"></span><span>Ambient Noise Spectrum</span></div>
-          <div class="legend-item"><span class="legend-dot" style="background: #bf5af2; box-shadow: 0 0 6px #bf5af2; width: 12px; height: 3px; border-radius: 1px;"></span><span>Active Hand-off Ceiling (1,200 Hz)</span></div>
-          <div class="legend-item"><span class="legend-dot" style="background: #30d158; box-shadow: 0 0 6px #30d158;"></span><span>Post-ANC Auditory Floor (-40 dB)</span></div>
+          <div class="legend-item"><span class="legend-dot" style="background: #d97706; box-shadow: 0 0 6px rgba(217, 119, 6, 0.4);"></span><span>Ambient Noise Spectrum</span></div>
+          <div class="legend-item"><span class="legend-dot" style="background: #af52de; box-shadow: 0 0 6px rgba(175, 82, 222, 0.4); width: 12px; height: 3px; border-radius: 1px;"></span><span>Active Hand-off Ceiling (1,200 Hz)</span></div>
+          <div class="legend-item"><span class="legend-dot" style="background: #34c759; box-shadow: 0 0 6px rgba(52, 199, 89, 0.4);"></span><span>Post-ANC Auditory Floor (-40 dB)</span></div>
         `;
       } else if (view === 'molecules') {
         legend.innerHTML = `
-          <div class="legend-item"><span class="legend-dot" style="background: #ff453a; box-shadow: 0 0 6px #ff453a;"></span><span>Ambient Compressions (+P)</span></div>
-          <div class="legend-item"><span class="legend-dot" style="background: #ffd60a; box-shadow: 0 0 6px #ffd60a;"></span><span>Rarefactions (-P)</span></div>
-          <div class="legend-item"><span class="legend-dot" style="background: #64d2ff; box-shadow: 0 0 6px #64d2ff; width: 14px; height: 2px; border-radius: 1px;"></span><span>boAt 40mm Transducer</span></div>
-          <div class="legend-item"><span class="legend-dot" style="background: #30d158; box-shadow: 0 0 6px #30d158;"></span><span>Ear Canal Quietude (P₀ Silence)</span></div>
+          <div class="legend-item"><span class="legend-dot" style="background: #d60000; box-shadow: 0 0 6px rgba(214, 0, 0, 0.4);"></span><span>Ambient Compressions (+P)</span></div>
+          <div class="legend-item"><span class="legend-dot" style="background: #d97706; box-shadow: 0 0 6px rgba(217, 119, 6, 0.4);"></span><span>Rarefactions (-P)</span></div>
+          <div class="legend-item"><span class="legend-dot" style="background: #0071e3; box-shadow: 0 0 6px rgba(0, 113, 227, 0.4); width: 14px; height: 2px; border-radius: 1px;"></span><span>boAt 40mm Transducer</span></div>
+          <div class="legend-item"><span class="legend-dot" style="background: #34c759; box-shadow: 0 0 6px rgba(52, 199, 89, 0.4);"></span><span>Ear Canal Quietude (P₀ Silence)</span></div>
         `;
       }
     }
@@ -1111,11 +1104,11 @@
       const h = 220;
 
       ctxWave.clearRect(0, 0, w, h);
-      ctxWave.fillStyle = '#08080a';
+      ctxWave.fillStyle = '#fafafc';
       ctxWave.fillRect(0, 0, w, h);
 
       // Subtle Center Baseline & Grid
-      ctxWave.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+      ctxWave.strokeStyle = 'rgba(0, 0, 0, 0.06)';
       ctxWave.lineWidth = 0.5;
       ctxWave.beginPath();
       ctxWave.moveTo(0, h / 2);
@@ -1125,11 +1118,11 @@
       const n = rawData.length;
       const sliceW = w / n;
 
-      // 1. Outside Room Noise [Yellow]
-      ctxWave.shadowBlur = 4;
-      ctxWave.shadowColor = '#ffd60a';
-      ctxWave.strokeStyle = '#ffd60a';
-      ctxWave.lineWidth = 1.4;
+      // 1. Outside Room Noise [Amber Gold]
+      ctxWave.shadowBlur = 3;
+      ctxWave.shadowColor = 'rgba(217, 119, 6, 0.3)';
+      ctxWave.strokeStyle = '#d97706';
+      ctxWave.lineWidth = 1.5;
       ctxWave.beginPath();
       for (let i = 0; i < n; i++) {
         const val = (rawData[i] - 128) / 128.0;
@@ -1140,12 +1133,12 @@
       }
       ctxWave.stroke();
 
-      // 2. Anti-Wave Inversion [Cyan]
+      // 2. Anti-Wave Inversion [Apple Blue]
       if (isShieldActive && currentStrategy !== 'mute') {
-        ctxWave.shadowBlur = 4;
-        ctxWave.shadowColor = '#64d2ff';
-        ctxWave.strokeStyle = '#64d2ff';
-        ctxWave.lineWidth = 1.4;
+        ctxWave.shadowBlur = 3;
+        ctxWave.shadowColor = 'rgba(0, 113, 227, 0.3)';
+        ctxWave.strokeStyle = '#0071e3';
+        ctxWave.lineWidth = 1.5;
         ctxWave.beginPath();
         for (let i = 0; i < n; i++) {
           const val = (outData[i] - 128) / 128.0;
@@ -1157,10 +1150,10 @@
         ctxWave.stroke();
       }
 
-      // 3. Eardrum Flatline Annihilation [Green]
-      ctxWave.shadowBlur = 6;
-      ctxWave.shadowColor = '#30d158';
-      ctxWave.strokeStyle = '#30d158';
+      // 3. Eardrum Flatline Annihilation [Apple Green]
+      ctxWave.shadowBlur = 4;
+      ctxWave.shadowColor = 'rgba(52, 199, 89, 0.4)';
+      ctxWave.strokeStyle = '#34c759';
       ctxWave.lineWidth = 2.4;
       ctxWave.beginPath();
       for (let i = 0; i < n; i++) {
@@ -1180,11 +1173,11 @@
       const h = 220;
 
       ctxFFT.clearRect(0, 0, w, h);
-      ctxFFT.fillStyle = '#08080a';
+      ctxFFT.fillStyle = '#fafafc';
       ctxFFT.fillRect(0, 0, w, h);
 
       // Horizontal frequency grid lines
-      ctxFFT.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+      ctxFFT.strokeStyle = 'rgba(0, 0, 0, 0.04)';
       ctxFFT.lineWidth = 0.5;
       for (let y = 35; y < h; y += 35) {
         ctxFFT.beginPath();
@@ -1195,7 +1188,7 @@
 
       // Active Hand-off Marker at 1,200 Hz (Branch Education threshold)
       const handoffX = w * 0.42;
-      ctxFFT.strokeStyle = 'rgba(191, 90, 242, 0.45)';
+      ctxFFT.strokeStyle = 'rgba(175, 82, 222, 0.5)';
       ctxFFT.lineWidth = 1.2;
       ctxFFT.setLineDash([4, 4]);
       ctxFFT.beginPath();
@@ -1207,11 +1200,11 @@
       const n = rawFreq.length;
       const sliceW = w / n;
 
-      // Ambient Spectrum [Yellow]
-      ctxFFT.shadowBlur = 4;
-      ctxFFT.shadowColor = '#ffd60a';
-      ctxFFT.strokeStyle = '#ffd60a';
-      ctxFFT.lineWidth = 1.2;
+      // Ambient Spectrum [Amber]
+      ctxFFT.shadowBlur = 3;
+      ctxFFT.shadowColor = 'rgba(217, 119, 6, 0.25)';
+      ctxFFT.strokeStyle = '#d97706';
+      ctxFFT.lineWidth = 1.3;
       ctxFFT.beginPath();
       for (let i = 0; i < n; i++) {
         const v = rawFreq[i] / 255.0;
@@ -1222,10 +1215,10 @@
       }
       ctxFFT.stroke();
 
-      // Net Auditory Floor [Green]
-      ctxFFT.shadowBlur = 6;
-      ctxFFT.shadowColor = '#30d158';
-      ctxFFT.strokeStyle = '#30d158';
+      // Net Auditory Floor [Apple Green]
+      ctxFFT.shadowBlur = 4;
+      ctxFFT.shadowColor = 'rgba(52, 199, 89, 0.35)';
+      ctxFFT.strokeStyle = '#34c759';
       ctxFFT.lineWidth = 2.0;
       ctxFFT.beginPath();
       for (let i = 0; i < n; i++) {
@@ -1245,21 +1238,21 @@
       const h = 220;
 
       ctxParticles.clearRect(0, 0, w, h);
-      ctxParticles.fillStyle = '#08080a';
+      ctxParticles.fillStyle = '#fafafc';
       ctxParticles.fillRect(0, 0, w, h);
 
       pSimTime += 0.045;
       const barrierX = w * 0.46;
 
       // boAt Transducer Cushion Shading & Barrier Boundary
-      ctxParticles.fillStyle = 'rgba(100, 210, 255, 0.035)';
+      ctxParticles.fillStyle = 'rgba(0, 113, 227, 0.04)';
       ctxParticles.fillRect(barrierX - 8, 0, 16, h);
 
       const grad = ctxParticles.createLinearGradient(0, 0, 0, h);
-      grad.addColorStop(0, 'rgba(100, 210, 255, 0.15)');
-      grad.addColorStop(0.3, '#64d2ff');
-      grad.addColorStop(0.7, '#64d2ff');
-      grad.addColorStop(1, 'rgba(100, 210, 255, 0.15)');
+      grad.addColorStop(0, 'rgba(0, 113, 227, 0.15)');
+      grad.addColorStop(0.3, '#0071e3');
+      grad.addColorStop(0.7, '#0071e3');
+      grad.addColorStop(1, 'rgba(0, 113, 227, 0.15)');
 
       ctxParticles.strokeStyle = grad;
       ctxParticles.lineWidth = 1.8;
@@ -1271,7 +1264,7 @@
       ctxParticles.setLineDash([]);
 
       // Top & bottom anchor nodes for transducer
-      ctxParticles.fillStyle = '#64d2ff';
+      ctxParticles.fillStyle = '#0071e3';
       ctxParticles.beginPath();
       ctxParticles.arc(barrierX, 12, 3, 0, Math.PI * 2);
       ctxParticles.arc(barrierX, h - 12, 3, 0, Math.PI * 2);
@@ -1287,20 +1280,20 @@
         const baseY = particlePaddingTop + p.yNorm * particlePlayHeight;
 
         let disp = 0;
-        let color = 'rgba(255, 255, 255, 0.4)';
+        let color = 'rgba(0, 0, 0, 0.25)';
         let glow = 0;
 
         if (baseX < barrierX) {
           // Acoustic Wave: Compressions (+P) and Rarefactions (-P)
           disp = 13.0 * Math.sin(p.xNorm * 18.0 - pSimTime * 3.2);
           if (disp > 3.0) {
-            color = '#ff453a'; // Compression (+P)
-            glow = 4;
-          } else if (disp < -3.0) {
-            color = '#ffd60a'; // Rarefaction (-P)
+            color = '#d60000'; // Compression (+P) Crimson
             glow = 3;
+          } else if (disp < -3.0) {
+            color = '#d97706'; // Rarefaction (-P) Amber
+            glow = 2;
           } else {
-            color = 'rgba(255, 255, 255, 0.45)';
+            color = 'rgba(0, 0, 0, 0.28)';
           }
         } else {
           // Inside Ear Canal
@@ -1308,19 +1301,19 @@
             if (isMusicPlaying) {
               // Linear Superposition: Pure harmonic music wave inside quiet ear canal
               disp = 8.5 * Math.sin(p.xNorm * 24.0 - pSimTime * 4.8);
-              color = '#bf5af2';
-              glow = 4;
+              color = '#af52de';
+              glow = 3;
             } else {
               // Annihilation: Perfect equilibrium P0 (micro Brownian thermal jitter only)
               disp = 0.35 * Math.sin(pSimTime * 2.5 + p.yNorm * 10);
-              color = '#30d158';
-              glow = 3;
+              color = '#34c759';
+              glow = 2;
             }
           } else {
             // ANC Bypassed: Unattenuated noise penetrates into ear canal
             disp = 13.0 * Math.sin(p.xNorm * 18.0 - pSimTime * 3.2);
-            color = disp > 0 ? '#ff453a' : '#ffd60a';
-            glow = 3;
+            color = disp > 0 ? '#d60000' : '#d97706';
+            glow = 2;
           }
         }
 
