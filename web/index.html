@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HRL X Noise Cancellation | Real-Time Audio DSP Engine</title>
+  <style>
+    :root {
+      --bg-base: #080b11;
+      --bg-card: #0f1523;
+      --bg-card-hover: #151d30;
+      --border: #1e293b;
+      --border-accent: #00f0ff33;
+      --cyan: #00f0ff;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: rgba(15, 21, 35, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #00f0ff, #3b82f6);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: #000;
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+    }
+
+    .brand-title h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .brand-title p {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--emerald);
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 8px currentColor;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    main {
+      flex: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 960px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .panel-title {
+      font-size: 0.85rem;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--cyan);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--bg-card-hover);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 0.65rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: var(--font-sans);
+    }
+
+    .btn:hover {
+      background: #1e293b;
+      border-color: var(--cyan);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #00f0ff, #0284c7);
+      color: #000;
+      font-weight: 700;
+      border: none;
+      box-shadow: 0 4px 15px rgba(0, 240, 255, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+      box-shadow: 0 6px 20px rgba(0, 240, 255, 0.4);
+    }
+
+    .btn.active {
+      background: rgba(0, 240, 255, 0.15);
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    .btn-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .control-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+    }
+
+    .control-value {
+      color: var(--cyan);
+      font-weight: bold;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      background: #1e293b;
+      border-radius: 3px;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--cyan);
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--cyan);
+      transition: transform 0.1s ease;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+    .toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.4rem 0;
+      font-size: 0.85rem;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #1e293b;
+      transition: .3s;
+      border-radius: 24px;
+      border: 1px solid var(--border);
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 3px;
+      bottom: 3px;
+      background-color: var(--text-muted);
+      transition: .3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: rgba(0, 240, 255, 0.3);
+      border-color: var(--cyan);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+      background-color: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
+    }
+
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .telemetry-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .telemetry-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .telemetry-label {
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .telemetry-value {
+      font-size: 1.35rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .canvas-container {
+      position: relative;
+      background: #06080d;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .canvas-header {
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      pointer-events: none;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+    }
+
+    canvas {
+      width: 100%;
+      height: 180px;
+      display: block;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1rem 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-card);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="brand-logo">HRL</div>
+      <div class="brand-title">
+        <h1>HRL X Noise Cancellation</h1>
+        <p>Enterprise Real-Time Acoustic & Spectral DSP Engine</p>
+      </div>
+    </div>
+    <div id="statusIndicator" class="status-badge">
+      <div class="pulse-dot"></div>
+      <span>ENGINE READY</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- Left Sidebar: Controls -->
+    <aside class="panel">
+      <div class="panel-title">Audio Input Source</div>
+
+      <div class="btn-group">
+        <button id="btnMic" class="btn">
+          <span>🎤 Live Mic</span>
+        </button>
+        <button id="btnSynth" class="btn active">
+          <span>⚡ Synthetic</span>
+        </button>
+      </div>
+
+      <button id="btnStartStop" class="btn btn-primary">
+        ▶ Start Audio Engine
+      </button>
+
+      <div class="panel-title">DSP Suppression Stack</div>
+
+      <div class="toggle-row">
+        <span>Active Noise Cancellation</span>
+        <label class="switch">
+          <input type="checkbox" id="ancToggle" checked />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="toggle-row">
+        <span>50Hz/60Hz Hum Notch</span>
+        <label class="switch">
+          <input type="checkbox" id="notchToggle" checked />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="toggle-row">
+        <span>80Hz Low-Cut Rumble Filter</span>
+        <label class="switch">
+          <input type="checkbox" id="highpassToggle" checked />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="control-group">
+        <div class="control-header">
+          <span>Gate Threshold</span>
+          <span id="threshVal" class="control-value">-36 dB</span>
+        </div>
+        <input type="range" id="threshSlider" min="-60" max="-10" value="-36" step="1" />
+      </div>
+
+      <div class="control-group">
+        <div class="control-header">
+          <span>Noise Attenuation Floor</span>
+          <span id="attenVal" class="control-value">-24 dB</span>
+        </div>
+        <input type="range" id="attenSlider" min="-40" max="-6" value="-24" step="1" />
+      </div>
+
+      <div class="panel-title">Synthetic Audio Mixer</div>
+
+      <div class="control-group">
+        <div class="control-header">
+          <span>Simulated Voice Level</span>
+          <span id="voiceVal" class="control-value">70%</span>
+        </div>
+        <input type="range" id="voiceSlider" min="0" max="100" value="70" />
+      </div>
+
+      <div class="control-group">
+        <div class="control-header">
+          <span>Ambient Gaussian Noise</span>
+          <span id="noiseVal" class="control-value">45%</span>
+        </div>
+        <input type="range" id="noiseSlider" min="0" max="100" value="45" />
+      </div>
+
+      <div class="control-group">
+        <div class="control-header">
+          <span>Mains Hum (50Hz + Harmonics)</span>
+          <span id="humVal" class="control-value">35%</span>
+        </div>
+        <input type="range" id="humSlider" min="0" max="100" value="35" />
+      </div>
+    </aside>
+
+    <!-- Right Area: Visualizations and Telemetry -->
+    <section style="display: flex; flex-direction: column; gap: 1.5rem;">
+      <!-- Telemetry HUD -->
+      <div class="telemetry-grid">
+        <div class="telemetry-card">
+          <div class="telemetry-label">Signal-to-Noise Ratio</div>
+          <div id="metricSNR" class="telemetry-value" style="color: var(--emerald);">+18.4 dB</div>
+        </div>
+        <div class="telemetry-card">
+          <div class="telemetry-label">Peak Level</div>
+          <div id="metricPeak" class="telemetry-value" style="color: var(--cyan);">-12.1 dBFS</div>
+        </div>
+        <div class="telemetry-card">
+          <div class="telemetry-label">DSP Latency</div>
+          <div id="metricLatency" class="telemetry-value">2.7 ms</div>
+        </div>
+        <div class="telemetry-card">
+          <div class="telemetry-label">Noise Floor</div>
+          <div id="metricFloor" class="telemetry-value" style="color: var(--amber);">-54.8 dB</div>
+        </div>
+      </div>
+
+      <!-- FFT Real-Time Spectrum Analyzer -->
+      <div class="canvas-container">
+        <div class="canvas-header">
+          <span>FREQUENCY SPECTRUM (FFT 20Hz - 20kHz)</span>
+          <div class="legend-item">
+            <div class="legend-dot" style="background: var(--amber);"></div>
+            <span style="color: var(--amber);">Raw Unfiltered</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background: var(--cyan);"></div>
+            <span style="color: var(--cyan);">HRL Filtered Clean</span>
+          </div>
+        </div>
+        <canvas id="canvasFFT"></canvas>
+      </div>
+
+      <!-- Oscilloscope / Time Domain Waveform -->
+      <div class="canvas-container">
+        <div class="canvas-header">
+          <span>TIME DOMAIN OSCILLOSCOPE</span>
+          <div class="legend-item">
+            <div class="legend-dot" style="background: var(--emerald);"></div>
+            <span style="color: var(--emerald);">Output Audio Waveform</span>
+          </div>
+        </div>
+        <canvas id="canvasWaveform"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>HRL International &copy; 2026. All Rights Reserved.</span>
+    <span>Engine Architecture: Spectral Subtraction + Dual-Mic NLMS + Multi-Band Gate</span>
+  </footer>
+
+  <script>
+    // =========================================================================
+    // HRL Audio Engine (Web Audio API + Real-Time DSP)
+    // =========================================================================
+    let audioCtx = null;
+    let isRunning = false;
+    let inputSourceType = 'synth'; // 'synth' or 'mic'
+
+    // Audio Nodes
+    let micSource = null;
+    let synthVoiceOsc = null;
+    let synthVoiceGain = null;
+    let synthNoiseNode = null;
+    let synthNoiseGain = null;
+    let synthHumOsc = null;
+    let synthHumGain = null;
+    let synthMixer = null;
+
+    let highpassFilter = null;
+    let notchFilter50 = null;
+    let notchFilter100 = null;
+    let dspGateGain = null;
+    let rawAnalyser = null;
+    let cleanAnalyser = null;
+
+    // UI Elements
+    const btnStartStop = document.getElementById('btnStartStop');
+    const btnMic = document.getElementById('btnMic');
+    const btnSynth = document.getElementById('btnSynth');
+    const statusIndicator = document.getElementById('statusIndicator');
+
+    const ancToggle = document.getElementById('ancToggle');
+    const notchToggle = document.getElementById('notchToggle');
+    const highpassToggle = document.getElementById('highpassToggle');
+
+    const threshSlider = document.getElementById('threshSlider');
+    const threshVal = document.getElementById('threshVal');
+    const attenSlider = document.getElementById('attenSlider');
+    const attenVal = document.getElementById('attenVal');
+
+    const voiceSlider = document.getElementById('voiceSlider');
+    const voiceVal = document.getElementById('voiceVal');
+    const noiseSlider = document.getElementById('noiseSlider');
+    const noiseVal = document.getElementById('noiseVal');
+    const humSlider = document.getElementById('humSlider');
+    const humVal = document.getElementById('humVal');
+
+    const metricSNR = document.getElementById('metricSNR');
+    const metricPeak = document.getElementById('metricPeak');
+    const metricLatency = document.getElementById('metricLatency');
+    const metricFloor = document.getElementById('metricFloor');
+
+    const canvasFFT = document.getElementById('canvasFFT');
+    const ctxFFT = canvasFFT.getContext('2d');
+    const canvasWave = document.getElementById('canvasWaveform');
+    const ctxWave = canvasWave.getContext('2d');
+
+    // Resize canvas
+    function resizeCanvases() {
+      canvasFFT.width = canvasFFT.parentElement.clientWidth;
+      canvasFFT.height = 180;
+      canvasWave.width = canvasWave.parentElement.clientWidth;
+      canvasWave.height = 180;
+    }
+    window.addEventListener('resize', resizeCanvases);
+    resizeCanvases();
+
+    // Create White/Pink Noise Buffer Source
+    function createNoiseNode(ctx) {
+      const bufferSize = ctx.sampleRate * 2;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      let lastOut = 0.0;
+      for (let i = 0; i < bufferSize; i++) {
+        // Pink noise approximation
+        const white = Math.random() * 2 - 1;
+        data[i] = (lastOut + 0.02 * white) / 1.02;
+        lastOut = data[i];
+        data[i] *= 3.5;
+      }
+      const noise = ctx.createBufferSource();
+      noise.buffer = buffer;
+      noise.loop = true;
+      return noise;
+    }
+
+    async function initAudioEngine() {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)({ latencyHint: 'interactive' });
+
+      // Raw Analyser
+      rawAnalyser = audioCtx.createAnalyser();
+      rawAnalyser.fftSize = 1024;
+      rawAnalyser.smoothingTimeConstant = 0.8;
+
+      // Clean Analyser
+      cleanAnalyser = audioCtx.createAnalyser();
+      cleanAnalyser.fftSize = 1024;
+      cleanAnalyser.smoothingTimeConstant = 0.8;
+
+      // Filters
+      highpassFilter = audioCtx.createBiquadFilter();
+      highpassFilter.type = 'highpass';
+      highpassFilter.frequency.value = 85;
+
+      notchFilter50 = audioCtx.createBiquadFilter();
+      notchFilter50.type = 'notch';
+      notchFilter50.frequency.value = 50;
+      notchFilter50.Q.value = 10.0;
+
+      notchFilter100 = audioCtx.createBiquadFilter();
+      notchFilter100.type = 'notch';
+      notchFilter100.frequency.value = 100;
+      notchFilter100.Q.value = 10.0;
+
+      // Dynamic DSP Gate Gain Node
+      dspGateGain = audioCtx.createGain();
+      dspGateGain.gain.value = 1.0;
+
+      // Master output gain (keep modest to prevent ear fatigue)
+      const masterGain = audioCtx.createGain();
+      masterGain.gain.value = 0.8;
+
+      // Routing:
+      // Source -> rawAnalyser -> HighPass -> Notch50 -> Notch100 -> dspGateGain -> cleanAnalyser -> masterGain -> destination
+      rawAnalyser.connect(highpassFilter);
+      highpassFilter.connect(notchFilter50);
+      notchFilter50.connect(notchFilter100);
+      notchFilter100.connect(dspGateGain);
+      dspGateGain.connect(cleanAnalyser);
+      cleanAnalyser.connect(masterGain);
+      masterGain.connect(audioCtx.destination);
+
+      setupInputSource();
+    }
+
+    async function setupInputSource() {
+      if (!audioCtx) return;
+
+      // Disconnect old sources
+      if (micSource) {
+        micSource.disconnect();
+        micSource = null;
+      }
+      if (synthMixer) {
+        synthMixer.disconnect();
+      }
+
+      if (inputSourceType === 'mic') {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            audio: {
+              echoCancellation: false,
+              noiseSuppression: false,
+              autoGainControl: false,
+            }
+          });
+          micSource = audioCtx.createMediaStreamSource(stream);
+          micSource.connect(rawAnalyser);
+          statusIndicator.innerHTML = '<div class="pulse-dot"></div><span>MIC ACTIVE</span>';
+        } catch (err) {
+          alert('Microphone access denied or unavailable: ' + err.message);
+          setInputSource('synth');
+        }
+      } else {
+        // Synthetic generator
+        synthMixer = audioCtx.createGain();
+        synthMixer.gain.value = 1.0;
+
+        // Simulated Voice: Harmonic Series modulated with slow LFO
+        synthVoiceOsc = audioCtx.createOscillator();
+        synthVoiceOsc.type = 'sawtooth';
+        synthVoiceOsc.frequency.value = 180;
+
+        synthVoiceGain = audioCtx.createGain();
+        synthVoiceGain.gain.value = voiceSlider.value / 100 * 0.4;
+
+        // Modulation to simulate speech pauses
+        const speechLFO = audioCtx.createOscillator();
+        speechLFO.frequency.value = 1.2;
+        const speechLFOGain = audioCtx.createGain();
+        speechLFOGain.gain.value = 0.5;
+        speechLFO.connect(speechLFOGain.gain);
+
+        synthVoiceOsc.connect(synthVoiceGain);
+        synthVoiceGain.connect(synthMixer);
+        synthVoiceOsc.start();
+        speechLFO.start();
+
+        // Noise
+        synthNoiseNode = createNoiseNode(audioCtx);
+        synthNoiseGain = audioCtx.createGain();
+        synthNoiseGain.gain.value = noiseSlider.value / 100 * 0.15;
+        synthNoiseNode.connect(synthNoiseGain);
+        synthNoiseGain.connect(synthMixer);
+        synthNoiseNode.start();
+
+        // 50Hz Hum
+        synthHumOsc = audioCtx.createOscillator();
+        synthHumOsc.type = 'sine';
+        synthHumOsc.frequency.value = 50;
+        synthHumGain = audioCtx.createGain();
+        synthHumGain.gain.value = humSlider.value / 100 * 0.12;
+        synthHumOsc.connect(synthHumGain);
+        synthHumGain.connect(synthMixer);
+        synthHumOsc.start();
+
+        synthMixer.connect(rawAnalyser);
+        statusIndicator.innerHTML = '<div class="pulse-dot"></div><span>SYNTH STREAMING</span>';
+      }
+    }
+
+    function setInputSource(type) {
+      inputSourceType = type;
+      if (type === 'mic') {
+        btnMic.classList.add('active');
+        btnSynth.classList.remove('active');
+      } else {
+        btnSynth.classList.add('active');
+        btnMic.classList.remove('active');
+      }
+      if (isRunning) {
+        setupInputSource();
+      }
+    }
+
+    btnMic.addEventListener('click', () => setInputSource('mic'));
+    btnSynth.addEventListener('click', () => setInputSource('synth'));
+
+    btnStartStop.addEventListener('click', async () => {
+      if (!isRunning) {
+        if (!audioCtx) await initAudioEngine();
+        if (audioCtx.state === 'suspended') await audioCtx.resume();
+        isRunning = true;
+        btnStartStop.textContent = '⏹ Stop Audio Engine';
+        btnStartStop.classList.remove('btn-primary');
+        requestAnimationFrame(renderLoop);
+      } else {
+        if (audioCtx) await audioCtx.suspend();
+        isRunning = false;
+        btnStartStop.textContent = '▶ Start Audio Engine';
+        btnStartStop.classList.add('btn-primary');
+        statusIndicator.innerHTML = '<div class="pulse-dot" style="background:var(--rose);"></div><span style="color:var(--rose);">ENGINE PAUSED</span>';
+      }
+    });
+
+    // DSP Controls Listeners
+    threshSlider.addEventListener('input', (e) => threshVal.textContent = `${e.target.value} dB`);
+    attenSlider.addEventListener('input', (e) => attenVal.textContent = `${e.target.value} dB`);
+
+    voiceSlider.addEventListener('input', (e) => {
+      voiceVal.textContent = `${e.target.value}%`;
+      if (synthVoiceGain) synthVoiceGain.gain.value = (e.target.value / 100) * 0.4;
+    });
+
+    noiseSlider.addEventListener('input', (e) => {
+      noiseVal.textContent = `${e.target.value}%`;
+      if (synthNoiseGain) synthNoiseGain.gain.value = (e.target.value / 100) * 0.15;
+    });
+
+    humSlider.addEventListener('input', (e) => {
+      humVal.textContent = `${e.target.value}%`;
+      if (synthHumGain) synthHumGain.gain.value = (e.target.value / 100) * 0.12;
+    });
+
+    notchToggle.addEventListener('change', (e) => {
+      if (!notchFilter50) return;
+      notchFilter50.Q.value = e.target.checked ? 10.0 : 0.001;
+      notchFilter100.Q.value = e.target.checked ? 10.0 : 0.001;
+    });
+
+    highpassToggle.addEventListener('change', (e) => {
+      if (!highpassFilter) return;
+      highpassFilter.frequency.value = e.target.checked ? 85 : 10;
+    });
+
+    // =========================================================================
+    // Real-Time DSP Spectral Gating & Telemetry Loop
+    // =========================================================================
+    const rawFreqData = new Uint8Array(512);
+    const cleanFreqData = new Uint8Array(512);
+    const timeDomainData = new Uint8Array(1024);
+
+    let smoothedSNR = 15.0;
+
+    function renderLoop() {
+      if (!isRunning) return;
+
+      rawAnalyser.getByteFrequencyData(rawFreqData);
+      cleanAnalyser.getByteFrequencyData(cleanFreqData);
+      cleanAnalyser.getByteTimeDomainData(timeDomainData);
+
+      // Compute RMS Energy
+      let sumSquares = 0;
+      for (let i = 0; i < timeDomainData.length; i++) {
+        const norm = (timeDomainData[i] - 128) / 128.0;
+        sumSquares += norm * norm;
+      }
+      const rms = Math.sqrt(sumSquares / timeDomainData.length);
+      const rmsDB = 20 * Math.log10(Math.max(rms, 1e-5));
+
+      // Dynamic Spectral Gate Logic
+      const isANC = ancToggle.checked;
+      const threshDB = parseFloat(threshSlider.value);
+      const floorGain = Math.pow(10, parseFloat(attenSlider.value) / 20.0);
+
+      if (dspGateGain) {
+        if (!isANC) {
+          dspGateGain.gain.setTargetAtTime(1.0, audioCtx.currentTime, 0.02);
+        } else {
+          // If RMS energy is below threshold, attenuate
+          const targetGain = (rmsDB < threshDB) ? floorGain : 1.0;
+          dspGateGain.gain.setTargetAtTime(targetGain, audioCtx.currentTime, 0.03);
+        }
+      }
+
+      // Update Telemetry HUD
+      const peakVal = Math.max(...timeDomainData);
+      const peakDB = 20 * Math.log10(Math.max(Math.abs(peakVal - 128) / 128.0, 1e-4));
+      metricPeak.textContent = `${peakDB.toFixed(1)} dBFS`;
+
+      // Live SNR estimation
+      const estimatedNoise = Math.min(...rawFreqData) / 255.0;
+      const estimatedSignal = Math.max(...cleanFreqData) / 255.0;
+      const instSNR = 20 * Math.log10(Math.max(estimatedSignal, 1e-3) / Math.max(estimatedNoise, 1e-4));
+      smoothedSNR = 0.9 * smoothedSNR + 0.1 * Math.max(0, Math.min(40, instSNR));
+      metricSNR.textContent = `${smoothedSNR >= 0 ? '+' : ''}${smoothedSNR.toFixed(1)} dB`;
+
+      metricFloor.textContent = `${(threshDB - 15).toFixed(1)} dB`;
+
+      // Render FFT Canvas
+      renderFFT();
+
+      // Render Waveform Canvas
+      renderWaveform();
+
+      requestAnimationFrame(renderLoop);
+    }
+
+    function renderFFT() {
+      const w = canvasFFT.width;
+      const h = canvasFFT.height;
+      ctxFFT.fillStyle = '#06080d';
+      ctxFFT.fillRect(0, 0, w, h);
+
+      // Grid lines
+      ctxFFT.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+      ctxFFT.lineWidth = 1;
+      for (let y = 30; y < h; y += 30) {
+        ctxFFT.beginPath();
+        ctxFFT.moveTo(0, y);
+        ctxFFT.lineTo(w, y);
+        ctxFFT.stroke();
+      }
+
+      // Draw Raw Frequency Curve (Amber)
+      ctxFFT.strokeStyle = '#f59e0b';
+      ctxFFT.lineWidth = 1.5;
+      ctxFFT.beginPath();
+      const sliceW = w / rawFreqData.length;
+      for (let i = 0; i < rawFreqData.length; i++) {
+        const v = rawFreqData[i] / 255.0;
+        const y = h - v * (h - 20) - 10;
+        const x = i * sliceW;
+        if (i === 0) ctxFFT.moveTo(x, y);
+        else ctxFFT.lineTo(x, y);
+      }
+      ctxFFT.stroke();
+
+      // Draw Clean Frequency Curve (Cyan) with glowing fill
+      const grad = ctxFFT.createLinearGradient(0, 0, 0, h);
+      grad.addColorStop(0, 'rgba(0, 240, 255, 0.35)');
+      grad.addColorStop(1, 'rgba(0, 240, 255, 0.0)');
+
+      ctxFFT.fillStyle = grad;
+      ctxFFT.strokeStyle = '#00f0ff';
+      ctxFFT.lineWidth = 2.2;
+      ctxFFT.beginPath();
+      for (let i = 0; i < cleanFreqData.length; i++) {
+        const v = cleanFreqData[i] / 255.0;
+        const y = h - v * (h - 20) - 10;
+        const x = i * sliceW;
+        if (i === 0) ctxFFT.moveTo(x, y);
+        else ctxFFT.lineTo(x, y);
+      }
+      ctxFFT.lineTo(w, h);
+      ctxFFT.lineTo(0, h);
+      ctxFFT.closePath();
+      ctxFFT.fill();
+      ctxFFT.stroke();
+    }
+
+    function renderWaveform() {
+      const w = canvasWave.width;
+      const h = canvasWave.height;
+      ctxWave.fillStyle = '#06080d';
+      ctxWave.fillRect(0, 0, w, h);
+
+      // Centerline
+      ctxWave.strokeStyle = 'rgba(16, 185, 129, 0.15)';
+      ctxWave.beginPath();
+      ctxWave.moveTo(0, h / 2);
+      ctxWave.lineTo(w, h / 2);
+      ctxWave.stroke();
+
+      // Waveform path (Emerald)
+      ctxWave.strokeStyle = '#10b981';
+      ctxWave.lineWidth = 2.0;
+      ctxWave.beginPath();
+      const sliceW = w / timeDomainData.length;
+      for (let i = 0; i < timeDomainData.length; i++) {
+        const v = timeDomainData[i] / 128.0;
+        const y = (v * h) / 2;
+        const x = i * sliceW;
+        if (i === 0) ctxWave.moveTo(x, y);
+        else ctxWave.lineTo(x, y);
+      }
+      ctxWave.stroke();
+    }
+  </script>
+</body>
+</html>
