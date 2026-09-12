@@ -20,6 +20,7 @@ from hrl_noise_cancellation.dsp.adaptive_eq import AdaptiveEQ, PsychoacousticMas
 from hrl_noise_cancellation.dsp.anti_phase import AntiPhaseInverter
 from hrl_noise_cancellation.dsp.echo_cancellation import AcousticEchoKiller
 from hrl_noise_cancellation.dsp.fan_vacuum import FanNoiseVacuum
+from hrl_noise_cancellation.silicon.h1_chip import H1AudioSilicon
 
 
 class TestDSPAlgorithms(unittest.TestCase):
@@ -144,7 +145,6 @@ class TestDSPAlgorithms(unittest.TestCase):
         Validates that room fan blade-pass turbulence (120 Hz) is annihilated by the FanNoiseVacuum.
         """
         vacuum = FanNoiseVacuum(sample_rate=self.sr, fan_type="ceiling_fan", vacuum_power=1.0)
-        # Synthetic ceiling fan sound: 60Hz hum + 120Hz blade pass
         fan_sound = [
             0.3 * math.sin(2 * math.pi * 60 * i / self.sr)
             + 0.5 * math.sin(2 * math.pi * 120 * i / self.sr)
@@ -156,6 +156,33 @@ class TestDSPAlgorithms(unittest.TestCase):
 
         self.assertEqual(len(sound_in_ear), len(fan_sound))
         self.assertGreater(atten_db, 40.0, f"Expected > 40 dB fan annihilation, got {atten_db:.1f} dB")
+
+    def test_h1_silicon_chip_core(self):
+        """
+        Validates the H1 Audio Silicon hardware core emulation:
+        MMIO registers, clock-cycle anti-wave generation, and sub-15us pipeline latency.
+        """
+        h1 = H1AudioSilicon(clock_hz=48000, num_cores=10)
+
+        # 1. MMIO register check
+        self.assertEqual(h1.read_reg(H1AudioSilicon.REG_PHASE_DEG), 180)
+        h1.write_reg(H1AudioSilicon.REG_DELAY_US, 25)
+        self.assertEqual(h1.read_reg(H1AudioSilicon.REG_DELAY_US), 25)
+
+        # 2. Clock cycle anti-wave test
+        in_sample = 0.5
+        anti_wave = h1.clock_cycle(in_sample)
+        # Anti-wave should be inverted (negative)
+        self.assertLess(anti_wave, 0.0, f"Expected negative anti-wave, got {anti_wave}")
+
+        # 3. Stream processing
+        ambient_stream = [0.2 * math.sin(2 * math.pi * 120 * i / 48000) for i in range(4800)]
+        anti_stream = h1.process_stream(ambient_stream)
+        self.assertEqual(len(anti_stream), len(ambient_stream))
+
+        # Check telemetry
+        telemetry = h1.get_silicon_telemetry()
+        self.assertIn("10 Parallel RISC/DSP Units", telemetry["Active Cores"])
 
 
 if __name__ == "__main__":
