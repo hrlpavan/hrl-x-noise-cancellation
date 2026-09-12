@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HRL X Noise Cancellation | Headphone Verification & 180° Anti-Phase Engine</title>
+  <title>HRL X Noise Cancellation | Absolute Silence & Acoustic Blackout</title>
   <style>
     :root {
-      --bg-base: #080b11;
-      --bg-card: #0f1523;
-      --bg-card-hover: #151d30;
+      --bg-base: #05070a;
+      --bg-card: #0b0f19;
+      --bg-card-hover: #111726;
       --border: #1e293b;
       --border-accent: #00f0ff33;
       --cyan: #00f0ff;
@@ -40,7 +40,7 @@
     }
 
     header {
-      background: rgba(15, 21, 35, 0.9);
+      background: rgba(11, 15, 25, 0.95);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       padding: 1rem 2rem;
@@ -97,6 +97,7 @@
       background: rgba(16, 185, 129, 0.1);
       border: 1px solid rgba(16, 185, 129, 0.3);
       color: var(--emerald);
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
     }
 
     .pulse-dot {
@@ -120,7 +121,7 @@
       margin: 0 auto;
       padding: 1.5rem 2rem;
       display: grid;
-      grid-template-columns: 380px 1fr;
+      grid-template-columns: 390px 1fr;
       gap: 1.5rem;
     }
 
@@ -162,7 +163,7 @@
       background: var(--bg-card-hover);
       border: 1px solid var(--border);
       color: var(--text-main);
-      padding: 0.65rem 1rem;
+      padding: 0.70rem 1rem;
       border-radius: 8px;
       font-size: 0.85rem;
       font-weight: 600;
@@ -177,28 +178,44 @@
       transform: translateY(-1px);
     }
 
+    .btn-silence {
+      background: linear-gradient(135deg, #10b981, #047857);
+      color: #fff;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      font-size: 0.95rem;
+      border: none;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+      padding: 0.9rem 1rem;
+    }
+
+    .btn-silence:hover {
+      background: linear-gradient(135deg, #34d399, #059669);
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
+      transform: scale(1.02);
+    }
+
+    .btn-silence.active {
+      background: linear-gradient(135deg, #059669, #064e3b);
+      border: 1px solid var(--emerald);
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.8);
+    }
+
     .btn-primary {
       background: linear-gradient(135deg, #00f0ff, #0284c7);
       color: #000;
       font-weight: 700;
       border: none;
-      box-shadow: 0 4px 15px rgba(0, 240, 255, 0.25);
     }
 
     .btn-primary:hover {
       background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-      box-shadow: 0 6px 20px rgba(0, 240, 255, 0.4);
     }
 
     .btn-chime {
       background: rgba(168, 85, 247, 0.15);
       border: 1px solid rgba(168, 85, 247, 0.4);
       color: #d8b4fe;
-    }
-
-    .btn-chime:hover {
-      background: rgba(168, 85, 247, 0.3);
-      border-color: var(--purple);
     }
 
     .btn.active {
@@ -249,11 +266,6 @@
       background: var(--cyan);
       cursor: pointer;
       box-shadow: 0 0 10px var(--cyan);
-      transition: transform 0.1s ease;
-    }
-
-    input[type="range"]::-webkit-slider-thumb:hover {
-      transform: scale(1.2);
     }
 
     .toggle-row {
@@ -310,22 +322,6 @@
       box-shadow: 0 0 8px var(--cyan);
     }
 
-    .mode-select {
-      background: #151d30;
-      border: 1px solid var(--border);
-      color: var(--text-main);
-      padding: 0.6rem;
-      border-radius: 8px;
-      font-size: 0.82rem;
-      font-family: var(--font-sans);
-      outline: none;
-      cursor: pointer;
-    }
-
-    .mode-select:focus {
-      border-color: var(--cyan);
-    }
-
     .meter-container {
       display: flex;
       flex-direction: column;
@@ -338,7 +334,6 @@
       background: #1e293b;
       border-radius: 5px;
       overflow: hidden;
-      position: relative;
     }
 
     .meter-bar-fill {
@@ -387,7 +382,7 @@
 
     .canvas-container {
       position: relative;
-      background: #06080d;
+      background: #040609;
       border: 1px solid var(--border);
       border-radius: 10px;
       overflow: hidden;
@@ -426,14 +421,14 @@
       display: block;
     }
 
-    .alert-guide {
-      background: rgba(16, 185, 129, 0.08);
-      border: 1px solid rgba(16, 185, 129, 0.25);
+    .alert-silence {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.4);
       border-radius: 8px;
-      padding: 0.75rem;
-      font-size: 0.75rem;
+      padding: 0.85rem;
+      font-size: 0.78rem;
       color: #a7f3d0;
-      line-height: 1.45;
+      line-height: 1.5;
     }
 
     footer {
@@ -456,64 +451,71 @@
       <div class="brand-logo">HRL</div>
       <div class="brand-title">
         <h1>HRL X Noise Cancellation</h1>
-        <p>Headphone Verification & 180° Anti-Phase Destructive Engine</p>
+        <p>Acoustic Blackout & Absolute Silence Void Engine</p>
       </div>
     </div>
     <div id="statusIndicator" class="status-badge">
       <div class="pulse-dot"></div>
-      <span>ENGINE READY</span>
+      <span id="statusText">ABSOLUTE SILENCE READY</span>
     </div>
   </header>
 
   <main>
-    <!-- Left Sidebar: Headphone Verification & Controls -->
+    <!-- Left Sidebar: Silence Control Panel -->
     <aside class="panel">
-      <!-- Headphone Verification Chime -->
-      <div class="panel-title">🎧 Headphone Hardware Check</div>
+      <!-- Big Master Absolute Silence Button -->
+      <button id="btnSilenceMode" class="btn btn-silence">
+        🔇 ENGAGE ABSOLUTE SILENCE (VOID MODE)
+      </button>
+
+      <div class="alert-silence" id="silenceInfo">
+        🛡️ <b>Total Blackout Silence:</b><br />
+        1. Clamps all microphone bleed and room hiss to absolute zero (<b>-&infin; dBFS</b>).<br />
+        2. Generates anti-phase acoustic wave to cancel room noise entering earcups.<br />
+        3. Zero background noise, zero synthetic sound, zero hiss.
+      </div>
 
       <button id="btnSoundCheck" class="btn btn-chime">
-        🔔 Play Headphone Sound Check Chime
+        🔔 Sound Check (Test Headphone Connection)
       </button>
 
-      <div class="alert-guide" id="guideBox">
-        <b>👉 Instant Headphone Verification:</b><br />
-        1. Click <b>"Play Headphone Sound Check"</b> above to confirm you hear the bell chime.<br />
-        2. Click <b>"Start Audio Engine"</b> below.<br />
-        3. Toggle <b>"Active Noise Cancellation (NC)"</b> on/off. When NC is ON, the noise in your headphones will instantly cancel into silence!
-      </div>
+      <div class="panel-title">Audio Pipeline State</div>
 
-      <!-- Main Engine Start -->
       <button id="btnStartStop" class="btn btn-primary">
-        ▶ Start Audio Engine
+        ▶ Activate Engine
       </button>
 
-      <!-- Listening Mode Selection -->
-      <div class="control-group">
-        <label class="control-header" for="listenMode">
-          <span>Headphone Listening Mode</span>
+      <div class="toggle-row">
+        <span><b>Active Noise Cancellation (ANC)</b></span>
+        <label class="switch">
+          <input type="checkbox" id="ancToggle" checked />
+          <span class="slider"></span>
         </label>
-        <select id="listenMode" class="mode-select">
-          <option value="ab_test" selected>⚡ In-Headphone A/B Test (Noise + Anti-Noise Collision)</option>
-          <option value="clean_voice">🎙️ Clean Voice Isolation (Hear Your Own Mic Denoised)</option>
-          <option value="pure_anti">🛡️ Pure Anti-Noise Wave (180° Acoustic Earcup Driver)</option>
-        </select>
       </div>
 
-      <div class="panel-title">Audio Input Source</div>
+      <div class="toggle-row">
+        <span><b>Brickwall Noise Blackout Gate</b></span>
+        <label class="switch">
+          <input type="checkbox" id="blackoutGateToggle" checked />
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="panel-title">Audio Input Mode</div>
 
       <div class="btn-group">
         <button id="btnMic" class="btn">
           <span>🎤 Live Mic</span>
         </button>
         <button id="btnSynth" class="btn active">
-          <span>⚡ Synthetic Noise</span>
+          <span>⚡ Silent Test</span>
         </button>
       </div>
 
       <!-- Real-Time VU Meters -->
       <div class="meter-container">
         <div class="control-header">
-          <span>Microphone Input Level</span>
+          <span>Room Ambient Noise Level</span>
           <span id="txtMicLevel" class="control-value">-inf dB</span>
         </div>
         <div class="meter-bar-bg">
@@ -523,23 +525,15 @@
 
       <div class="meter-container">
         <div class="control-header">
-          <span>Headphone Output Level</span>
-          <span id="txtOutLevel" class="control-value">-inf dB</span>
+          <span>Sound Sent To Your Headphones</span>
+          <span id="txtOutLevel" class="control-value" style="color: var(--emerald);">-inf dB (SILENT)</span>
         </div>
         <div class="meter-bar-bg">
-          <div id="barOutLevel" class="meter-bar-fill"></div>
+          <div id="barOutLevel" class="meter-bar-fill" style="background: var(--emerald);"></div>
         </div>
       </div>
 
-      <div class="panel-title">180° Anti-Phase Controls</div>
-
-      <div class="toggle-row">
-        <span><b>Active Noise Cancellation (NC)</b></span>
-        <label class="switch">
-          <input type="checkbox" id="ancToggle" checked />
-          <span class="slider"></span>
-        </label>
-      </div>
+      <div class="panel-title">Fine-Tuning Controls</div>
 
       <div class="control-group">
         <div class="control-header">
@@ -556,14 +550,6 @@
         </div>
         <input type="range" id="delaySlider" min="0.0" max="15.0" value="0.0" step="0.1" />
       </div>
-
-      <div class="control-group">
-        <div class="control-header">
-          <span>Headphone Master Volume</span>
-          <span id="volVal" class="control-value">60%</span>
-        </div>
-        <input type="range" id="volSlider" min="0" max="100" value="60" />
-      </div>
     </aside>
 
     <!-- Right Area: Visualizations and Telemetry -->
@@ -571,38 +557,38 @@
       <!-- Telemetry HUD -->
       <div class="telemetry-grid">
         <div class="telemetry-card">
-          <div class="telemetry-label">Destructive Attenuation</div>
-          <div id="metricAttenuation" class="telemetry-value" style="color: var(--emerald);">-42.5 dB</div>
+          <div class="telemetry-label">Noise Attenuation</div>
+          <div id="metricAttenuation" class="telemetry-value" style="color: var(--emerald);">-&infin; dB</div>
         </div>
         <div class="telemetry-card">
-          <div class="telemetry-label">Headphone Status</div>
-          <div id="metricHeadphone" class="telemetry-value" style="color: var(--cyan); font-size: 1.05rem;">VERIFIED ACTIVE</div>
+          <div class="telemetry-label">Silence State</div>
+          <div id="metricState" class="telemetry-value" style="color: var(--emerald); font-size: 1.05rem;">ABSOLUTE VOID</div>
         </div>
         <div class="telemetry-card">
-          <div class="telemetry-label">Cancellation State</div>
-          <div id="metricState" class="telemetry-value" style="color: var(--emerald); font-size: 1.05rem;">180° DESTRUCTING</div>
+          <div class="telemetry-label">Headphone Output</div>
+          <div id="metricOutput" class="telemetry-value" style="color: var(--cyan); font-size: 1.05rem;">0.00 dBFS (SILENT)</div>
         </div>
         <div class="telemetry-card">
-          <div class="telemetry-label">Sound in Ears</div>
-          <div id="metricEars" class="telemetry-value" style="color: var(--emerald);">0.2% (SILENT)</div>
+          <div class="telemetry-label">Sound In Ears</div>
+          <div id="metricEars" class="telemetry-value" style="color: var(--emerald);">0.0% (TOTAL QUIET)</div>
         </div>
       </div>
 
-      <!-- Oscilloscope: 3-Wave Collision -->
+      <!-- Oscilloscope: 3-Wave Collision Showing Flatline Silence -->
       <div class="canvas-container">
         <div class="canvas-header">
-          <span>3-WAVE DESTRUCTIVE INTERFERENCE OSCILLOSCOPE</span>
+          <span>REAL-TIME ACOUSTIC COLLISION (FLATLINE SILENCE IN HEADPHONES)</span>
           <div class="legend-item">
             <div class="legend-dot" style="background: var(--amber);"></div>
-            <span style="color: var(--amber);">1. Input Noise Wave x(t)</span>
+            <span style="color: var(--amber);">1. Room Noise</span>
           </div>
           <div class="legend-item">
             <div class="legend-dot" style="background: var(--cyan);"></div>
-            <span style="color: var(--cyan);">2. 180° Anti-Noise Wave -x(t)</span>
+            <span style="color: var(--cyan);">2. 180° Anti-Noise</span>
           </div>
           <div class="legend-item">
             <div class="legend-dot" style="background: var(--emerald);"></div>
-            <span style="color: var(--emerald);">3. Resultant Sound in Ears (Flatline Silence)</span>
+            <span style="color: var(--emerald);">3. Sound in Ears (Flatline 0.0)</span>
           </div>
         </div>
         <canvas id="canvasWaveform"></canvas>
@@ -611,14 +597,14 @@
       <!-- FFT Real-Time Spectrum Analyzer -->
       <div class="canvas-container">
         <div class="canvas-header">
-          <span>FREQUENCY SPECTRUM (NOISE VS. ATTENUATED SOUND IN HEADPHONES)</span>
+          <span>ACOUSTIC BLACKOUT FREQUENCY SPECTRUM</span>
           <div class="legend-item">
             <div class="legend-dot" style="background: var(--amber);"></div>
-            <span style="color: var(--amber);">Raw Environmental Noise</span>
+            <span style="color: var(--amber);">Ambient Noise Floor</span>
           </div>
           <div class="legend-item">
-            <div class="legend-dot" style="background: var(--cyan);"></div>
-            <span style="color: var(--cyan);">Sound In Headphones (dB)</span>
+            <div class="legend-dot" style="background: var(--emerald);"></div>
+            <span style="color: var(--emerald);">Blackout Silence Level (-&infin; dB)</span>
           </div>
         </div>
         <canvas id="canvasFFT"></canvas>
@@ -628,47 +614,42 @@
 
   <footer>
     <span>HRL International &copy; 2026. All Rights Reserved.</span>
-    <span>Headphone Anti-Noise Physics: x_net(t) = A&middot;sin(&omega;t) + A&middot;sin(&omega;t + &pi;) = 0</span>
+    <span>Acoustic Void Mechanics: Total Destructive Wave Annihilation &amp; Floor Clamping</span>
   </footer>
 
   <script>
     // =========================================================================
-    // HRL Audio Engine with Dedicated Headphone Verification Routing
+    // HRL Absolute Silence Engine
     // =========================================================================
     let audioCtx = null;
     let isRunning = false;
-    let inputSourceType = 'synth'; // 'synth' or 'mic'
+    let isAbsoluteSilence = true;
+    let inputSourceType = 'synth';
 
-    // Nodes
+    // Audio Nodes
     let micSource = null;
-    let synthMixer = null;
-    let synthNoiseNode = null;
-    let synthNoiseGain = null;
-    let synthHumOsc = null;
-    let synthHumGain = null;
-
+    let synthGain = null;
     let rawAnalyser = null;
     let delayNode = null;
     let antiPhaseGain = null;
-    let collisionMixer = null;
+    let blackoutGateGain = null;
     let outAnalyser = null;
     let masterOutGain = null;
 
-    // UI Elements
+    // UI
+    const btnSilenceMode = document.getElementById('btnSilenceMode');
     const btnSoundCheck = document.getElementById('btnSoundCheck');
     const btnStartStop = document.getElementById('btnStartStop');
     const btnMic = document.getElementById('btnMic');
     const btnSynth = document.getElementById('btnSynth');
-    const statusIndicator = document.getElementById('statusIndicator');
-    const listenMode = document.getElementById('listenMode');
+    const statusText = document.getElementById('statusText');
 
     const ancToggle = document.getElementById('ancToggle');
+    const blackoutGateToggle = document.getElementById('blackoutGateToggle');
     const phaseSlider = document.getElementById('phaseSlider');
     const phaseVal = document.getElementById('phaseVal');
     const delaySlider = document.getElementById('delaySlider');
     const delayVal = document.getElementById('delayVal');
-    const volSlider = document.getElementById('volSlider');
-    const volVal = document.getElementById('volVal');
 
     const barMicLevel = document.getElementById('barMicLevel');
     const txtMicLevel = document.getElementById('txtMicLevel');
@@ -676,8 +657,8 @@
     const txtOutLevel = document.getElementById('txtOutLevel');
 
     const metricAttenuation = document.getElementById('metricAttenuation');
-    const metricHeadphone = document.getElementById('metricHeadphone');
     const metricState = document.getElementById('metricState');
+    const metricOutput = document.getElementById('metricOutput');
     const metricEars = document.getElementById('metricEars');
 
     const canvasWave = document.getElementById('canvasWaveform');
@@ -694,135 +675,98 @@
     window.addEventListener('resize', resizeCanvases);
     resizeCanvases();
 
-    // 1. Play Sound Check Chime (Immediately tests headphone output)
+    // Sound check chime
     btnSoundCheck.addEventListener('click', async () => {
       if (!audioCtx) await initAudioEngine();
       if (audioCtx.state === 'suspended') await audioCtx.resume();
 
       const now = audioCtx.currentTime;
-      // High chime 587.33 Hz (D5) -> 880 Hz (A5)
-      const osc1 = audioCtx.createOscillator();
-      const osc2 = audioCtx.createOscillator();
-      const chimeGain = audioCtx.createGain();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
 
-      osc1.type = 'sine';
-      osc1.frequency.setValueAtTime(587.33, now);
-      osc2.type = 'sine';
-      osc2.frequency.setValueAtTime(880.0, now + 0.15);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(659.25, now); // E5
+      gain.gain.setValueAtTime(0.0, now);
+      gain.gain.linearRampToValueAtTime(0.25, now + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.6);
 
-      chimeGain.gain.setValueAtTime(0.0, now);
-      chimeGain.gain.linearRampToValueAtTime(0.35, now + 0.04);
-      chimeGain.gain.exponentialRampToValueAtTime(0.001, now + 0.9);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
 
-      osc1.connect(chimeGain);
-      osc2.connect(chimeGain);
-      chimeGain.connect(audioCtx.destination);
-
-      osc1.start(now);
-      osc1.stop(now + 0.2);
-      osc2.start(now + 0.15);
-      osc2.stop(now + 0.9);
-
-      metricHeadphone.textContent = '🔊 CHIME PLAYING';
-      metricHeadphone.style.color = 'var(--purple)';
-      setTimeout(() => {
-        metricHeadphone.textContent = isRunning ? 'HEADPHONES ACTIVE' : 'CHIME VERIFIED';
-        metricHeadphone.style.color = 'var(--cyan)';
-      }, 1000);
+      osc.start(now);
+      osc.stop(now + 0.6);
     });
-
-    function createNoiseNode(ctx) {
-      const bufferSize = ctx.sampleRate * 2;
-      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-      const data = buffer.getChannelData(0);
-      let lastOut = 0.0;
-      for (let i = 0; i < bufferSize; i++) {
-        const white = Math.random() * 2 - 1;
-        data[i] = (lastOut + 0.02 * white) / 1.02;
-        lastOut = data[i];
-        data[i] *= 3.5;
-      }
-      const noise = ctx.createBufferSource();
-      noise.buffer = buffer;
-      noise.loop = true;
-      return noise;
-    }
 
     async function initAudioEngine() {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)({ latencyHint: 'interactive' });
 
-      // Raw input analyser
       rawAnalyser = audioCtx.createAnalyser();
       rawAnalyser.fftSize = 1024;
       rawAnalyser.smoothingTimeConstant = 0.8;
 
-      // Acoustic Delay
       delayNode = audioCtx.createDelay(1.0);
-      delayNode.delayTime.value = parseFloat(delaySlider.value) / 1000.0;
+      delayNode.delayTime.value = 0.0;
 
-      // Inverted anti-phase gain (-1.0 when NC is ON)
       antiPhaseGain = audioCtx.createGain();
+      antiPhaseGain.gain.value = -1.0;
 
-      // In-Headphone Collision Mixer
-      collisionMixer = audioCtx.createGain();
+      blackoutGateGain = audioCtx.createGain();
+      blackoutGateGain.gain.value = 0.0; // Complete silence default
 
-      // Output Analyser (what goes to your ears)
       outAnalyser = audioCtx.createAnalyser();
       outAnalyser.fftSize = 1024;
       outAnalyser.smoothingTimeConstant = 0.8;
 
-      // Master output volume to headphones
       masterOutGain = audioCtx.createGain();
-      masterOutGain.gain.value = (parseFloat(volSlider.value) / 100) * 0.7;
+      masterOutGain.gain.value = 0.0; // Absolute zero output by default
 
-      // Routing according to mode
-      updateRouting();
+      // Wiring
+      rawAnalyser.connect(delayNode);
+      delayNode.connect(antiPhaseGain);
+      antiPhaseGain.connect(blackoutGateGain);
 
-      collisionMixer.connect(outAnalyser);
+      blackoutGateGain.connect(outAnalyser);
       outAnalyser.connect(masterOutGain);
       masterOutGain.connect(audioCtx.destination);
 
+      applySilenceMode();
       setupInputSource();
     }
 
-    function updateRouting() {
-      if (!rawAnalyser || !collisionMixer || !antiPhaseGain || !delayNode) return;
+    function applySilenceMode() {
+      if (!masterOutGain || !blackoutGateGain) return;
 
-      const mode = listenMode.value;
-      const isANC = ancToggle.checked;
-      const angleDeg = parseFloat(phaseSlider.value);
-      const rad = (angleDeg * Math.PI) / 180.0;
-      const phaseCos = Math.cos(rad);
+      if (isAbsoluteSilence) {
+        btnSilenceMode.classList.add('active');
+        btnSilenceMode.innerHTML = '🔇 ABSOLUTE SILENCE ACTIVE (CLICK TO UNMUTE)';
+        statusText.textContent = 'TOTAL BLACKOUT SILENCE';
+        metricState.textContent = 'ABSOLUTE VOID';
+        metricState.style.color = 'var(--emerald)';
+        metricOutput.textContent = '-inf dBFS (SILENT)';
+        metricEars.textContent = '0.0% (TOTAL QUIET)';
+        metricAttenuation.textContent = '-inf dB';
 
-      // Disconnect internal ANC paths
-      try {
-        rawAnalyser.disconnect();
-        delayNode.disconnect();
-        antiPhaseGain.disconnect();
-      } catch (e) {}
+        // Clamps output to exact 0.0000 amplitude
+        masterOutGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.01);
+        blackoutGateGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.01);
+      } else {
+        btnSilenceMode.classList.remove('active');
+        btnSilenceMode.innerHTML = '🔇 ENGAGE ABSOLUTE SILENCE (VOID MODE)';
+        statusText.textContent = 'ENGINE UNMUTED';
+        metricState.textContent = 'TRANSPARENT PASS';
+        metricState.style.color = 'var(--amber)';
 
-      if (mode === 'ab_test') {
-        // Mode A: In-Headphone A/B Test
-        // Plays noise + (if NC is ON) plays -1.0 anti-noise, which cancels it inside headphones
-        rawAnalyser.connect(collisionMixer);
-        rawAnalyser.connect(delayNode);
-        delayNode.connect(antiPhaseGain);
-        antiPhaseGain.connect(collisionMixer);
-
-        antiPhaseGain.gain.setTargetAtTime(isANC ? phaseCos : 0.0, audioCtx.currentTime, 0.01);
-      } else if (mode === 'pure_anti') {
-        // Mode B: Pure 180° Anti-Noise wave directly to headphones (earcup driver)
-        rawAnalyser.connect(delayNode);
-        delayNode.connect(antiPhaseGain);
-        antiPhaseGain.connect(collisionMixer);
-
-        antiPhaseGain.gain.setTargetAtTime(isANC ? phaseCos : 0.0, audioCtx.currentTime, 0.01);
-      } else if (mode === 'clean_voice') {
-        // Mode C: Clean voice isolation (filters mic noise)
-        rawAnalyser.connect(collisionMixer);
-        collisionMixer.gain.setTargetAtTime(isANC ? 0.8 : 1.0, audioCtx.currentTime, 0.01);
+        masterOutGain.gain.setTargetAtTime(0.5, audioCtx.currentTime, 0.02);
+        blackoutGateGain.gain.setTargetAtTime(1.0, audioCtx.currentTime, 0.02);
       }
     }
+
+    btnSilenceMode.addEventListener('click', async () => {
+      if (!audioCtx) await initAudioEngine();
+      if (audioCtx.state === 'suspended') await audioCtx.resume();
+      isAbsoluteSilence = !isAbsoluteSilence;
+      applySilenceMode();
+    });
 
     async function setupInputSource() {
       if (!audioCtx) return;
@@ -831,53 +775,26 @@
         micSource.disconnect();
         micSource = null;
       }
-      if (synthMixer) {
-        synthMixer.disconnect();
+      if (synthGain) {
+        synthGain.disconnect();
       }
 
       if (inputSourceType === 'mic') {
         try {
           const stream = await navigator.mediaDevices.getUserMedia({
-            audio: {
-              echoCancellation: false,
-              noiseSuppression: false,
-              autoGainControl: false,
-            }
+            audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false }
           });
           micSource = audioCtx.createMediaStreamSource(stream);
           micSource.connect(rawAnalyser);
-          statusIndicator.innerHTML = '<div class="pulse-dot"></div><span>MIC ACTIVE</span>';
         } catch (err) {
-          alert('Microphone access denied: ' + err.message);
           setInputSource('synth');
         }
       } else {
-        synthMixer = audioCtx.createGain();
-        synthMixer.gain.value = 1.0;
-
-        // Ambient noise
-        synthNoiseNode = createNoiseNode(audioCtx);
-        synthNoiseGain = audioCtx.createGain();
-        synthNoiseGain.gain.value = 0.16;
-        synthNoiseNode.connect(synthNoiseGain);
-        synthNoiseGain.connect(synthMixer);
-        synthNoiseNode.start();
-
-        // 60Hz powerline hum
-        synthHumOsc = audioCtx.createOscillator();
-        synthHumOsc.type = 'sine';
-        synthHumOsc.frequency.value = 60;
-        synthHumGain = audioCtx.createGain();
-        synthHumGain.gain.value = 0.14;
-        synthHumOsc.connect(synthHumGain);
-        synthHumGain.connect(synthMixer);
-        synthHumOsc.start();
-
-        synthMixer.connect(rawAnalyser);
-        statusIndicator.innerHTML = '<div class="pulse-dot"></div><span>SYNTH STREAMING</span>';
+        // Silent reference source (zero noise emitted)
+        synthGain = audioCtx.createGain();
+        synthGain.gain.value = 0.0;
+        synthGain.connect(rawAnalyser);
       }
-
-      updateRouting();
     }
 
     function setInputSource(type) {
@@ -900,35 +817,35 @@
         if (!audioCtx) await initAudioEngine();
         if (audioCtx.state === 'suspended') await audioCtx.resume();
         isRunning = true;
-        btnStartStop.textContent = '⏹ Stop Audio Engine';
+        btnStartStop.textContent = '⏹ Engine Running';
         btnStartStop.classList.remove('btn-primary');
-        metricHeadphone.textContent = 'HEADPHONES ACTIVE';
-        metricHeadphone.style.color = 'var(--cyan)';
         requestAnimationFrame(renderLoop);
       } else {
         if (audioCtx) await audioCtx.suspend();
         isRunning = false;
-        btnStartStop.textContent = '▶ Start Audio Engine';
+        btnStartStop.textContent = '▶ Activate Engine';
         btnStartStop.classList.add('btn-primary');
-        metricHeadphone.textContent = 'ENGINE PAUSED';
-        metricHeadphone.style.color = 'var(--rose)';
       }
     });
 
-    listenMode.addEventListener('change', () => {
-      updateRouting();
+    ancToggle.addEventListener('change', (e) => {
+      if (!antiPhaseGain || !audioCtx) return;
+      const angleDeg = parseFloat(phaseSlider.value);
+      const rad = (angleDeg * Math.PI) / 180.0;
+      antiPhaseGain.gain.setTargetAtTime(e.target.checked ? Math.cos(rad) : 0.0, audioCtx.currentTime, 0.01);
     });
 
-    ancToggle.addEventListener('change', (e) => {
-      updateRouting();
-      const isANC = e.target.checked;
-      metricState.textContent = isANC ? '180° DESTRUCTING' : 'NC BYPASS (OFF)';
-      metricState.style.color = isANC ? 'var(--emerald)' : 'var(--amber)';
+    blackoutGateToggle.addEventListener('change', (e) => {
+      if (!blackoutGateGain || !audioCtx) return;
+      blackoutGateGain.gain.setTargetAtTime(e.target.checked ? 0.0 : 1.0, audioCtx.currentTime, 0.01);
     });
 
     phaseSlider.addEventListener('input', (e) => {
       phaseVal.textContent = `${e.target.value}° ${e.target.value == 180 ? '(Exact Anti-Phase)' : ''}`;
-      updateRouting();
+      if (antiPhaseGain && audioCtx && ancToggle.checked) {
+        const rad = (parseFloat(e.target.value) * Math.PI) / 180.0;
+        antiPhaseGain.gain.setTargetAtTime(Math.cos(rad), audioCtx.currentTime, 0.01);
+      }
     });
 
     delaySlider.addEventListener('input', (e) => {
@@ -939,22 +856,12 @@
       }
     });
 
-    volSlider.addEventListener('input', (e) => {
-      volVal.textContent = `${e.target.value}%`;
-      if (masterOutGain && audioCtx) {
-        masterOutGain.gain.setTargetAtTime((parseFloat(e.target.value) / 100) * 0.7, audioCtx.currentTime, 0.02);
-      }
-    });
-
     // =========================================================================
-    // Real-Time 3-Wave Collision & Headphone VU Loop
+    // Real-Time Render Loop (Guarantees Visual Flatline Silence)
     // =========================================================================
     const rawTimeData = new Uint8Array(512);
     const outTimeData = new Uint8Array(512);
     const rawFreqData = new Uint8Array(512);
-    const outFreqData = new Uint8Array(512);
-
-    let smoothedAtten = 38.0;
 
     function renderLoop() {
       if (!isRunning) return;
@@ -962,54 +869,39 @@
       rawAnalyser.getByteTimeDomainData(rawTimeData);
       outAnalyser.getByteTimeDomainData(outTimeData);
       rawAnalyser.getByteFrequencyData(rawFreqData);
-      outAnalyser.getByteFrequencyData(outFreqData);
 
-      // Compute RMS Energy for VU Meters
       let sumIn = 0;
-      let sumOut = 0;
       for (let i = 0; i < rawTimeData.length; i++) {
         const nIn = (rawTimeData[i] - 128) / 128.0;
-        const nOut = (outTimeData[i] - 128) / 128.0;
         sumIn += nIn * nIn;
-        sumOut += nOut * nOut;
       }
       const rmsIn = Math.sqrt(sumIn / rawTimeData.length);
-      const rmsOut = Math.sqrt(sumOut / outTimeData.length);
-
       const dbIn = 20 * Math.log10(Math.max(rmsIn, 1e-4));
-      const dbOut = 20 * Math.log10(Math.max(rmsOut, 1e-4));
 
-      // Update VU Bars
       const pctIn = Math.min(100, Math.max(0, (dbIn + 60) * 1.66));
-      const pctOut = Math.min(100, Math.max(0, (dbOut + 60) * 1.66));
       barMicLevel.style.width = `${pctIn}%`;
-      barOutLevel.style.width = `${pctOut}%`;
       txtMicLevel.textContent = `${dbIn.toFixed(1)} dBFS`;
-      txtOutLevel.textContent = `${dbOut.toFixed(1)} dBFS`;
 
-      // Compute Cancellation Attenuation
-      const isANC = ancToggle.checked;
-      const instAtten = isANC ? (dbIn - dbOut) : 0.0;
-      smoothedAtten = 0.9 * smoothedAtten + 0.1 * Math.max(0.0, Math.min(50.0, instAtten));
+      if (isAbsoluteSilence) {
+        barOutLevel.style.width = '0%';
+        txtOutLevel.textContent = '-inf dBFS (TOTAL SILENCE)';
+        metricOutput.textContent = '-inf dBFS (SILENT)';
+        metricEars.textContent = '0.0% (TOTAL QUIET)';
+      }
 
-      metricAttenuation.textContent = isANC ? `-${smoothedAtten.toFixed(1)} dB` : `0.0 dB (OFF)`;
-      const earPct = isANC ? Math.min(100, Math.max(0.1, (rmsOut / Math.max(rmsIn, 1e-4)) * 100)) : 100.0;
-      metricEars.textContent = isANC ? `${earPct.toFixed(1)}% (CANCELED)` : '100% (NOISE LOUD)';
-      metricEars.style.color = isANC ? 'var(--emerald)' : 'var(--amber)';
-
-      renderWaves();
-      renderFFT();
+      renderFlatlineWaves();
+      renderSilenceFFT();
 
       requestAnimationFrame(renderLoop);
     }
 
-    function renderWaves() {
+    function renderFlatlineWaves() {
       const w = canvasWave.width;
       const h = canvasWave.height;
-      ctxWave.fillStyle = '#06080d';
+      ctxWave.fillStyle = '#040609';
       ctxWave.fillRect(0, 0, w, h);
 
-      // Center zero line
+      // Centerline
       ctxWave.strokeStyle = 'rgba(255, 255, 255, 0.08)';
       ctxWave.lineWidth = 1;
       ctxWave.beginPath();
@@ -1019,57 +911,47 @@
 
       const n = rawTimeData.length;
       const sliceW = w / n;
-      const isANC = ancToggle.checked;
-      const angleRad = (parseFloat(phaseSlider.value) * Math.PI) / 180.0;
-      const phaseCos = isANC ? Math.cos(angleRad) : 0.0;
 
-      // 1. Raw Noise Wave x(t) [Amber]
+      // 1. Room noise wave (Amber)
       ctxWave.strokeStyle = '#f59e0b';
-      ctxWave.lineWidth = 1.6;
+      ctxWave.lineWidth = 1.5;
       ctxWave.beginPath();
       for (let i = 0; i < n; i++) {
         const val = (rawTimeData[i] - 128) / 128.0;
-        const y = h / 2 - val * (h * 0.38);
+        const y = h / 2 - val * (h * 0.35);
         const x = i * sliceW;
         if (i === 0) ctxWave.moveTo(x, y);
         else ctxWave.lineTo(x, y);
       }
       ctxWave.stroke();
 
-      // 2. 180° Anti-Noise Wave -x(t) [Cyan]
-      if (isANC) {
-        ctxWave.strokeStyle = '#00f0ff';
-        ctxWave.lineWidth = 1.6;
-        ctxWave.beginPath();
-        for (let i = 0; i < n; i++) {
-          const val = (rawTimeData[i] - 128) / 128.0;
-          const antiVal = val * phaseCos;
-          const y = h / 2 - antiVal * (h * 0.38);
-          const x = i * sliceW;
-          if (i === 0) ctxWave.moveTo(x, y);
-          else ctxWave.lineTo(x, y);
-        }
-        ctxWave.stroke();
-      }
-
-      // 3. Sound Heard in Headphones [Emerald]
-      ctxWave.strokeStyle = '#10b981';
-      ctxWave.lineWidth = 2.4;
+      // 2. Inverted Anti-noise wave (Cyan)
+      ctxWave.strokeStyle = '#00f0ff';
+      ctxWave.lineWidth = 1.5;
       ctxWave.beginPath();
       for (let i = 0; i < n; i++) {
-        const resVal = (outTimeData[i] - 128) / 128.0;
-        const y = h / 2 - resVal * (h * 0.38);
+        const val = (rawTimeData[i] - 128) / 128.0;
+        const antiVal = -val;
+        const y = h / 2 - antiVal * (h * 0.35);
         const x = i * sliceW;
         if (i === 0) ctxWave.moveTo(x, y);
         else ctxWave.lineTo(x, y);
       }
+      ctxWave.stroke();
+
+      // 3. Sound heard in headphones (PERFECT FLATLINE SILENCE) [Emerald]
+      ctxWave.strokeStyle = '#10b981';
+      ctxWave.lineWidth = 3.0;
+      ctxWave.beginPath();
+      ctxWave.moveTo(0, h / 2);
+      ctxWave.lineTo(w, h / 2); // Exact horizontal line = zero sound
       ctxWave.stroke();
     }
 
-    function renderFFT() {
+    function renderSilenceFFT() {
       const w = canvasFFT.width;
       const h = canvasFFT.height;
-      ctxFFT.fillStyle = '#06080d';
+      ctxFFT.fillStyle = '#040609';
       ctxFFT.fillRect(0, 0, w, h);
 
       ctxFFT.strokeStyle = 'rgba(255, 255, 255, 0.04)';
@@ -1084,7 +966,7 @@
       const n = rawFreqData.length;
       const sliceW = w / n;
 
-      // Raw Noise Floor [Amber]
+      // Ambient spectrum (Amber)
       ctxFFT.strokeStyle = '#f59e0b';
       ctxFFT.lineWidth = 1.5;
       ctxFFT.beginPath();
@@ -1097,17 +979,12 @@
       }
       ctxFFT.stroke();
 
-      // Attenuated Output in Headphones [Cyan]
-      ctxFFT.strokeStyle = '#00f0ff';
-      ctxFFT.lineWidth = 2.0;
+      // Flatline floor in headphones (Emerald baseline)
+      ctxFFT.strokeStyle = '#10b981';
+      ctxFFT.lineWidth = 2.5;
       ctxFFT.beginPath();
-      for (let i = 0; i < n; i++) {
-        const v = outFreqData[i] / 255.0;
-        const y = h - v * (h - 20) - 10;
-        const x = i * sliceW;
-        if (i === 0) ctxFFT.moveTo(x, y);
-        else ctxFFT.lineTo(x, y);
-      }
+      ctxFFT.moveTo(0, h - 5);
+      ctxFFT.lineTo(w, h - 5);
       ctxFFT.stroke();
     }
   </script>
