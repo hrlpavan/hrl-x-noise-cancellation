@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HRL X Noise Cancellation | Real-Time Audio DSP Engine</title>
+  <title>HRL X Noise Cancellation | 180° Anti-Phase Destructive Wave Engine</title>
   <style>
     :root {
       --bg-base: #080b11;
@@ -15,6 +15,7 @@
       --emerald: #10b981;
       --amber: #f59e0b;
       --rose: #f43f5e;
+      --purple: #a855f7;
       --text-main: #f1f5f9;
       --text-muted: #94a3b8;
       --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -58,8 +59,8 @@
     }
 
     .brand-logo {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       background: linear-gradient(135deg, #00f0ff, #3b82f6);
       border-radius: 8px;
       display: flex;
@@ -68,8 +69,8 @@
       font-weight: 900;
       color: #000;
       font-family: var(--font-mono);
-      font-size: 1.1rem;
-      box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+      font-size: 1.15rem;
+      box-shadow: 0 0 18px rgba(0, 240, 255, 0.4);
     }
 
     .brand-title h1 {
@@ -119,7 +120,7 @@
       margin: 0 auto;
       padding: 1.5rem 2rem;
       display: grid;
-      grid-template-columns: 340px 1fr;
+      grid-template-columns: 360px 1fr;
       gap: 1.5rem;
     }
 
@@ -137,11 +138,11 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       display: flex;
       flex-direction: column;
-      gap: 1.25rem;
+      gap: 1.15rem;
     }
 
     .panel-title {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-family: var(--font-mono);
       text-transform: uppercase;
       letter-spacing: 0.08em;
@@ -150,7 +151,7 @@
       align-items: center;
       gap: 0.5rem;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 0.5rem;
+      padding-bottom: 0.4rem;
     }
 
     .btn {
@@ -204,13 +205,13 @@
     .control-group {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
+      gap: 0.35rem;
     }
 
     .control-header {
       display: flex;
       justify-content: space-between;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-family: var(--font-mono);
       color: var(--text-muted);
     }
@@ -248,8 +249,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.4rem 0;
-      font-size: 0.85rem;
+      padding: 0.35rem 0;
+      font-size: 0.82rem;
     }
 
     .switch {
@@ -321,7 +322,7 @@
     }
 
     .telemetry-label {
-      font-size: 0.72rem;
+      font-size: 0.70rem;
       font-family: var(--font-mono);
       color: var(--text-muted);
       text-transform: uppercase;
@@ -351,9 +352,9 @@
       z-index: 10;
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 1.2rem;
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       pointer-events: none;
     }
 
@@ -371,8 +372,19 @@
 
     canvas {
       width: 100%;
-      height: 180px;
+      height: 185px;
       display: block;
+    }
+
+    .alert-box {
+      background: rgba(14, 165, 233, 0.08);
+      border: 1px solid rgba(14, 165, 233, 0.25);
+      border-radius: 8px;
+      padding: 0.6rem 0.85rem;
+      font-size: 0.74rem;
+      color: #93c5fd;
+      line-height: 1.4;
+      font-family: var(--font-mono);
     }
 
     footer {
@@ -395,7 +407,7 @@
       <div class="brand-logo">HRL</div>
       <div class="brand-title">
         <h1>HRL X Noise Cancellation</h1>
-        <p>Enterprise Real-Time Acoustic & Spectral DSP Engine</p>
+        <p>180° Anti-Phase Destructive Interference & Acoustic Collision Engine</p>
       </div>
     </div>
     <div id="statusIndicator" class="status-badge">
@@ -407,14 +419,14 @@
   <main>
     <!-- Left Sidebar: Controls -->
     <aside class="panel">
-      <div class="panel-title">Audio Input Source</div>
+      <div class="panel-title">1. Audio Input Feed</div>
 
       <div class="btn-group">
         <button id="btnMic" class="btn">
           <span>🎤 Live Mic</span>
         </button>
         <button id="btnSynth" class="btn active">
-          <span>⚡ Synthetic</span>
+          <span>⚡ Synthetic Noise</span>
         </button>
       </div>
 
@@ -422,72 +434,68 @@
         ▶ Start Audio Engine
       </button>
 
-      <div class="panel-title">DSP Suppression Stack</div>
+      <div class="panel-title">2. 180° Phase-Rotation Anti-Noise (ANC)</div>
 
       <div class="toggle-row">
-        <span>Active Noise Cancellation</span>
+        <span><b>Active Noise Cancellation (NC)</b></span>
         <label class="switch">
           <input type="checkbox" id="ancToggle" checked />
           <span class="slider"></span>
         </label>
       </div>
 
-      <div class="toggle-row">
-        <span>50Hz/60Hz Hum Notch</span>
-        <label class="switch">
-          <input type="checkbox" id="notchToggle" checked />
-          <span class="slider"></span>
-        </label>
-      </div>
-
-      <div class="toggle-row">
-        <span>80Hz Low-Cut Rumble Filter</span>
-        <label class="switch">
-          <input type="checkbox" id="highpassToggle" checked />
-          <span class="slider"></span>
-        </label>
+      <div class="control-group">
+        <div class="control-header">
+          <span>Phase Rotation Angle</span>
+          <span id="phaseVal" class="control-value">180° (Anti-Phase)</span>
+        </div>
+        <input type="range" id="phaseSlider" min="0" max="360" value="180" step="1" />
       </div>
 
       <div class="control-group">
         <div class="control-header">
-          <span>Gate Threshold</span>
-          <span id="threshVal" class="control-value">-36 dB</span>
+          <span>Acoustic Delay Calibration (τ)</span>
+          <span id="delayVal" class="control-value">0.0 ms</span>
         </div>
-        <input type="range" id="threshSlider" min="-60" max="-10" value="-36" step="1" />
+        <input type="range" id="delaySlider" min="0.0" max="15.0" value="0.0" step="0.1" />
       </div>
 
       <div class="control-group">
         <div class="control-header">
-          <span>Noise Attenuation Floor</span>
-          <span id="attenVal" class="control-value">-24 dB</span>
+          <span>Anti-Noise Driver Output Level</span>
+          <span id="antiGainVal" class="control-value">100%</span>
         </div>
-        <input type="range" id="attenSlider" min="-40" max="-6" value="-24" step="1" />
+        <input type="range" id="antiGainSlider" min="0" max="150" value="100" />
       </div>
 
-      <div class="panel-title">Synthetic Audio Mixer</div>
+      <div class="alert-box">
+        💡 <b>How it works:</b> Captures environmental noise, rotates wavelength by 180° (&pi; rad), and fires the mirror anti-noise wave. When sound peaks meet anti-sound troughs, they cancel out into silence.
+      </div>
+
+      <div class="panel-title">3. Ambient Noise Environment Mixer</div>
 
       <div class="control-group">
         <div class="control-header">
-          <span>Simulated Voice Level</span>
-          <span id="voiceVal" class="control-value">70%</span>
+          <span>Ambient Noise (Traffic / Fan / White)</span>
+          <span id="noiseVal" class="control-value">60%</span>
         </div>
-        <input type="range" id="voiceSlider" min="0" max="100" value="70" />
-      </div>
-
-      <div class="control-group">
-        <div class="control-header">
-          <span>Ambient Gaussian Noise</span>
-          <span id="noiseVal" class="control-value">45%</span>
-        </div>
-        <input type="range" id="noiseSlider" min="0" max="100" value="45" />
+        <input type="range" id="noiseSlider" min="0" max="100" value="60" />
       </div>
 
       <div class="control-group">
         <div class="control-header">
-          <span>Mains Hum (50Hz + Harmonics)</span>
-          <span id="humVal" class="control-value">35%</span>
+          <span>Powerline AC Hum (50Hz / 60Hz)</span>
+          <span id="humVal" class="control-value">40%</span>
         </div>
-        <input type="range" id="humSlider" min="0" max="100" value="35" />
+        <input type="range" id="humSlider" min="0" max="100" value="40" />
+      </div>
+
+      <div class="control-group">
+        <div class="control-header">
+          <span>Human Speech Formants</span>
+          <span id="voiceVal" class="control-value">50%</span>
+        </div>
+        <input type="range" id="voiceSlider" min="0" max="100" value="50" />
       </div>
     </aside>
 
@@ -496,61 +504,69 @@
       <!-- Telemetry HUD -->
       <div class="telemetry-grid">
         <div class="telemetry-card">
-          <div class="telemetry-label">Signal-to-Noise Ratio</div>
-          <div id="metricSNR" class="telemetry-value" style="color: var(--emerald);">+18.4 dB</div>
+          <div class="telemetry-label">Destructive Attenuation</div>
+          <div id="metricAttenuation" class="telemetry-value" style="color: var(--emerald);">-38.2 dB</div>
         </div>
         <div class="telemetry-card">
-          <div class="telemetry-label">Peak Level</div>
-          <div id="metricPeak" class="telemetry-value" style="color: var(--cyan);">-12.1 dBFS</div>
+          <div class="telemetry-label">Phase Alignment</div>
+          <div id="metricPhase" class="telemetry-value" style="color: var(--cyan);">180.0°</div>
         </div>
         <div class="telemetry-card">
-          <div class="telemetry-label">DSP Latency</div>
-          <div id="metricLatency" class="telemetry-value">2.7 ms</div>
+          <div class="telemetry-label">Acoustic Delay (τ)</div>
+          <div id="metricDelay" class="telemetry-value">0.0 ms</div>
         </div>
         <div class="telemetry-card">
-          <div class="telemetry-label">Noise Floor</div>
-          <div id="metricFloor" class="telemetry-value" style="color: var(--amber);">-54.8 dB</div>
+          <div class="telemetry-label">Residual Sound Energy</div>
+          <div id="metricResidual" class="telemetry-value" style="color: var(--amber);">0.4%</div>
         </div>
+      </div>
+
+      <!-- Oscilloscope: 3-Wave Collision & Cancellation -->
+      <div class="canvas-container">
+        <div class="canvas-header">
+          <span>WAVE DESTRUCTIVE INTERFERENCE OSCILLOSCOPE</span>
+          <div class="legend-item">
+            <div class="legend-dot" style="background: var(--amber);"></div>
+            <span style="color: var(--amber);">1. Environmental Noise x(t)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background: var(--cyan);"></div>
+            <span style="color: var(--cyan);">2. 180° Anti-Noise Wave -x(t)</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background: var(--emerald);"></div>
+            <span style="color: var(--emerald);">3. Collided Residual (Cancelled Silence)</span>
+          </div>
+        </div>
+        <canvas id="canvasWaveform"></canvas>
       </div>
 
       <!-- FFT Real-Time Spectrum Analyzer -->
       <div class="canvas-container">
         <div class="canvas-header">
-          <span>FREQUENCY SPECTRUM (FFT 20Hz - 20kHz)</span>
+          <span>FREQUENCY SPECTRUM (BEFORE VS. AFTER 180° DESTRUCTION)</span>
           <div class="legend-item">
             <div class="legend-dot" style="background: var(--amber);"></div>
-            <span style="color: var(--amber);">Raw Unfiltered</span>
+            <span style="color: var(--amber);">Ambient Noise Floor</span>
           </div>
           <div class="legend-item">
             <div class="legend-dot" style="background: var(--cyan);"></div>
-            <span style="color: var(--cyan);">HRL Filtered Clean</span>
+            <span style="color: var(--cyan);">Net Attenuated Level</span>
           </div>
         </div>
         <canvas id="canvasFFT"></canvas>
-      </div>
-
-      <!-- Oscilloscope / Time Domain Waveform -->
-      <div class="canvas-container">
-        <div class="canvas-header">
-          <span>TIME DOMAIN OSCILLOSCOPE</span>
-          <div class="legend-item">
-            <div class="legend-dot" style="background: var(--emerald);"></div>
-            <span style="color: var(--emerald);">Output Audio Waveform</span>
-          </div>
-        </div>
-        <canvas id="canvasWaveform"></canvas>
       </div>
     </section>
   </main>
 
   <footer>
     <span>HRL International &copy; 2026. All Rights Reserved.</span>
-    <span>Engine Architecture: Spectral Subtraction + Dual-Mic NLMS + Multi-Band Gate</span>
+    <span>Destructive Wave Mechanics: x_net(t) = A&middot;sin(&omega;t) + A&middot;sin(&omega;t + &pi;) = 0</span>
   </footer>
 
   <script>
     // =========================================================================
-    // HRL Audio Engine (Web Audio API + Real-Time DSP)
+    // HRL 180° Anti-Phase Destructive Audio Engine (Web Audio API)
     // =========================================================================
     let audioCtx = null;
     let isRunning = false;
@@ -558,20 +574,21 @@
 
     // Audio Nodes
     let micSource = null;
-    let synthVoiceOsc = null;
-    let synthVoiceGain = null;
+    let synthMixer = null;
     let synthNoiseNode = null;
     let synthNoiseGain = null;
     let synthHumOsc = null;
     let synthHumGain = null;
-    let synthMixer = null;
+    let synthVoiceOsc = null;
+    let synthVoiceGain = null;
 
-    let highpassFilter = null;
-    let notchFilter50 = null;
-    let notchFilter100 = null;
-    let dspGateGain = null;
-    let rawAnalyser = null;
-    let cleanAnalyser = null;
+    // ANC DSP Path
+    let rawNoiseAnalyser = null;
+    let delayNode = null;
+    let antiPhaseInverterGain = null;
+    let collisionMixer = null;
+    let residualAnalyser = null;
+    let masterOutGain = null;
 
     // UI Elements
     const btnStartStop = document.getElementById('btnStartStop');
@@ -580,49 +597,45 @@
     const statusIndicator = document.getElementById('statusIndicator');
 
     const ancToggle = document.getElementById('ancToggle');
-    const notchToggle = document.getElementById('notchToggle');
-    const highpassToggle = document.getElementById('highpassToggle');
+    const phaseSlider = document.getElementById('phaseSlider');
+    const phaseVal = document.getElementById('phaseVal');
+    const delaySlider = document.getElementById('delaySlider');
+    const delayVal = document.getElementById('delayVal');
+    const antiGainSlider = document.getElementById('antiGainSlider');
+    const antiGainVal = document.getElementById('antiGainVal');
 
-    const threshSlider = document.getElementById('threshSlider');
-    const threshVal = document.getElementById('threshVal');
-    const attenSlider = document.getElementById('attenSlider');
-    const attenVal = document.getElementById('attenVal');
-
-    const voiceSlider = document.getElementById('voiceSlider');
-    const voiceVal = document.getElementById('voiceVal');
     const noiseSlider = document.getElementById('noiseSlider');
     const noiseVal = document.getElementById('noiseVal');
     const humSlider = document.getElementById('humSlider');
     const humVal = document.getElementById('humVal');
+    const voiceSlider = document.getElementById('voiceSlider');
+    const voiceVal = document.getElementById('voiceVal');
 
-    const metricSNR = document.getElementById('metricSNR');
-    const metricPeak = document.getElementById('metricPeak');
-    const metricLatency = document.getElementById('metricLatency');
-    const metricFloor = document.getElementById('metricFloor');
+    const metricAttenuation = document.getElementById('metricAttenuation');
+    const metricPhase = document.getElementById('metricPhase');
+    const metricDelay = document.getElementById('metricDelay');
+    const metricResidual = document.getElementById('metricResidual');
 
-    const canvasFFT = document.getElementById('canvasFFT');
-    const ctxFFT = canvasFFT.getContext('2d');
     const canvasWave = document.getElementById('canvasWaveform');
     const ctxWave = canvasWave.getContext('2d');
+    const canvasFFT = document.getElementById('canvasFFT');
+    const ctxFFT = canvasFFT.getContext('2d');
 
-    // Resize canvas
     function resizeCanvases() {
-      canvasFFT.width = canvasFFT.parentElement.clientWidth;
-      canvasFFT.height = 180;
       canvasWave.width = canvasWave.parentElement.clientWidth;
-      canvasWave.height = 180;
+      canvasWave.height = 185;
+      canvasFFT.width = canvasFFT.parentElement.clientWidth;
+      canvasFFT.height = 185;
     }
     window.addEventListener('resize', resizeCanvases);
     resizeCanvases();
 
-    // Create White/Pink Noise Buffer Source
     function createNoiseNode(ctx) {
       const bufferSize = ctx.sampleRate * 2;
       const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
       const data = buffer.getChannelData(0);
       let lastOut = 0.0;
       for (let i = 0; i < bufferSize; i++) {
-        // Pink noise approximation
         const white = Math.random() * 2 - 1;
         data[i] = (lastOut + 0.02 * white) / 1.02;
         lastOut = data[i];
@@ -637,56 +650,70 @@
     async function initAudioEngine() {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)({ latencyHint: 'interactive' });
 
-      // Raw Analyser
-      rawAnalyser = audioCtx.createAnalyser();
-      rawAnalyser.fftSize = 1024;
-      rawAnalyser.smoothingTimeConstant = 0.8;
+      // 1. Raw Environmental Noise Analyser (captures original incoming wave x(t))
+      rawNoiseAnalyser = audioCtx.createAnalyser();
+      rawNoiseAnalyser.fftSize = 1024;
+      rawNoiseAnalyser.smoothingTimeConstant = 0.8;
 
-      // Clean Analyser
-      cleanAnalyser = audioCtx.createAnalyser();
-      cleanAnalyser.fftSize = 1024;
-      cleanAnalyser.smoothingTimeConstant = 0.8;
+      // 2. Acoustic Delay Node (compensates for sound wave travel distance)
+      delayNode = audioCtx.createDelay(1.0);
+      delayNode.delayTime.value = parseFloat(delaySlider.value) / 1000.0;
 
-      // Filters
-      highpassFilter = audioCtx.createBiquadFilter();
-      highpassFilter.type = 'highpass';
-      highpassFilter.frequency.value = 85;
+      // 3. 180° Anti-Phase Inversion Gain Node: Multiplies by cos(180°) = -1.0
+      antiPhaseInverterGain = audioCtx.createGain();
+      updatePhaseInversionGain();
 
-      notchFilter50 = audioCtx.createBiquadFilter();
-      notchFilter50.type = 'notch';
-      notchFilter50.frequency.value = 50;
-      notchFilter50.Q.value = 10.0;
+      // 4. Acoustic Collision & Destructive Interference Node
+      // Ambient noise + Inverted Anti-Noise arrive simultaneously at ear
+      collisionMixer = audioCtx.createGain();
+      collisionMixer.gain.value = 1.0;
 
-      notchFilter100 = audioCtx.createBiquadFilter();
-      notchFilter100.type = 'notch';
-      notchFilter100.frequency.value = 100;
-      notchFilter100.Q.value = 10.0;
+      // Connect environmental noise directly to collision mixer
+      rawNoiseAnalyser.connect(collisionMixer);
 
-      // Dynamic DSP Gate Gain Node
-      dspGateGain = audioCtx.createGain();
-      dspGateGain.gain.value = 1.0;
+      // Connect environmental noise -> delay -> 180° phase inversion -> collision mixer
+      rawNoiseAnalyser.connect(delayNode);
+      delayNode.connect(antiPhaseInverterGain);
+      antiPhaseInverterGain.connect(collisionMixer);
 
-      // Master output gain (keep modest to prevent ear fatigue)
-      const masterGain = audioCtx.createGain();
-      masterGain.gain.value = 0.8;
+      // 5. Residual Analyser (Measures the post-collision sound at the ear)
+      residualAnalyser = audioCtx.createAnalyser();
+      residualAnalyser.fftSize = 1024;
+      residualAnalyser.smoothingTimeConstant = 0.8;
 
-      // Routing:
-      // Source -> rawAnalyser -> HighPass -> Notch50 -> Notch100 -> dspGateGain -> cleanAnalyser -> masterGain -> destination
-      rawAnalyser.connect(highpassFilter);
-      highpassFilter.connect(notchFilter50);
-      notchFilter50.connect(notchFilter100);
-      notchFilter100.connect(dspGateGain);
-      dspGateGain.connect(cleanAnalyser);
-      cleanAnalyser.connect(masterGain);
-      masterGain.connect(audioCtx.destination);
+      collisionMixer.connect(residualAnalyser);
+
+      // Master output (safe listening volume)
+      masterOutGain = audioCtx.createGain();
+      masterOutGain.gain.value = 0.6;
+      residualAnalyser.connect(masterOutGain);
+      masterOutGain.connect(audioCtx.destination);
 
       setupInputSource();
+    }
+
+    function updatePhaseInversionGain() {
+      if (!antiPhaseInverterGain) return;
+      const isANC = ancToggle.checked;
+      if (!isANC) {
+        // NC disabled: no anti-noise emitted
+        antiPhaseInverterGain.gain.setTargetAtTime(0.0, audioCtx ? audioCtx.currentTime : 0, 0.01);
+        return;
+      }
+
+      const angleDeg = parseFloat(phaseSlider.value);
+      const rad = (angleDeg * Math.PI) / 180.0;
+      // Exact wave inversion: cos(180°) = -1.0
+      const phaseMultiplier = Math.cos(rad);
+      const amplitudeGain = parseFloat(antiGainSlider.value) / 100.0;
+      const finalGain = phaseMultiplier * amplitudeGain;
+
+      antiPhaseInverterGain.gain.setTargetAtTime(finalGain, audioCtx ? audioCtx.currentTime : 0, 0.01);
     }
 
     async function setupInputSource() {
       if (!audioCtx) return;
 
-      // Disconnect old sources
       if (micSource) {
         micSource.disconnect();
         micSource = null;
@@ -705,57 +732,47 @@
             }
           });
           micSource = audioCtx.createMediaStreamSource(stream);
-          micSource.connect(rawAnalyser);
-          statusIndicator.innerHTML = '<div class="pulse-dot"></div><span>MIC ACTIVE</span>';
+          micSource.connect(rawNoiseAnalyser);
+          statusIndicator.innerHTML = '<div class="pulse-dot"></div><span>MIC 180° INVERTING</span>';
         } catch (err) {
-          alert('Microphone access denied or unavailable: ' + err.message);
+          alert('Microphone access unavailable: ' + err.message);
           setInputSource('synth');
         }
       } else {
-        // Synthetic generator
+        // Synthetic environmental generator
         synthMixer = audioCtx.createGain();
         synthMixer.gain.value = 1.0;
 
-        // Simulated Voice: Harmonic Series modulated with slow LFO
-        synthVoiceOsc = audioCtx.createOscillator();
-        synthVoiceOsc.type = 'sawtooth';
-        synthVoiceOsc.frequency.value = 180;
-
-        synthVoiceGain = audioCtx.createGain();
-        synthVoiceGain.gain.value = voiceSlider.value / 100 * 0.4;
-
-        // Modulation to simulate speech pauses
-        const speechLFO = audioCtx.createOscillator();
-        speechLFO.frequency.value = 1.2;
-        const speechLFOGain = audioCtx.createGain();
-        speechLFOGain.gain.value = 0.5;
-        speechLFO.connect(speechLFOGain.gain);
-
-        synthVoiceOsc.connect(synthVoiceGain);
-        synthVoiceGain.connect(synthMixer);
-        synthVoiceOsc.start();
-        speechLFO.start();
-
-        // Noise
+        // Ambient noise
         synthNoiseNode = createNoiseNode(audioCtx);
         synthNoiseGain = audioCtx.createGain();
-        synthNoiseGain.gain.value = noiseSlider.value / 100 * 0.15;
+        synthNoiseGain.gain.value = (noiseSlider.value / 100) * 0.15;
         synthNoiseNode.connect(synthNoiseGain);
         synthNoiseGain.connect(synthMixer);
         synthNoiseNode.start();
 
-        // 50Hz Hum
+        // 50Hz mains hum
         synthHumOsc = audioCtx.createOscillator();
         synthHumOsc.type = 'sine';
         synthHumOsc.frequency.value = 50;
         synthHumGain = audioCtx.createGain();
-        synthHumGain.gain.value = humSlider.value / 100 * 0.12;
+        synthHumGain.gain.value = (humSlider.value / 100) * 0.12;
         synthHumOsc.connect(synthHumGain);
         synthHumGain.connect(synthMixer);
         synthHumOsc.start();
 
-        synthMixer.connect(rawAnalyser);
-        statusIndicator.innerHTML = '<div class="pulse-dot"></div><span>SYNTH STREAMING</span>';
+        // Voice formants
+        synthVoiceOsc = audioCtx.createOscillator();
+        synthVoiceOsc.type = 'sawtooth';
+        synthVoiceOsc.frequency.value = 220;
+        synthVoiceGain = audioCtx.createGain();
+        synthVoiceGain.gain.value = (voiceSlider.value / 100) * 0.25;
+        synthVoiceOsc.connect(synthVoiceGain);
+        synthVoiceGain.connect(synthMixer);
+        synthVoiceOsc.start();
+
+        synthMixer.connect(rawNoiseAnalyser);
+        statusIndicator.innerHTML = '<div class="pulse-dot"></div><span>SYNTH 180° ROTATING</span>';
       }
     }
 
@@ -793,13 +810,30 @@
       }
     });
 
-    // DSP Controls Listeners
-    threshSlider.addEventListener('input', (e) => threshVal.textContent = `${e.target.value} dB`);
-    attenSlider.addEventListener('input', (e) => attenVal.textContent = `${e.target.value} dB`);
+    // Control Listeners
+    ancToggle.addEventListener('change', () => {
+      updatePhaseInversionGain();
+    });
 
-    voiceSlider.addEventListener('input', (e) => {
-      voiceVal.textContent = `${e.target.value}%`;
-      if (synthVoiceGain) synthVoiceGain.gain.value = (e.target.value / 100) * 0.4;
+    phaseSlider.addEventListener('input', (e) => {
+      const deg = e.target.value;
+      phaseVal.textContent = `${deg}° ${deg == 180 ? '(Exact Anti-Phase)' : ''}`;
+      metricPhase.textContent = `${deg}.0°`;
+      updatePhaseInversionGain();
+    });
+
+    delaySlider.addEventListener('input', (e) => {
+      const ms = parseFloat(e.target.value);
+      delayVal.textContent = `${ms.toFixed(1)} ms`;
+      metricDelay.textContent = `${ms.toFixed(1)} ms`;
+      if (delayNode && audioCtx) {
+        delayNode.delayTime.setTargetAtTime(ms / 1000.0, audioCtx.currentTime, 0.01);
+      }
+    });
+
+    antiGainSlider.addEventListener('input', (e) => {
+      antiGainVal.textContent = `${e.target.value}%`;
+      updatePhaseInversionGain();
     });
 
     noiseSlider.addEventListener('input', (e) => {
@@ -812,78 +846,118 @@
       if (synthHumGain) synthHumGain.gain.value = (e.target.value / 100) * 0.12;
     });
 
-    notchToggle.addEventListener('change', (e) => {
-      if (!notchFilter50) return;
-      notchFilter50.Q.value = e.target.checked ? 10.0 : 0.001;
-      notchFilter100.Q.value = e.target.checked ? 10.0 : 0.001;
-    });
-
-    highpassToggle.addEventListener('change', (e) => {
-      if (!highpassFilter) return;
-      highpassFilter.frequency.value = e.target.checked ? 85 : 10;
+    voiceSlider.addEventListener('input', (e) => {
+      voiceVal.textContent = `${e.target.value}%`;
+      if (synthVoiceGain) synthVoiceGain.gain.value = (e.target.value / 100) * 0.25;
     });
 
     // =========================================================================
-    // Real-Time DSP Spectral Gating & Telemetry Loop
+    // Real-Time 3-Wave Interference Render Loop
     // =========================================================================
+    const rawTimeData = new Uint8Array(512);
+    const residualTimeData = new Uint8Array(512);
     const rawFreqData = new Uint8Array(512);
-    const cleanFreqData = new Uint8Array(512);
-    const timeDomainData = new Uint8Array(1024);
+    const resFreqData = new Uint8Array(512);
 
-    let smoothedSNR = 15.0;
+    let smoothedAtten = 32.0;
 
     function renderLoop() {
       if (!isRunning) return;
 
-      rawAnalyser.getByteFrequencyData(rawFreqData);
-      cleanAnalyser.getByteFrequencyData(cleanFreqData);
-      cleanAnalyser.getByteTimeDomainData(timeDomainData);
+      rawNoiseAnalyser.getByteTimeDomainData(rawTimeData);
+      residualAnalyser.getByteTimeDomainData(residualTimeData);
+      rawNoiseAnalyser.getByteFrequencyData(rawFreqData);
+      residualAnalyser.getByteFrequencyData(resFreqData);
 
-      // Compute RMS Energy
-      let sumSquares = 0;
-      for (let i = 0; i < timeDomainData.length; i++) {
-        const norm = (timeDomainData[i] - 128) / 128.0;
-        sumSquares += norm * norm;
+      // Energy calculations
+      let pRaw = 0.0;
+      let pRes = 0.0;
+      for (let i = 0; i < rawTimeData.length; i++) {
+        const rNorm = (rawTimeData[i] - 128) / 128.0;
+        const resNorm = (residualTimeData[i] - 128) / 128.0;
+        pRaw += rNorm * rNorm;
+        pRes += resNorm * resNorm;
       }
-      const rms = Math.sqrt(sumSquares / timeDomainData.length);
-      const rmsDB = 20 * Math.log10(Math.max(rms, 1e-5));
+      pRaw = Math.max(1e-6, pRaw / rawTimeData.length);
+      pRes = Math.max(1e-6, pRes / residualTimeData.length);
 
-      // Dynamic Spectral Gate Logic
       const isANC = ancToggle.checked;
-      const threshDB = parseFloat(threshSlider.value);
-      const floorGain = Math.pow(10, parseFloat(attenSlider.value) / 20.0);
+      const instAtten = isANC ? (10.0 * Math.log10(pRaw / pRes)) : 0.0;
+      smoothedAtten = 0.92 * smoothedAtten + 0.08 * Math.max(0.0, Math.min(60.0, instAtten));
 
-      if (dspGateGain) {
-        if (!isANC) {
-          dspGateGain.gain.setTargetAtTime(1.0, audioCtx.currentTime, 0.02);
-        } else {
-          // If RMS energy is below threshold, attenuate
-          const targetGain = (rmsDB < threshDB) ? floorGain : 1.0;
-          dspGateGain.gain.setTargetAtTime(targetGain, audioCtx.currentTime, 0.03);
-        }
-      }
+      metricAttenuation.textContent = isANC ? `-${smoothedAtten.toFixed(1)} dB` : `0.0 dB (OFF)`;
+      const resPct = isANC ? Math.min(100, Math.max(0.1, (pRes / pRaw) * 100)) : 100.0;
+      metricResidual.textContent = `${resPct.toFixed(1)}%`;
 
-      // Update Telemetry HUD
-      const peakVal = Math.max(...timeDomainData);
-      const peakDB = 20 * Math.log10(Math.max(Math.abs(peakVal - 128) / 128.0, 1e-4));
-      metricPeak.textContent = `${peakDB.toFixed(1)} dBFS`;
-
-      // Live SNR estimation
-      const estimatedNoise = Math.min(...rawFreqData) / 255.0;
-      const estimatedSignal = Math.max(...cleanFreqData) / 255.0;
-      const instSNR = 20 * Math.log10(Math.max(estimatedSignal, 1e-3) / Math.max(estimatedNoise, 1e-4));
-      smoothedSNR = 0.9 * smoothedSNR + 0.1 * Math.max(0, Math.min(40, instSNR));
-      metricSNR.textContent = `${smoothedSNR >= 0 ? '+' : ''}${smoothedSNR.toFixed(1)} dB`;
-
-      metricFloor.textContent = `${(threshDB - 15).toFixed(1)} dB`;
-
-      // Render FFT Canvas
+      renderWaveCollision();
       renderFFT();
 
-      // Render Waveform Canvas
-      renderWaveform();
-
       requestAnimationFrame(renderLoop);
+    }
+
+    function renderWaveCollision() {
+      const w = canvasWave.width;
+      const h = canvasWave.height;
+      ctxWave.fillStyle = '#06080d';
+      ctxWave.fillRect(0, 0, w, h);
+
+      // Center zero-reference line
+      ctxWave.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      ctxWave.lineWidth = 1;
+      ctxWave.beginPath();
+      ctxWave.moveTo(0, h / 2);
+      ctxWave.lineTo(w, h / 2);
+      ctxWave.stroke();
+
+      const n = rawTimeData.length;
+      const sliceW = w / n;
+      const isANC = ancToggle.checked;
+      const angleRad = (parseFloat(phaseSlider.value) * Math.PI) / 180.0;
+      const phaseFactor = isANC ? Math.cos(angleRad) : 0.0;
+      const gain = isANC ? (parseFloat(antiGainSlider.value) / 100.0) : 0.0;
+
+      // 1. Draw Environmental Wave x(t) [Amber]
+      ctxWave.strokeStyle = '#f59e0b';
+      ctxWave.lineWidth = 1.6;
+      ctxWave.beginPath();
+      for (let i = 0; i < n; i++) {
+        const val = (rawTimeData[i] - 128) / 128.0;
+        const y = h / 2 - val * (h * 0.38);
+        const x = i * sliceW;
+        if (i === 0) ctxWave.moveTo(x, y);
+        else ctxWave.lineTo(x, y);
+      }
+      ctxWave.stroke();
+
+      // 2. Draw 180° Inverted Anti-Noise Wave -x(t) [Cyan]
+      if (isANC) {
+        ctxWave.strokeStyle = '#00f0ff';
+        ctxWave.lineWidth = 1.6;
+        ctxWave.beginPath();
+        for (let i = 0; i < n; i++) {
+          const val = (rawTimeData[i] - 128) / 128.0;
+          // Invert phase: peak becomes trough
+          const antiVal = val * phaseFactor * gain;
+          const y = h / 2 - antiVal * (h * 0.38);
+          const x = i * sliceW;
+          if (i === 0) ctxWave.moveTo(x, y);
+          else ctxWave.lineTo(x, y);
+        }
+        ctxWave.stroke();
+      }
+
+      // 3. Draw Resultant Collided Wave (Silence flatline) [Emerald]
+      ctxWave.strokeStyle = '#10b981';
+      ctxWave.lineWidth = 2.4;
+      ctxWave.beginPath();
+      for (let i = 0; i < n; i++) {
+        const resVal = isANC ? ((residualTimeData[i] - 128) / 128.0) : ((rawTimeData[i] - 128) / 128.0);
+        const y = h / 2 - resVal * (h * 0.38);
+        const x = i * sliceW;
+        if (i === 0) ctxWave.moveTo(x, y);
+        else ctxWave.lineTo(x, y);
+      }
+      ctxWave.stroke();
     }
 
     function renderFFT() {
@@ -892,7 +966,6 @@
       ctxFFT.fillStyle = '#06080d';
       ctxFFT.fillRect(0, 0, w, h);
 
-      // Grid lines
       ctxFFT.strokeStyle = 'rgba(255, 255, 255, 0.04)';
       ctxFFT.lineWidth = 1;
       for (let y = 30; y < h; y += 30) {
@@ -902,12 +975,14 @@
         ctxFFT.stroke();
       }
 
-      // Draw Raw Frequency Curve (Amber)
+      const n = rawFreqData.length;
+      const sliceW = w / n;
+
+      // Draw Raw Ambient Spectrum [Amber]
       ctxFFT.strokeStyle = '#f59e0b';
       ctxFFT.lineWidth = 1.5;
       ctxFFT.beginPath();
-      const sliceW = w / rawFreqData.length;
-      for (let i = 0; i < rawFreqData.length; i++) {
+      for (let i = 0; i < n; i++) {
         const v = rawFreqData[i] / 255.0;
         const y = h - v * (h - 20) - 10;
         const x = i * sliceW;
@@ -916,55 +991,18 @@
       }
       ctxFFT.stroke();
 
-      // Draw Clean Frequency Curve (Cyan) with glowing fill
-      const grad = ctxFFT.createLinearGradient(0, 0, 0, h);
-      grad.addColorStop(0, 'rgba(0, 240, 255, 0.35)');
-      grad.addColorStop(1, 'rgba(0, 240, 255, 0.0)');
-
-      ctxFFT.fillStyle = grad;
+      // Draw Attenuated Spectrum [Cyan]
       ctxFFT.strokeStyle = '#00f0ff';
-      ctxFFT.lineWidth = 2.2;
+      ctxFFT.lineWidth = 2.0;
       ctxFFT.beginPath();
-      for (let i = 0; i < cleanFreqData.length; i++) {
-        const v = cleanFreqData[i] / 255.0;
+      for (let i = 0; i < n; i++) {
+        const v = resFreqData[i] / 255.0;
         const y = h - v * (h - 20) - 10;
         const x = i * sliceW;
         if (i === 0) ctxFFT.moveTo(x, y);
         else ctxFFT.lineTo(x, y);
       }
-      ctxFFT.lineTo(w, h);
-      ctxFFT.lineTo(0, h);
-      ctxFFT.closePath();
-      ctxFFT.fill();
       ctxFFT.stroke();
-    }
-
-    function renderWaveform() {
-      const w = canvasWave.width;
-      const h = canvasWave.height;
-      ctxWave.fillStyle = '#06080d';
-      ctxWave.fillRect(0, 0, w, h);
-
-      // Centerline
-      ctxWave.strokeStyle = 'rgba(16, 185, 129, 0.15)';
-      ctxWave.beginPath();
-      ctxWave.moveTo(0, h / 2);
-      ctxWave.lineTo(w, h / 2);
-      ctxWave.stroke();
-
-      // Waveform path (Emerald)
-      ctxWave.strokeStyle = '#10b981';
-      ctxWave.lineWidth = 2.0;
-      ctxWave.beginPath();
-      const sliceW = w / timeDomainData.length;
-      for (let i = 0; i < timeDomainData.length; i++) {
-        const v = timeDomainData[i] / 128.0;
-        const y = (v * h) / 2;
-        const x = i * sliceW;
-        if (i === 0) ctxWave.moveTo(x, y);
-        else ctxWave.lineTo(x, y);
-      }
-      ctxWave.stroke();
     }
   </script>
 </body>

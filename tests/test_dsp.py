@@ -3,6 +3,7 @@ Unit tests and DSP validation suite for HRL X Noise Cancellation.
 Runs with standard Python unittest (zero dependencies required).
 """
 
+import math
 import os
 import tempfile
 import unittest
@@ -16,6 +17,7 @@ from hrl_noise_cancellation.dsp.spectral import SpectralSubtraction, SpectralGat
 from hrl_noise_cancellation.dsp.adaptive import NLMSFilter
 from hrl_noise_cancellation.dsp.fxlms import FxLMSFilter
 from hrl_noise_cancellation.dsp.adaptive_eq import AdaptiveEQ, PsychoacousticMasker
+from hrl_noise_cancellation.dsp.anti_phase import AntiPhaseInverter
 
 
 class TestDSPAlgorithms(unittest.TestCase):
@@ -87,29 +89,42 @@ class TestDSPAlgorithms(unittest.TestCase):
         self.assertEqual(len(anti_noise), len(self.noisy))
         self.assertEqual(len(residual), len(self.noisy))
 
-        # Check that anti-noise is actively generated
         max_anti = max(abs(x) for x in anti_noise)
         self.assertGreater(max_anti, 0.05, "FxLMS failed to synthesize anti-noise waveform")
 
     def test_adaptive_eq_seal_and_pressure_relief(self):
         """Validates in-ear acoustic seal estimation and ISO 226 pressure relief."""
         eq = AdaptiveEQ(sample_rate=16000)
-        # Simulate acoustic leak: inward mic captures 40% of driver playback
         leaked_mic = [s * 0.4 for s in self.clean]
         seal = eq.estimate_seal_integrity(self.clean, leaked_mic)
 
         self.assertLess(seal, 0.8)
         self.assertGreater(eq.boost_gain, 1.0)
 
-        # Test ISO 226 hearing threshold at 1 kHz (~0-3 dB SPL) and 40 Hz (> 40 dB SPL)
         ath_1khz = PsychoacousticMasker.hearing_threshold_db(1000.0)
         ath_40hz = PsychoacousticMasker.hearing_threshold_db(40.0)
-        self.assertGreater(ath_40hz, ath_1khz, "Human ear should be much less sensitive at 40Hz than 1kHz")
+        self.assertGreater(ath_40hz, ath_1khz)
 
-        # Test pressure relief in quiet environment (30 dB ambient noise)
         test_anti_noise = [0.5] * 100
         relieved = PsychoacousticMasker.apply_pressure_relief(test_anti_noise, ambient_noise_level_db=30.0)
-        self.assertLess(max(relieved), 0.5, "Expected anti-noise attenuation in quiet room to relieve pressure")
+        self.assertLess(max(relieved), 0.5)
+
+    def test_anti_phase_destructive_cancellation(self):
+        """
+        Validates 180° phase-inversion destructive acoustic collision:
+        Incoming environmental noise + 180° inverted anti-noise wave = complete silence.
+        """
+        inverter = AntiPhaseInverter(sample_rate=self.sr, phase_degrees=180.0, delay_ms=0.0)
+        anti_noise = inverter.generate_anti_noise(self.noise)
+        residual = inverter.collide_and_cancel(self.noise, anti_noise)
+
+        # Destructive collision attenuation
+        attenuation_db = inverter.compute_attenuation_db(self.noise, residual)
+        self.assertGreater(attenuation_db, 50.0, f"Expected > 50 dB destructive cancellation, got {attenuation_db:.1f} dB")
+
+        # Verify max residual amplitude is practically zero
+        max_res = max(abs(x) for x in residual)
+        self.assertLess(max_res, 1e-6, "Destructive wave collision failed to zero-out noise")
 
 
 if __name__ == "__main__":
