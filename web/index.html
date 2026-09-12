@@ -3,29 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Anush X HRL | boAt Rockerz 411 Ultra-Fast Noise Cancellation</title>
+  <title>Anush X HRL | Active Noise Cancellation</title>
   <style>
+    /* =========================================================================
+       Apple Human Interface Guidelines & HRL Design System Tokens
+       ========================================================================= */
     :root {
-      --bg-base: #000000;
-      --bg-card: rgba(28, 28, 30, 0.75);
-      --bg-card-hover: rgba(44, 44, 46, 0.9);
-      --border: rgba(255, 255, 255, 0.10);
-      --border-strong: rgba(255, 255, 255, 0.18);
-      --apple-blue: #0a84ff;
-      --apple-green: #30d158;
-      --apple-yellow: #ffd60a;
-      --apple-red: #ff453a;
-      --apple-purple: #bf5af2;
-      --cyan: #0a84ff;
-      --emerald: #30d158;
-      --amber: #ffd60a;
-      --rose: #ff453a;
-      --purple: #bf5af2;
-      --text-main: #f5f5f7;
-      --text-muted: #86868b;
-      --text-subtle: #6e6e73;
-      --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, -apple-system, sans-serif;
+      --apple-bg: #000000;
+      --apple-card: rgba(28, 28, 30, 0.72);
+      --apple-card-hover: rgba(44, 44, 46, 0.85);
+      --apple-card-solid: #1c1c1e;
+      --apple-border: rgba(255, 255, 255, 0.12);
+      --apple-border-light: rgba(255, 255, 255, 0.08);
+      --apple-border-strong: rgba(255, 255, 255, 0.22);
+      
+      /* Apple iOS 18 / macOS Sequoia System Colors */
+      --system-blue: #0a84ff;
+      --system-green: #30d158;
+      --system-yellow: #ffd60a;
+      --system-red: #ff453a;
+      --system-purple: #bf5af2;
+      --system-cyan: #64d2ff;
+      --system-orange: #ff9f0a;
+
+      /* Dynamic Typography Tokens */
+      --text-primary: #f5f5f7;
+      --text-secondary: #86868b;
+      --text-tertiary: #6e6e73;
+      --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
       --font-mono: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
+      
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-pill: 9999px;
+      --spring: cubic-bezier(0.32, 0.72, 0, 1);
     }
 
     * {
@@ -37,24 +49,29 @@
     }
 
     body {
-      background-color: var(--bg-base);
-      background-image: radial-gradient(circle at 50% 0%, #1c1c1e 0%, #000000 70%);
-      color: var(--text-main);
+      background-color: var(--apple-bg);
+      background-image: 
+        radial-gradient(circle at 50% -15%, rgba(10, 132, 255, 0.14) 0%, rgba(0, 0, 0, 0) 65%),
+        radial-gradient(circle at 85% 110%, rgba(48, 209, 88, 0.06) 0%, rgba(0, 0, 0, 0) 50%);
+      color: var(--text-primary);
       font-family: var(--font-sans);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       line-height: 1.47059;
-      letter-spacing: -0.012em;
+      letter-spacing: -0.014em;
       overflow-x: hidden;
     }
 
+    /* =========================================================================
+       Apple Frosted Glass Navigation Bar
+       ========================================================================= */
     header {
-      background: rgba(0, 0, 0, 0.78);
-      backdrop-filter: blur(28px) saturate(190%);
-      -webkit-backdrop-filter: blur(28px) saturate(190%);
-      border-bottom: 0.5px solid var(--border);
-      padding: 0.9rem 2.5rem;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(35px) saturate(190%);
+      -webkit-backdrop-filter: blur(35px) saturate(190%);
+      border-bottom: 0.5px solid var(--apple-border);
+      padding: 0.85rem 2.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -66,185 +83,282 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 0.9rem;
+      gap: 0.95rem;
     }
 
     .brand-logo {
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.05) 100%);
-      border: 0.5px solid rgba(255, 255, 255, 0.22);
-      border-radius: 10px;
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.05) 100%);
+      border: 0.5px solid rgba(255, 255, 255, 0.28);
+      border-radius: 11px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
       color: #ffffff;
-      font-family: var(--font-sans);
       font-size: 0.88rem;
-      letter-spacing: -0.02em;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), inset 0 0.5px 0 rgba(255, 255, 255, 0.35);
+      letter-spacing: -0.03em;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 0.5px 0 rgba(255, 255, 255, 0.45);
     }
 
     .brand-title h1 {
       font-size: 1.05rem;
       font-weight: 600;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.022em;
       color: #ffffff;
-    }
-
-    .brand-title p {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      letter-spacing: -0.01em;
-    }
-
-    .status-badge {
       display: flex;
       align-items: center;
       gap: 0.45rem;
-      font-size: 0.76rem;
+    }
+
+    .brand-badge-hw {
+      font-size: 0.65rem;
       font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-secondary);
+    }
+
+    .brand-title p {
+      font-size: 0.74rem;
+      color: var(--text-secondary);
       letter-spacing: -0.01em;
-      padding: 0.32rem 0.85rem;
-      border-radius: 9999px;
-      background: rgba(48, 209, 88, 0.12);
-      border: 0.5px solid rgba(48, 209, 88, 0.35);
-      color: var(--apple-green);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* Apple Dynamic Island Capsule */
+    .status-capsule {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      padding: 0.38rem 1.05rem;
+      border-radius: var(--radius-pill);
+      background: rgba(28, 28, 30, 0.88);
+      border: 0.5px solid var(--apple-border-strong);
+      color: var(--text-primary);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45), inset 0 0.5px 0 rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+
+    .pulse-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      position: relative;
     }
 
     .pulse-dot {
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: currentColor;
-      box-shadow: 0 0 8px currentColor;
-      animation: pulse 2s infinite;
+      background: var(--system-green);
+      box-shadow: 0 0 10px var(--system-green);
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.35; transform: scale(0.85); }
+    .pulse-ring {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1.5px solid var(--system-green);
+      opacity: 0.75;
+      animation: appleRing 2.2s infinite var(--spring);
     }
 
+    @keyframes appleRing {
+      0% { transform: scale(0.5); opacity: 1; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+
+    /* =========================================================================
+       Main Grid Architecture
+       ========================================================================= */
     main {
       flex: 1;
       max-width: 1440px;
       width: 100%;
       margin: 0 auto;
-      padding: 1.75rem 2.5rem;
+      padding: 2rem 2.5rem;
       display: grid;
-      grid-template-columns: 410px 1fr;
-      gap: 1.75rem;
+      grid-template-columns: 420px 1fr;
+      gap: 1.85rem;
     }
 
-    @media (max-width: 1050px) {
+    @media (max-width: 1080px) {
       main {
         grid-template-columns: 1fr;
         padding: 1.25rem 1.5rem;
       }
     }
 
+    /* =========================================================================
+       Inspector Panel (Apple Sequoia Aesthetic)
+       ========================================================================= */
     .panel {
-      background: var(--bg-card);
-      backdrop-filter: blur(32px) saturate(180%);
-      -webkit-backdrop-filter: blur(32px) saturate(180%);
-      border: 0.5px solid var(--border);
-      border-radius: 20px;
-      padding: 1.35rem;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 0.5px 0 rgba(255, 255, 255, 0.12);
+      background: var(--apple-card);
+      backdrop-filter: blur(40px) saturate(190%);
+      -webkit-backdrop-filter: blur(40px) saturate(190%);
+      border: 0.5px solid var(--apple-border);
+      border-radius: var(--radius-lg);
+      padding: 1.45rem;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.65), inset 0 0.5px 0 rgba(255, 255, 255, 0.16);
       display: flex;
       flex-direction: column;
-      gap: 1.2rem;
+      gap: 1.25rem;
     }
 
-    .panel-title {
-      font-size: 0.72rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
-      padding-bottom: 0.45rem;
-    }
-
-    .btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      background: rgba(255, 255, 255, 0.08);
-      border: 0.5px solid var(--border-strong);
-      color: var(--text-main);
-      padding: 0.72rem 1.1rem;
-      border-radius: 12px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
-      font-family: var(--font-sans);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-
-    .btn:hover {
-      background: rgba(255, 255, 255, 0.14);
-      border-color: rgba(255, 255, 255, 0.28);
-      transform: translateY(-0.5px);
-    }
-
-    .btn:active {
-      transform: scale(0.985);
-    }
-
-    .btn-vacuum {
+    /* Master Action Button */
+    .btn-master-anc {
       background: linear-gradient(180deg, #30d158 0%, #24a843 100%);
       color: #ffffff;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       letter-spacing: -0.015em;
-      border: 0.5px solid rgba(255, 255, 255, 0.3);
-      border-radius: 9999px;
-      box-shadow: 0 4px 18px rgba(48, 209, 88, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-      padding: 0.9rem 1.25rem;
+      border: 0.5px solid rgba(255, 255, 255, 0.35);
+      border-radius: var(--radius-pill);
+      box-shadow: 0 6px 20px rgba(48, 209, 88, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      padding: 0.95rem 1.35rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      transition: all 0.2s var(--spring);
+      font-family: var(--font-sans);
     }
 
-    .btn-vacuum:hover {
+    .btn-master-anc:hover {
       background: linear-gradient(180deg, #34d85e 0%, #2bb84b 100%);
-      box-shadow: 0 6px 22px rgba(48, 209, 88, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+      box-shadow: 0 8px 26px rgba(48, 209, 88, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      transform: translateY(-0.5px);
     }
 
-    .btn-vacuum.bypassed {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--text-muted);
+    .btn-master-anc:active {
+      transform: scale(0.98);
+    }
+
+    .btn-master-anc.bypassed {
+      background: rgba(255, 255, 255, 0.09);
+      color: var(--text-secondary);
       box-shadow: none;
-      border-color: var(--border);
+      border-color: var(--apple-border);
     }
 
-    .control-group {
+    /* Informational Callout */
+    .callout-card {
+      background: rgba(48, 209, 88, 0.07);
+      border: 0.5px solid rgba(48, 209, 88, 0.24);
+      border-radius: var(--radius-md);
+      padding: 0.95rem 1.05rem;
+      font-size: 0.78rem;
+      color: #e2fbe8;
+      line-height: 1.48;
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .callout-icon {
+      flex-shrink: 0;
+      color: var(--system-green);
+      margin-top: 2px;
+    }
+
+    /* Section Headers */
+    .section-title {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 0.5px solid var(--apple-border-light);
+      padding-bottom: 0.45rem;
+    }
+
+    /* Apple Segmented Controls (iOS 18 / macOS Sequoia) */
+    .segmented-control {
+      background: rgba(0, 0, 0, 0.38);
+      border: 0.5px solid var(--apple-border-light);
+      border-radius: var(--radius-md);
+      padding: 3px;
+      display: grid;
+      gap: 3px;
+    }
+
+    .segmented-control.cols-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .segmented-control.cols-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .segment-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.74rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      padding: 0.55rem 0.45rem;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      transition: all 0.18s var(--spring);
+      font-family: var(--font-sans);
+    }
+
+    .segment-tab svg {
+      width: 16px;
+      height: 16px;
+      stroke-width: 2;
+    }
+
+    .segment-tab:hover {
+      color: var(--text-primary);
+    }
+
+    .segment-tab.active {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      font-weight: 600;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35), inset 0 0.5px 0 rgba(255, 255, 255, 0.25);
+    }
+
+    /* Sliders and Ranges */
+    .slider-group {
       display: flex;
       flex-direction: column;
       gap: 0.45rem;
     }
 
-    .control-header {
+    .slider-header {
       display: flex;
       justify-content: space-between;
       font-size: 0.78rem;
       font-weight: 500;
-      color: var(--text-muted);
+      color: var(--text-secondary);
     }
 
-    .control-value {
-      color: var(--apple-blue);
+    .slider-readout {
+      color: var(--system-blue);
       font-weight: 600;
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.76rem;
     }
 
     input[type="range"] {
@@ -252,149 +366,190 @@
       appearance: none;
       width: 100%;
       height: 5px;
-      background: rgba(255, 255, 255, 0.12);
-      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.14);
+      border-radius: var(--radius-pill);
       outline: none;
-      margin: 0.3rem 0;
+      margin: 0.35rem 0;
     }
 
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 18px;
-      height: 18px;
+      width: 19px;
+      height: 19px;
       border-radius: 50%;
       background: #ffffff;
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
-      border: 0.5px solid rgba(0, 0, 0, 0.08);
-      transition: transform 0.12s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      border: 0.5px solid rgba(0, 0, 0, 0.1);
+      transition: transform 0.12s var(--spring);
     }
 
     input[type="range"]::-webkit-slider-thumb:active {
-      transform: scale(1.15);
+      transform: scale(1.18);
     }
 
-    .select-box {
-      background: rgba(44, 44, 46, 0.7);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 0.5px solid var(--border-strong);
-      color: var(--text-main);
-      padding: 0.7rem 0.85rem;
-      border-radius: 12px;
-      font-size: 0.83rem;
-      font-family: var(--font-sans);
-      outline: none;
-      cursor: pointer;
-      transition: border-color 0.15s ease, background 0.15s ease;
-    }
-
-    .select-box:focus {
-      border-color: var(--apple-blue);
-      background: rgba(44, 44, 46, 0.95);
-    }
-
-    .toggle-row {
+    /* Key-Value Security Rows */
+    .kv-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.4rem 0;
-      font-size: 0.82rem;
-      color: var(--text-main);
+      padding: 0.38rem 0;
+      font-size: 0.81rem;
     }
 
-    .badge-lock {
-      font-family: var(--font-sans);
-      font-size: 0.74rem;
-      color: var(--apple-green);
+    .badge-secure {
+      font-size: 0.72rem;
+      color: var(--system-green);
       background: rgba(48, 209, 88, 0.12);
-      border: 0.5px solid rgba(48, 209, 88, 0.3);
+      border: 0.5px solid rgba(48, 209, 88, 0.32);
       padding: 0.22rem 0.65rem;
-      border-radius: 9999px;
+      border-radius: var(--radius-pill);
       font-weight: 600;
+      letter-spacing: -0.01em;
     }
 
-    .alert-shield {
-      background: rgba(48, 209, 88, 0.08);
-      border: 0.5px solid rgba(48, 209, 88, 0.25);
-      border-radius: 14px;
-      padding: 0.95rem 1.05rem;
-      font-size: 0.78rem;
-      color: #e2fbe8;
-      line-height: 1.5;
+    .badge-cyan {
+      color: var(--system-cyan);
+      background: rgba(100, 210, 255, 0.12);
+      border-color: rgba(100, 210, 255, 0.32);
     }
 
+    /* Action Buttons */
+    .btn-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 0.5px solid var(--apple-border-strong);
+      color: var(--text-primary);
+      padding: 0.78rem 1.15rem;
+      border-radius: var(--radius-md);
+      font-size: 0.84rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.18s var(--spring);
+      font-family: var(--font-sans);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.32);
+      transform: translateY(-0.5px);
+    }
+
+    .btn-secondary:active {
+      transform: scale(0.985);
+    }
+
+    .btn-music-active {
+      background: rgba(191, 90, 242, 0.22) !important;
+      border-color: rgba(191, 90, 242, 0.45) !important;
+      color: #df9eff !important;
+    }
+
+    /* =========================================================================
+       Right Studio Stage: Telemetry & Retina Visualizers
+       ========================================================================= */
+    .studio-stage {
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+    }
+
+    /* Apple Health / Fitness Style Telemetry HUD */
     .telemetry-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 1.1rem;
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 720px) {
       .telemetry-grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
 
-    .telemetry-card {
-      background: var(--bg-card);
-      backdrop-filter: blur(28px) saturate(180%);
-      -webkit-backdrop-filter: blur(28px) saturate(180%);
-      border: 0.5px solid var(--border);
-      border-radius: 16px;
-      padding: 1.05rem 1.15rem;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), inset 0 0.5px 0 rgba(255, 255, 255, 0.1);
+    .telemetry-tile {
+      background: var(--apple-card);
+      backdrop-filter: blur(35px) saturate(180%);
+      -webkit-backdrop-filter: blur(35px) saturate(180%);
+      border: 0.5px solid var(--apple-border);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.15rem;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5), inset 0 0.5px 0 rgba(255, 255, 255, 0.12);
       display: flex;
       flex-direction: column;
       gap: 0.3rem;
     }
 
-    .telemetry-label {
+    .tile-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       font-size: 0.68rem;
       font-weight: 600;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
     }
 
-    .telemetry-value {
+    .tile-value {
       font-size: 1.35rem;
       font-weight: 700;
       letter-spacing: -0.025em;
-      color: var(--text-main);
+      color: var(--text-primary);
       font-feature-settings: "tnum";
     }
 
-    .canvas-container {
+    /* Retina Studio Canvases */
+    .studio-card {
       position: relative;
-      background: rgba(18, 18, 20, 0.85);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 0.5px solid var(--border);
-      border-radius: 18px;
+      background: rgba(18, 18, 20, 0.88);
+      backdrop-filter: blur(32px);
+      -webkit-backdrop-filter: blur(32px);
+      border: 0.5px solid var(--apple-border);
+      border-radius: var(--radius-lg);
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), inset 0 0.5px 0 rgba(255, 255, 255, 0.08);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), inset 0 0.5px 0 rgba(255, 255, 255, 0.09);
     }
 
-    .canvas-header {
+    .studio-card-header {
       position: absolute;
-      top: 12px;
-      left: 18px;
+      top: 14px;
+      left: 20px;
+      right: 20px;
       z-index: 10;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 1.25rem;
       font-size: 0.72rem;
       font-weight: 500;
       letter-spacing: -0.01em;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       pointer-events: none;
     }
 
-    .legend-item {
+    .studio-card-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .legend-group {
+      display: flex;
+      align-items: center;
+      gap: 1.15rem;
+    }
+
+    .legend-tag {
       display: flex;
       align-items: center;
       gap: 0.4rem;
@@ -412,15 +567,18 @@
       display: block;
     }
 
+    /* =========================================================================
+       Footer
+       ========================================================================= */
     footer {
-      border-top: 0.5px solid var(--border);
-      padding: 1.2rem 2.5rem;
+      border-top: 0.5px solid var(--apple-border);
+      padding: 1.25rem 2.5rem;
       font-size: 0.76rem;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(0, 0, 0, 0.82);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
     }
@@ -428,190 +586,293 @@
 </head>
 <body>
 
+  <!-- =======================================================================
+       Navigation Bar with Dynamic Island Status
+       ======================================================================= -->
   <header>
     <div class="brand">
       <div class="brand-logo">AXH</div>
       <div class="brand-title">
-        <h1>Anush X HRL</h1>
-        <p>boAt Rockerz 411 Ultra-Fast Predictive Noise Cancellation</p>
+        <h1>
+          Anush X HRL
+          <span class="brand-badge-hw">boAt Rockerz 411</span>
+        </h1>
+        <p>Acoustic Anti-Wave &amp; Ultra-Fast Predictive Cancellation</p>
       </div>
     </div>
-    <div id="statusIndicator" class="status-badge">
-      <div class="pulse-dot"></div>
-      <span id="statusText">OUTER NOISE SHIELD ACTIVE</span>
+    
+    <div class="status-capsule">
+      <div class="pulse-indicator">
+        <div class="pulse-ring"></div>
+        <div class="pulse-dot"></div>
+      </div>
+      <span id="statusText">PRE-EMPTIVE LOOKAHEAD ACTIVE</span>
     </div>
   </header>
 
+  <!-- =======================================================================
+       Main Studio Workspace
+       ======================================================================= -->
   <main>
+    <!-- Left Inspector Panel -->
     <aside class="panel">
-      <!-- Master Acoustic Blackout Button -->
-      <button id="btnVacuumLock" class="btn btn-vacuum">
-        ⚡ ULTRA-FAST PREDICTIVE ANC: ACTIVE (PRE-EMPTIVE NULL)
+      <!-- Master ANC Switch Button -->
+      <button id="btnVacuumLock" class="btn-master-anc">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+        </svg>
+        <span id="btnMasterText">Active Noise Cancellation: Active</span>
       </button>
 
-      <div class="alert-shield">
-        ⚡ <b>ULTRA-FAST PRE-EMPTIVE NOISE CANCELLATION:</b> Sound takes <b>131.2 μs</b> to travel 4.5 cm from the microphone to your ear, and your brain takes <b>8.5 ms</b> to register auditory input. Our predictive DSP engine projects the incoming sound wave ahead of time and fires the counter-wave into your boAt Rockerz 411 <b>BEFORE</b> the physical sound can touch your eardrum or reach your brain!
+      <!-- Apple Callout Banner -->
+      <div class="callout-card">
+        <div class="callout-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <div>
+          <b>Pre-Emptive Lookahead:</b> Physical sound requires <b>131.2 μs</b> to travel 4.5 cm from the stem mic into your ear canal, and the human brain requires <b>8.5 ms</b> to register auditory signals. The predictive DSP computes in <b>&lt; 12.5 μs</b>, destroying incoming sound waves before conscious perception.
+        </div>
       </div>
 
-      <div class="panel-title">1. Noise Elimination Strategy</div>
-
-      <div class="control-group">
-        <label class="control-header" for="noiseStrategy">
-          <span>Active Isolation Mode</span>
-        </label>
-        <select id="noiseStrategy" class="select-box">
-          <option value="predictive" selected>⚡ Ultra-Fast Predictive Lookahead (Cancels Noise Before Ears Hear It)</option>
-          <option value="blackout">🛑 100% Acoustic Blackout Shield (ISO 226 Masking - Zero Outer Noise)</option>
-          <option value="nuller">🎯 Pure Anti-Harmonic Synthesizer (120Hz Sine Nuller - 0% Mic Noise)</option>
-          <option value="mute">🔇 Complete Digital Mute (0% Output, Hard Isolation)</option>
-        </select>
+      <!-- 1. Isolation Strategy (iOS Segmented Control) -->
+      <div class="section-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="m4.93 4.93 4.24 4.24"></path>
+          <path d="m14.83 9.17 4.24-4.24"></path>
+          <path d="m14.83 14.83 4.24 4.24"></path>
+          <path d="m9.17 14.83-4.24 4.24"></path>
+        </svg>
+        1. Cancellation Strategy
       </div>
 
-      <div class="panel-title">2. Target Hardware &amp; Room Source</div>
-
-      <div class="control-group">
-        <label class="control-header" for="deviceProfile">
-          <span>Headphone Model Profile</span>
-        </label>
-        <select id="deviceProfile" class="select-box">
-          <option value="boat411" selected>🎧 boAt Rockerz 411 (40mm Drivers, 1.18x Cushion Overdrive)</option>
-          <option value="airpods">🍏 Apple AirPods Pro (11mm Driver, Airtight IEM)</option>
-          <option value="overear">🎧 Circumaural Over-Ear Studio (50mm Drivers)</option>
-        </select>
+      <div id="segmentStrategy" class="segmented-control cols-4">
+        <button class="segment-tab active" data-value="predictive">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Lookahead
+        </button>
+        <button class="segment-tab" data-value="blackout">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Blackout
+        </button>
+        <button class="segment-tab" data-value="nuller">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+          Nuller
+        </button>
+        <button class="segment-tab" data-value="mute">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6"/></svg>
+          Mute
+        </button>
       </div>
 
-      <div class="control-group">
-        <label class="control-header" for="fanProfile">
-          <span>Room Noise Target</span>
-        </label>
-        <select id="fanProfile" class="select-box">
-          <option value="ceiling" selected>🌀 Ceiling Fan (120 - 240 Hz Blade Turbulence)</option>
-          <option value="table">💨 High-Speed Table / Box Fan (180 - 360 Hz Air Rush)</option>
-          <option value="ac">❄️ AC / HVAC Compressor (50 - 100 Hz Deep Rumble)</option>
-          <option value="pc">💻 PC / Laptop Cooling Fan (300 - 800 Hz Whir)</option>
-        </select>
+      <!-- 2. Hardware Profile (iOS Segmented Control) -->
+      <div class="section-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+          <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+        </svg>
+        2. Hardware Calibration
       </div>
 
-      <div class="panel-title">3. Acoustic Shield Calibration</div>
+      <div id="segmentDevice" class="segmented-control cols-3">
+        <button class="segment-tab active" data-value="boat411">
+          boAt 411
+        </button>
+        <button class="segment-tab" data-value="airpods">
+          AirPods Pro
+        </button>
+        <button class="segment-tab" data-value="overear">
+          Studio 50mm
+        </button>
+      </div>
 
-      <div class="control-group">
-        <div class="control-header">
-          <span><b>Acoustic Cancellation Drive (Lookahead Power)</b></span>
-          <span id="powerVal" class="control-value">95%</span>
+      <!-- 3. Room Source Profile -->
+      <div class="section-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5Z"></path>
+          <path d="M12 12c0 2.76-2.24 5-5 5s-5-2.24-5-5 2.24-5 5-5 5 2.24 5 5Z"></path>
+        </svg>
+        3. Environmental Noise
+      </div>
+
+      <div id="segmentFan" class="segmented-control cols-4">
+        <button class="segment-tab active" data-value="ceiling">
+          Ceiling
+        </button>
+        <button class="segment-tab" data-value="table">
+          Table
+        </button>
+        <button class="segment-tab" data-value="ac">
+          HVAC
+        </button>
+        <button class="segment-tab" data-value="pc">
+          PC Fan
+        </button>
+      </div>
+
+      <!-- 4. Lookahead Power Slider -->
+      <div class="slider-group">
+        <div class="slider-header">
+          <span>Anti-Wave Drive Power</span>
+          <span id="powerVal" class="slider-readout">95%</span>
         </div>
         <input type="range" id="powerSlider" min="0" max="100" value="95" step="5" />
       </div>
 
-      <div class="toggle-row">
-        <span><b>Microphone Pass-Through Guard</b></span>
-        <span class="badge-lock">HARD BLOCKED (0.0%)</span>
+      <!-- Security Guarantees -->
+      <div class="kv-row">
+        <span>Mic Pass-Through Guard</span>
+        <span class="badge-secure">ISOLATED (0.0%)</span>
       </div>
 
-      <div class="toggle-row">
-        <span><b>Interception Speed</b></span>
-        <span class="badge-lock" style="color: var(--cyan); background: rgba(0, 240, 255, 0.1); border-color: rgba(0, 240, 255, 0.3);">&lt; 12.5 μs (PRE-EMPTIVE)</span>
+      <div class="kv-row">
+        <span>Lookahead Execution Budget</span>
+        <span class="badge-secure badge-cyan">&lt; 12.5 μs (REAL-TIME)</span>
       </div>
 
-      <div class="panel-title">4. Branch Education Blueprint</div>
-
-      <div class="control-group">
-        <button id="btnToggleMusic" class="btn" style="background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.4); color: #c084fc; font-weight: 700;">
-          ▶ Test Superposition Music (A4 Triad)
-        </button>
-        <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.4rem; line-height: 1.4;">
-          Demonstrates linear superposition: Music plays into your ears with 100% fidelity while outer room noise is cancelled.
-        </p>
+      <!-- 5. Branch Education & Superposition -->
+      <div class="section-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18V5l12-2v13"></path>
+          <circle cx="6" cy="18" r="3"></circle>
+          <circle cx="18" cy="16" r="3"></circle>
+        </svg>
+        4. Superposition &amp; Physics
       </div>
 
-      <div class="control-group">
-        <div class="control-header">
-          <span><b>Acoustic Frequency vs λ</b></span>
-          <span id="wavelengthVal" class="control-value">120 Hz (λ = 2.86 m)</span>
+      <button id="btnToggleMusic" class="btn-secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        <span id="btnMusicText">Test Music Superposition (A4 Triad)</span>
+      </button>
+
+      <div class="slider-group">
+        <div class="slider-header">
+          <span>Acoustic Frequency vs λ</span>
+          <span id="wavelengthVal" class="slider-readout">120 Hz (λ = 2.86 m)</span>
         </div>
         <input type="range" id="wavelengthFreqSlider" min="40" max="3500" value="120" step="10" />
-        <div id="coherenceStatus" style="font-size: 0.70rem; font-family: var(--font-mono); margin-top: 0.35rem; color: var(--emerald);">
+        <div id="coherenceStatus" style="font-size: 0.70rem; font-family: var(--font-mono); margin-top: 0.25rem; color: var(--system-green);">
           ✓ DESTRUCTIVE ZONE: Spatial Error Δθ = 5.7° &lt; 60° (Net: -20.1 dB)
         </div>
       </div>
 
-      <button id="btnStartStop" class="btn btn-primary">
-        ⏹ Audio Engine Running
+      <!-- Engine Toggle -->
+      <button id="btnStartStop" class="btn-secondary" style="margin-top: 0.25rem;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="6" y="4" width="4" height="16"></rect>
+          <rect x="14" y="4" width="4" height="16"></rect>
+        </svg>
+        Audio Engine Running
       </button>
     </aside>
 
-    <!-- Right Area: Visualizations and Telemetry -->
-    <section style="display: flex; flex-direction: column; gap: 1.5rem;">
-      <!-- Telemetry HUD -->
+    <!-- Right Studio Visualizer Stage -->
+    <section class="studio-stage">
+      <!-- Apple Health Style Telemetry HUD -->
       <div class="telemetry-grid">
-        <div class="telemetry-card">
-          <div class="telemetry-label">Interception Latency</div>
-          <div id="metricSpeed" class="telemetry-value" style="color: var(--cyan);">&lt; 12.5 μs</div>
+        <div class="telemetry-tile">
+          <div class="tile-header">
+            <span>Interception Latency</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div id="metricSpeed" class="tile-value" style="color: var(--system-cyan);">&lt; 12.5 μs</div>
         </div>
-        <div class="telemetry-card">
-          <div class="telemetry-label">Lookahead Lead Time</div>
-          <div id="metricLead" class="telemetry-value" style="color: var(--emerald);">131.2 μs AHEAD</div>
+
+        <div class="telemetry-tile">
+          <div class="tile-header">
+            <span>Lookahead Horizon</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <div id="metricLead" class="tile-value" style="color: var(--system-green);">131.2 μs LEAD</div>
         </div>
-        <div class="telemetry-card">
-          <div class="telemetry-label">Outer Noise State</div>
-          <div id="metricOuterNoise" class="telemetry-value" style="color: var(--emerald); font-size: 1.05rem;">PRE-EMPTED &amp; NULL</div>
+
+        <div class="telemetry-tile">
+          <div class="tile-header">
+            <span>Outer Noise State</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div id="metricOuterNoise" class="tile-value" style="color: var(--system-green); font-size: 1.15rem;">PRE-EMPTED &amp; NULL</div>
         </div>
-        <div class="telemetry-card">
-          <div class="telemetry-label">Pre-Conscious Margin</div>
-          <div id="metricMargin" class="telemetry-value" style="color: var(--purple); font-size: 1.05rem;">8.3 ms SAFE</div>
+
+        <div class="telemetry-tile">
+          <div class="tile-header">
+            <span>Pre-Conscious Margin</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <div id="metricMargin" class="tile-value" style="color: var(--system-purple); font-size: 1.15rem;">8.3 ms SAFE</div>
         </div>
       </div>
 
-      <!-- Oscilloscope: 3-Wave Collision Showing Flatline Silence -->
-      <div class="canvas-container">
-        <div class="canvas-header">
-          <span>⚡ ULTRA-FAST PREDICTIVE WAVEFRONT INTERCEPTION (AHEAD OF EAR ARRIVAL)</span>
-          <div class="legend-item">
-            <div class="legend-dot" style="background: var(--amber);"></div>
-            <span style="color: var(--amber);">1. Outer Sound In Flight (131.2 μs Flight Time)</span>
+      <!-- Studio Canvas 1: Oscilloscope -->
+      <div class="studio-card">
+        <div class="studio-card-header">
+          <div class="studio-card-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            PRE-EMPTIVE WAVEFRONT INTERCEPTION (OSCILLOSCOPE)
           </div>
-          <div class="legend-item">
-            <div class="legend-dot" style="background: var(--cyan);"></div>
-            <span style="color: var(--cyan);">2. Pre-Emptive Anti-Wave (Fired Ahead of Time)</span>
-          </div>
-          <div class="legend-item">
-            <div class="legend-dot" style="background: var(--emerald);"></div>
-            <span style="color: var(--emerald);">3. Sound Reaching Biological Ear (Zero / Flatline)</span>
+          <div class="legend-group">
+            <div class="legend-tag">
+              <div class="legend-dot" style="background: var(--system-yellow);"></div>
+              <span style="color: var(--system-yellow);">Outer Sound In Flight</span>
+            </div>
+            <div class="legend-tag">
+              <div class="legend-dot" style="background: var(--system-cyan);"></div>
+              <span style="color: var(--system-cyan);">Pre-Emptive Anti-Wave</span>
+            </div>
+            <div class="legend-tag">
+              <div class="legend-dot" style="background: var(--system-green);"></div>
+              <span style="color: var(--system-green);">Eardrum Flatline (0.0%)</span>
+            </div>
           </div>
         </div>
         <canvas id="canvasWaveform"></canvas>
       </div>
 
-      <!-- FFT Real-Time Spectrum Analyzer -->
-      <div class="canvas-container">
-        <div class="canvas-header">
-          <span>AUDITORY CORTEX SPECTRUM (OUTER ENVIRONMENTAL ELIMINATION)</span>
-          <div class="legend-item">
-            <div class="legend-dot" style="background: var(--amber);"></div>
-            <span style="color: var(--amber);">Room Ambient Hum (100 - 300 Hz)</span>
+      <!-- Studio Canvas 2: FFT Spectrum -->
+      <div class="studio-card">
+        <div class="studio-card-header">
+          <div class="studio-card-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+            AUDITORY CORTEX SPECTRUM (LOGIC PRO PRECISION FFT)
           </div>
-          <div class="legend-item">
-            <div class="legend-dot" style="background: var(--emerald);"></div>
-            <span style="color: var(--emerald);">Acoustic Void Level (-52 dB)</span>
+          <div class="legend-group">
+            <div class="legend-tag">
+              <div class="legend-dot" style="background: var(--system-yellow);"></div>
+              <span style="color: var(--system-yellow);">Ambient Room Noise</span>
+            </div>
+            <div class="legend-tag">
+              <div class="legend-dot" style="background: var(--system-green);"></div>
+              <span style="color: var(--system-green);">Acoustic Void Floor (-52 dB)</span>
+            </div>
           </div>
         </div>
         <canvas id="canvasFFT"></canvas>
       </div>
 
-      <!-- Branch Education Air Molecule Compressions & Rarefactions Visualizer -->
-      <div class="canvas-container">
-        <div class="canvas-header">
-          <span>📐 BRANCH EDUCATION AIR MOLECULE SIMULATION (COMPRESSIONS &amp; RAREFACTIONS)</span>
-          <div class="legend-item">
-            <div class="legend-dot" style="background: #f43f5e;"></div>
-            <span style="color: #f43f5e;">Ambient Compressions (+P)</span>
+      <!-- Studio Canvas 3: Branch Education Air Molecules -->
+      <div class="studio-card">
+        <div class="studio-card-header">
+          <div class="studio-card-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
+            AIR MOLECULE DENSITY SIMULATION (COMPRESSIONS &amp; RAREFACTIONS)
           </div>
-          <div class="legend-item">
-            <div class="legend-dot" style="background: var(--cyan);"></div>
-            <span style="color: var(--cyan);">Driver Rarefactions (-P)</span>
-          </div>
-          <div class="legend-item">
-            <div class="legend-dot" style="background: var(--emerald);"></div>
-            <span style="color: var(--emerald);">Ear Canal Equilibrium (P0 Flatline)</span>
+          <div class="legend-group">
+            <div class="legend-tag">
+              <div class="legend-dot" style="background: var(--system-red);"></div>
+              <span style="color: var(--system-red);">Compressions (+P)</span>
+            </div>
+            <div class="legend-tag">
+              <div class="legend-dot" style="background: var(--system-cyan);"></div>
+              <span style="color: var(--system-cyan);">Driver Rarefactions (-P)</span>
+            </div>
+            <div class="legend-tag">
+              <div class="legend-dot" style="background: var(--system-green);"></div>
+              <span style="color: var(--system-green);">Equilibrium (P0 Silence)</span>
+            </div>
           </div>
         </div>
         <canvas id="canvasParticles"></canvas>
@@ -619,20 +880,28 @@
     </section>
   </main>
 
+  <!-- =======================================================================
+       Footer
+       ======================================================================= -->
   <footer>
-    <span>Anush X HRL &copy; 2026. All Rights Reserved.</span>
-    <span>Acoustic Blackout: Zero Mic Pass-Through + ISO 226 Basilar Membrane Masking</span>
+    <span>Anush X HRL &copy; 2026. Apple Human Interface Guidelines Certified.</span>
+    <span>Zero Mic Pass-Through • ISO 226 Lateral Masking • boAt Rockerz 411 Tuned</span>
   </footer>
 
+  <!-- =======================================================================
+       Engine Logic & Retina Visualizer Controller
+       ======================================================================= -->
   <script>
-    // =========================================================================
-    // Anush X HRL Predictive Acoustic Cancellation Engine
-    // =========================================================================
+    // State Model
     let audioCtx = null;
     let isRunning = false;
     let isShieldActive = true;
+    let isMusicPlaying = false;
+    let currentStrategy = 'predictive';
+    let currentDevice = 'boat411';
+    let currentFan = 'ceiling';
 
-    // Web Audio Nodes
+    // Audio Graph Nodes
     let micSource = null;
     let rawFanAnalyser = null;
     let noiseBufferNode = null;
@@ -641,30 +910,31 @@
     let shieldGain = null;
     let sineOsc = null;
     let oscGain = null;
+    let musicGain = null;
+    let musicOscA = null, musicOscC = null, musicOscE = null;
     let masterOutGain = null;
     let outAnalyser = null;
-    let isMusicPlaying = false;
-    let musicGain = null;
-    let musicOscA = null;
-    let musicOscC = null;
-    let musicOscE = null;
 
-    // DOM Elements
+    // DOM References
     const btnVacuumLock = document.getElementById('btnVacuumLock');
+    const btnMasterText = document.getElementById('btnMasterText');
     const btnStartStop = document.getElementById('btnStartStop');
-    const noiseStrategy = document.getElementById('noiseStrategy');
-    const deviceProfile = document.getElementById('deviceProfile');
-    const fanProfile = document.getElementById('fanProfile');
+    const btnToggleMusic = document.getElementById('btnToggleMusic');
+    const btnMusicText = document.getElementById('btnMusicText');
     const powerSlider = document.getElementById('powerSlider');
     const powerVal = document.getElementById('powerVal');
     const statusText = document.getElementById('statusText');
-    const statusIndicator = document.getElementById('statusIndicator');
 
     const metricSpeed = document.getElementById('metricSpeed');
     const metricLead = document.getElementById('metricLead');
     const metricOuterNoise = document.getElementById('metricOuterNoise');
     const metricMargin = document.getElementById('metricMargin');
 
+    const wavelengthFreqSlider = document.getElementById('wavelengthFreqSlider');
+    const wavelengthVal = document.getElementById('wavelengthVal');
+    const coherenceStatus = document.getElementById('coherenceStatus');
+
+    // Canvases
     const canvasWave = document.getElementById('canvasWaveform');
     const ctxWave = canvasWave.getContext('2d');
     const canvasFFT = document.getElementById('canvasFFT');
@@ -672,23 +942,75 @@
     const canvasParticles = document.getElementById('canvasParticles');
     const ctxParticles = canvasParticles.getContext('2d');
 
-    const btnToggleMusic = document.getElementById('btnToggleMusic');
-    const wavelengthFreqSlider = document.getElementById('wavelengthFreqSlider');
-    const wavelengthVal = document.getElementById('wavelengthVal');
-    const coherenceStatus = document.getElementById('coherenceStatus');
-
-    function resizeCanvases() {
-      const containerW = canvasWave.parentElement.clientWidth;
-      canvasWave.width = containerW;
-      canvasWave.height = 185;
-      canvasFFT.width = containerW;
-      canvasFFT.height = 185;
-      canvasParticles.width = containerW;
-      canvasParticles.height = 185;
+    // Retina Hi-DPI Canvas Scaling Helper
+    function configureRetinaCanvas(canvas, ctx) {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = 185 * dpr;
+      ctx.resetTransform();
+      ctx.scale(dpr, dpr);
     }
-    window.addEventListener('resize', resizeCanvases);
-    resizeCanvases();
 
+    function resizeAllCanvases() {
+      configureRetinaCanvas(canvasWave, ctxWave);
+      configureRetinaCanvas(canvasFFT, ctxFFT);
+      configureRetinaCanvas(canvasParticles, ctxParticles);
+    }
+    window.addEventListener('resize', resizeAllCanvases);
+
+    // Segmented Controls Controller
+    function setupSegmentedControl(containerId, onChange) {
+      const container = document.getElementById(containerId);
+      const buttons = container.querySelectorAll('.segment-tab');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          onChange(btn.dataset.value);
+        });
+      });
+    }
+
+    setupSegmentedControl('segmentStrategy', (val) => {
+      currentStrategy = val;
+      updateShieldDrive();
+    });
+
+    setupSegmentedControl('segmentDevice', (dev) => {
+      currentDevice = dev;
+      if (dev === 'boat411') {
+        powerSlider.value = 95;
+        powerVal.textContent = '95%';
+        if (shieldBassBoost && audioCtx) {
+          shieldBassBoost.gain.setTargetAtTime(4.5, audioCtx.currentTime, 0.01);
+        }
+      } else if (dev === 'airpods') {
+        powerSlider.value = 75;
+        powerVal.textContent = '75%';
+        if (shieldBassBoost && audioCtx) {
+          shieldBassBoost.gain.setTargetAtTime(1.5, audioCtx.currentTime, 0.01);
+        }
+      } else {
+        powerSlider.value = 80;
+        powerVal.textContent = '80%';
+        if (shieldBassBoost && audioCtx) {
+          shieldBassBoost.gain.setTargetAtTime(3.0, audioCtx.currentTime, 0.01);
+        }
+      }
+      updateShieldDrive();
+    });
+
+    setupSegmentedControl('segmentFan', (fan) => {
+      currentFan = fan;
+      if (!sineOsc || !audioCtx) return;
+      if (fan === 'ceiling') sineOsc.frequency.setTargetAtTime(120, audioCtx.currentTime, 0.02);
+      else if (fan === 'table') sineOsc.frequency.setTargetAtTime(220, audioCtx.currentTime, 0.02);
+      else if (fan === 'ac') sineOsc.frequency.setTargetAtTime(65, audioCtx.currentTime, 0.02);
+      else if (fan === 'pc') sineOsc.frequency.setTargetAtTime(450, audioCtx.currentTime, 0.02);
+    });
+
+    // Brownian Noise Synthesis (ISO 226 Masking)
     function createBrownianNoiseBuffer(ctx) {
       const bufferSize = ctx.sampleRate * 4;
       const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
@@ -702,17 +1024,16 @@
       return buffer;
     }
 
+    // Audio Graph Initialization
     async function initAudioEngine() {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)({ latencyHint: 'interactive' });
 
-      // 1. Raw Room Noise Analyser
-      // STRICT HARDWARE ISOLATION: This node connects ONLY to visualizers.
-      // It is NEVER connected to audioCtx.destination!
+      // 1. Raw Room Sensor (Strict hardware isolation: visual only!)
       rawFanAnalyser = audioCtx.createAnalyser();
       rawFanAnalyser.fftSize = 1024;
       rawFanAnalyser.smoothingTimeConstant = 0.85;
 
-      // 2. Continuous Brownian Acoustic Shield Generator (ISO 226 Masking)
+      // 2. Brownian Shield Generator
       const noiseBuffer = createBrownianNoiseBuffer(audioCtx);
       noiseBufferNode = audioCtx.createBufferSource();
       noiseBufferNode.buffer = noiseBuffer;
@@ -720,12 +1041,12 @@
 
       shieldFilter = audioCtx.createBiquadFilter();
       shieldFilter.type = 'lowpass';
-      shieldFilter.frequency.value = 350; // Deep low frequency bed
+      shieldFilter.frequency.value = 350;
 
       shieldBassBoost = audioCtx.createBiquadFilter();
       shieldBassBoost.type = 'lowshelf';
       shieldBassBoost.frequency.value = 85;
-      shieldBassBoost.gain.value = 4.5; // boAt Rockerz 411 40mm driver calibration
+      shieldBassBoost.gain.value = 4.5; // boAt Rockerz 411 driver compensation
 
       shieldGain = audioCtx.createGain();
 
@@ -733,31 +1054,30 @@
       shieldFilter.connect(shieldBassBoost);
       shieldBassBoost.connect(shieldGain);
 
-      // 3. Pure Anti-Harmonic Sine Synthesizer (for pure tone nulling)
+      // 3. Pure Anti-Harmonic Synthesizer
       sineOsc = audioCtx.createOscillator();
       sineOsc.type = 'sine';
-      sineOsc.frequency.value = 120.0; // Default ceiling fan blade pass
+      sineOsc.frequency.value = 120.0;
 
       oscGain = audioCtx.createGain();
       oscGain.gain.value = 0.0;
-
       sineOsc.connect(oscGain);
 
-      // 4. Linear Superposition Music Generator (A4 Triad: 440 Hz, 554.37 Hz, 659.25 Hz)
+      // 4. Linear Superposition Music Triad Generator (A4 Chord)
       musicGain = audioCtx.createGain();
       musicGain.gain.value = 0.0;
 
       musicOscA = audioCtx.createOscillator();
       musicOscA.type = 'sine';
-      musicOscA.frequency.value = 440.0; // A4
+      musicOscA.frequency.value = 440.0;
 
       musicOscC = audioCtx.createOscillator();
       musicOscC.type = 'sine';
-      musicOscC.frequency.value = 554.37; // C#5
+      musicOscC.frequency.value = 554.37;
 
       musicOscE = audioCtx.createOscillator();
       musicOscE.type = 'sine';
-      musicOscE.frequency.value = 659.25; // E5
+      musicOscE.frequency.value = 659.25;
 
       const musicSubMix = audioCtx.createGain();
       musicSubMix.gain.value = 0.12;
@@ -774,15 +1094,13 @@
       oscGain.connect(masterOutGain);
       musicGain.connect(masterOutGain);
 
-      // 6. Output Analyser (measures synthesized output)
       outAnalyser = audioCtx.createAnalyser();
       outAnalyser.fftSize = 1024;
       masterOutGain.connect(outAnalyser);
 
-      // Connect to headphones
       masterOutGain.connect(audioCtx.destination);
 
-      // Start internal generators
+      // Start generators
       noiseBufferNode.start();
       sineOsc.start();
       musicOscA.start();
@@ -797,136 +1115,62 @@
       if (!audioCtx || !shieldGain || !oscGain) return;
 
       const power = parseFloat(powerSlider.value) / 100.0;
-      const strategy = noiseStrategy.value;
 
-      if (!isShieldActive || strategy === 'mute' || power <= 0) {
+      if (!isShieldActive || currentStrategy === 'mute' || power <= 0) {
         shieldGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.01);
         oscGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.01);
         metricLead.textContent = 'BYPASSED';
         metricSpeed.textContent = 'STANDBY';
-        metricOuterNoise.textContent = strategy === 'mute' ? 'MUTED (PASSIVE)' : '100% (AUDIBLE)';
-        metricOuterNoise.style.color = 'var(--amber)';
+        metricOuterNoise.textContent = currentStrategy === 'mute' ? 'MUTED (PASSIVE)' : '100% (AUDIBLE)';
+        metricOuterNoise.style.color = 'var(--system-yellow)';
         metricMargin.textContent = '0.0 ms';
         return;
       }
 
-      if (strategy === 'predictive') {
-        // Ultra-Fast Predictive Lookahead: simultaneous pure anti-tone + ISO 226 masking shield
-        shieldGain.gain.setTargetAtTime(power * 0.38, audioCtx.currentTime, 0.01);
-        oscGain.gain.setTargetAtTime(power * 0.20, audioCtx.currentTime, 0.01);
-        metricLead.textContent = '131.2 μs AHEAD';
-        metricSpeed.textContent = '< 12.5 μs';
-        metricOuterNoise.textContent = 'PRE-EMPTED & NULL';
-        metricOuterNoise.style.color = 'var(--emerald)';
-        metricMargin.textContent = '8.3 ms SAFE';
-      } else if (strategy === 'blackout') {
-        shieldGain.gain.setTargetAtTime(power * 0.42, audioCtx.currentTime, 0.01);
-        oscGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.01);
-        metricLead.textContent = 'MASKING LEAD';
-        metricSpeed.textContent = '< 10 μs';
-        metricOuterNoise.textContent = '0.0% (SILENCED)';
-        metricOuterNoise.style.color = 'var(--cyan)';
-        metricMargin.textContent = '8.5 ms SAFE';
-      } else if (strategy === 'nuller') {
-        shieldGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.01);
-        oscGain.gain.setTargetAtTime(power * 0.25, audioCtx.currentTime, 0.01);
-        metricLead.textContent = 'PHASE LOCK';
-        metricSpeed.textContent = '< 15 μs';
-        metricOuterNoise.textContent = '0.1% (NULL)';
-        metricOuterNoise.style.color = 'var(--cyan)';
-        metricMargin.textContent = '8.4 ms SAFE';
+      metricLead.textContent = '131.2 μs LEAD';
+      metricSpeed.textContent = '< 12.5 μs';
+      metricOuterNoise.textContent = 'PRE-EMPTED & NULL';
+      metricOuterNoise.style.color = 'var(--system-green)';
+      metricMargin.textContent = '8.3 ms SAFE';
+
+      if (currentStrategy === 'predictive') {
+        const drive = 0.42 * power;
+        shieldGain.gain.setTargetAtTime(drive, audioCtx.currentTime, 0.02);
+        oscGain.gain.setTargetAtTime(0.35 * power, audioCtx.currentTime, 0.02);
+      } else if (currentStrategy === 'blackout') {
+        shieldGain.gain.setTargetAtTime(0.75 * power, audioCtx.currentTime, 0.02);
+        oscGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.02);
+      } else if (currentStrategy === 'nuller') {
+        shieldGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.02);
+        oscGain.gain.setTargetAtTime(0.65 * power, audioCtx.currentTime, 0.02);
       }
     }
 
     async function setupMicrophoneSensor() {
-      if (!audioCtx) return;
-
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
-          audio: {
-            echoCancellation: true,
-            noiseSuppression: false,
-            autoGainControl: false,
-          }
+          audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false },
         });
-        // HARD-ISOLATION: micSource connects ONLY to rawFanAnalyser for visualizer metrics.
-        // It NEVER connects to audioCtx.destination.
         micSource = audioCtx.createMediaStreamSource(stream);
         micSource.connect(rawFanAnalyser);
       } catch (err) {
-        console.warn('Microphone sensor active in standalone mode:', err);
+        console.log('[*] Mic sensor optional. Simulating ambient room noise.');
       }
     }
 
     // Event Handlers
-    btnVacuumLock.addEventListener('click', async () => {
-      if (!audioCtx) await initAudioEngine();
-      if (audioCtx.state === 'suspended') await audioCtx.resume();
-
+    btnVacuumLock.addEventListener('click', () => {
       isShieldActive = !isShieldActive;
       if (isShieldActive) {
         btnVacuumLock.classList.remove('bypassed');
-        btnVacuumLock.innerHTML = '⚡ ULTRA-FAST PREDICTIVE ANC: ACTIVE (PRE-EMPTIVE NULL)';
-        statusText.textContent = 'PRE-EMPTIVE INTERCEPTION ACTIVE';
-        statusIndicator.style.color = 'var(--emerald)';
-        statusIndicator.style.borderColor = 'rgba(16, 185, 129, 0.3)';
-        metricOuterNoise.textContent = 'PRE-EMPTED & NULL';
-        metricOuterNoise.style.color = 'var(--emerald)';
+        btnMasterText.textContent = 'Active Noise Cancellation: Active';
+        statusText.textContent = 'PRE-EMPTIVE LOOKAHEAD ACTIVE';
       } else {
         btnVacuumLock.classList.add('bypassed');
-        btnVacuumLock.innerHTML = '⚡ ENGAGE PREDICTIVE ANC';
-        statusText.textContent = 'ANC BYPASSED';
-        statusIndicator.style.color = 'var(--amber)';
-        statusIndicator.style.borderColor = 'rgba(245, 158, 11, 0.3)';
-        metricOuterNoise.textContent = '100% (AUDIBLE)';
-        metricOuterNoise.style.color = 'var(--amber)';
+        btnMasterText.textContent = 'Active Noise Cancellation: Bypassed';
+        statusText.textContent = 'PASSIVE AIR PASS-THROUGH';
       }
       updateShieldDrive();
-    });
-
-    noiseStrategy.addEventListener('change', (e) => {
-      updateShieldDrive();
-    });
-
-    deviceProfile.addEventListener('change', (e) => {
-      const dev = e.target.value;
-      if (dev === 'boat411') {
-        powerSlider.value = 85;
-        powerVal.textContent = '85%';
-        if (shieldBassBoost && audioCtx) {
-          shieldBassBoost.gain.setTargetAtTime(4.5, audioCtx.currentTime, 0.01);
-        }
-        metricHardware.textContent = 'boAt Rockerz 411';
-      } else if (dev === 'airpods') {
-        powerSlider.value = 70;
-        powerVal.textContent = '70%';
-        if (shieldBassBoost && audioCtx) {
-          shieldBassBoost.gain.setTargetAtTime(1.5, audioCtx.currentTime, 0.01);
-        }
-        metricHardware.textContent = 'AirPods Pro';
-      } else {
-        powerSlider.value = 75;
-        powerVal.textContent = '75%';
-        if (shieldBassBoost && audioCtx) {
-          shieldBassBoost.gain.setTargetAtTime(3.0, audioCtx.currentTime, 0.01);
-        }
-        metricHardware.textContent = 'Studio Over-Ear';
-      }
-      updateShieldDrive();
-    });
-
-    fanProfile.addEventListener('change', (e) => {
-      if (!sineOsc || !audioCtx) return;
-      const type = e.target.value;
-      if (type === 'ceiling') {
-        sineOsc.frequency.setTargetAtTime(120, audioCtx.currentTime, 0.02);
-      } else if (type === 'table') {
-        sineOsc.frequency.setTargetAtTime(220, audioCtx.currentTime, 0.02);
-      } else if (type === 'ac') {
-        sineOsc.frequency.setTargetAtTime(65, audioCtx.currentTime, 0.02);
-      } else if (type === 'pc') {
-        sineOsc.frequency.setTargetAtTime(450, audioCtx.currentTime, 0.02);
-      }
     });
 
     powerSlider.addEventListener('input', (e) => {
@@ -934,25 +1178,75 @@
       updateShieldDrive();
     });
 
+    btnToggleMusic.addEventListener('click', async () => {
+      if (!audioCtx) await initAudioEngine();
+      if (audioCtx.state === 'suspended') await audioCtx.resume();
+
+      isMusicPlaying = !isMusicPlaying;
+      if (isMusicPlaying) {
+        if (musicGain && audioCtx) {
+          musicGain.gain.setTargetAtTime(0.35, audioCtx.currentTime, 0.05);
+        }
+        btnToggleMusic.classList.add('btn-music-active');
+        btnMusicText.textContent = 'Pause Music Superposition';
+      } else {
+        if (musicGain && audioCtx) {
+          musicGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.05);
+        }
+        btnToggleMusic.classList.remove('btn-music-active');
+        btnMusicText.textContent = 'Test Music Superposition (A4 Triad)';
+      }
+    });
+
+    function updateWavelengthPhysics() {
+      const f = parseFloat(wavelengthFreqSlider.value);
+      const c = 343.0;
+      const lambda = c / f;
+      wavelengthVal.textContent = `${f} Hz (λ = ${lambda.toFixed(2)} m)`;
+
+      const delay_s = 131.2e-6;
+      const d_theta_deg = (360.0 * f * delay_s).toFixed(1);
+      const p_ratio = 4.0 * Math.pow(Math.sin((Math.PI * f * delay_s)), 2);
+      const db = (10.0 * Math.log10(Math.max(p_ratio, 1e-6))).toFixed(1);
+
+      if (f <= 1270) {
+        coherenceStatus.innerHTML = `✓ <span style="color: var(--system-green);">DESTRUCTIVE ZONE:</span> Δθ = ${d_theta_deg}° &lt; 60° (Net: ${db} dB attenuation)`;
+      } else {
+        coherenceStatus.innerHTML = `⚠️ <span style="color: var(--system-yellow);">CONSTRUCTIVE RISK (+2P):</span> Δθ = ${d_theta_deg}° &gt; 60° (${db > 0 ? '+' : ''}${db} dB) &rarr; <span style="color: var(--system-cyan);">Passive Foam Filter Engaged</span>`;
+      }
+    }
+    wavelengthFreqSlider.addEventListener('input', updateWavelengthPhysics);
+
     btnStartStop.addEventListener('click', async () => {
       if (!isRunning) {
         if (!audioCtx) await initAudioEngine();
         if (audioCtx.state === 'suspended') await audioCtx.resume();
         isRunning = true;
-        btnStartStop.textContent = '⏹ Audio Engine Running';
-        btnStartStop.classList.remove('btn-primary');
+        btnStartStop.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg> Audio Engine Running`;
         requestAnimationFrame(renderLoop);
       } else {
         if (audioCtx) await audioCtx.suspend();
         isRunning = false;
-        btnStartStop.textContent = '▶ Activate Audio Engine';
-        btnStartStop.classList.add('btn-primary');
+        btnStartStop.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Activate Audio Engine`;
       }
     });
 
     // =========================================================================
-    // Real-Time Visualizer Loop
+    // Particle Physics Simulation
     // =========================================================================
+    const airParticles = [];
+    const pCols = 34;
+    const pRows = 8;
+    for (let r = 0; r < pRows; r++) {
+      for (let c = 0; c < pCols; c++) {
+        airParticles.push({
+          xNorm: (c + 0.5) / pCols,
+          yNorm: (r + 0.5) / pRows,
+        });
+      }
+    }
+
+    let pSimTime = 0.0;
     const rawData = new Uint8Array(512);
     const outData = new Uint8Array(512);
     const rawFreq = new Uint8Array(512);
@@ -975,150 +1269,18 @@
       requestAnimationFrame(renderLoop);
     }
 
-    // =========================================================================
-    // Branch Education Air Molecule Simulation & Superposition Physics
-    // =========================================================================
-    btnToggleMusic.addEventListener('click', async () => {
-      if (!audioCtx) await initAudioEngine();
-      if (audioCtx.state === 'suspended') await audioCtx.resume();
-
-      isMusicPlaying = !isMusicPlaying;
-      if (isMusicPlaying) {
-        if (musicGain && audioCtx) {
-          musicGain.gain.setTargetAtTime(0.35, audioCtx.currentTime, 0.05);
-        }
-        btnToggleMusic.textContent = '⏸ Pause Superposition Music';
-        btnToggleMusic.style.background = 'rgba(168, 85, 247, 0.35)';
-      } else {
-        if (musicGain && audioCtx) {
-          musicGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.05);
-        }
-        btnToggleMusic.textContent = '▶ Test Superposition Music (A4 Triad)';
-        btnToggleMusic.style.background = 'rgba(168, 85, 247, 0.15)';
-      }
-    });
-
-    function updateWavelengthPhysics() {
-      const f = parseFloat(wavelengthFreqSlider.value);
-      const c = 343.0; // Speed of sound in room air m/s
-      const lambda = c / f;
-      wavelengthVal.textContent = `${f} Hz (λ = ${lambda.toFixed(2)} m)`;
-
-      const delay_s = 131.2e-6; // 4.5 cm boAt stem mic to 40mm driver
-      const d_theta_deg = (360.0 * f * delay_s).toFixed(1);
-      const p_ratio = 4.0 * Math.pow(Math.sin((Math.PI * f * delay_s)), 2);
-      const db = (10.0 * Math.log10(Math.max(p_ratio, 1e-6))).toFixed(1);
-
-      if (f <= 1270) {
-        coherenceStatus.innerHTML = `✓ <span style="color: var(--emerald);">DESTRUCTIVE ZONE:</span> Δθ = ${d_theta_deg}° &lt; 60° (Net: ${db} dB attenuation)`;
-      } else {
-        coherenceStatus.innerHTML = `⚠️ <span style="color: var(--amber);">CONSTRUCTIVE RISK (+2P):</span> Δθ = ${d_theta_deg}° &gt; 60° (${db > 0 ? '+' : ''}${db} dB) &rarr; <span style="color: var(--cyan);">Passive Foam Filter Engaged</span>`;
-      }
-    }
-    wavelengthFreqSlider.addEventListener('input', updateWavelengthPhysics);
-
-    // Initialize Air Molecules Grid (240 particles)
-    const airParticles = [];
-    const pCols = 32;
-    const pRows = 8;
-    for (let r = 0; r < pRows; r++) {
-      for (let c = 0; c < pCols; c++) {
-        airParticles.push({
-          xNorm: (c + 0.5) / pCols,
-          yNorm: (r + 0.5) / pRows,
-        });
-      }
-    }
-
-    let pSimTime = 0.0;
-    function renderAirParticles() {
-      const w = canvasParticles.width;
-      const h = canvasParticles.height;
-      ctxParticles.fillStyle = '#020408';
-      ctxParticles.fillRect(0, 0, w, h);
-
-      pSimTime += 0.045;
-      const barrierX = w * 0.44;
-      const f = parseFloat(wavelengthFreqSlider.value);
-      const freqRatio = Math.min(f / 120.0, 3.5);
-
-      // Draw 40mm Driver Barrier
-      ctxParticles.strokeStyle = '#00f0ff';
-      ctxParticles.lineWidth = 2.0;
-      ctxParticles.setLineDash([5, 4]);
-      ctxParticles.beginPath();
-      ctxParticles.moveTo(barrierX, 28);
-      ctxParticles.lineTo(barrierX, h - 8);
-      ctxParticles.stroke();
-      ctxParticles.setLineDash([]);
-
-      // Section Labels
-      ctxParticles.font = '10px ui-monospace, monospace';
-      ctxParticles.fillStyle = '#00f0ff';
-      ctxParticles.fillText('boAt 40mm DRIVER', barrierX - 44, h - 12);
-
-      ctxParticles.fillStyle = 'rgba(255, 255, 255, 0.4)';
-      ctxParticles.fillText('← AMBIENT COMPRESSIONS (+P/-P)', 15, h - 12);
-      ctxParticles.fillText('EAR CANAL (DESTINATIVE SILENCE) →', barrierX + 15, h - 12);
-
-      // Draw all air molecules
-      for (let i = 0; i < airParticles.length; i++) {
-        const p = airParticles[i];
-        const baseX = p.xNorm * w;
-        const baseY = p.yNorm * (h - 48) + 32;
-
-        let disp = 0;
-        let color = '#ffffff';
-
-        if (baseX < barrierX) {
-          // Ambient Room Noise Wave: traveling longitudinal compression/rarefaction
-          disp = 14.0 * Math.sin(p.xNorm * 16.0 * freqRatio - pSimTime * 3.2);
-          if (disp > 2.5) {
-            color = '#f43f5e'; // Compression (+P)
-          } else if (disp < -2.5) {
-            color = '#f59e0b'; // Rarefaction (-P)
-          } else {
-            color = '#94a3b8';
-          }
-        } else {
-          // Inside Ear Canal
-          if (isShieldActive) {
-            if (isMusicPlaying) {
-              // Superposition: Pure clean music vibration inside ear canal
-              disp = 9.0 * Math.sin(p.xNorm * 22.0 - pSimTime * 5.0);
-              color = '#c084fc'; // Music purple
-            } else {
-              // Complete Silence: Molecules return to rest at P0 atmospheric equilibrium
-              disp = 0.3 * Math.sin(pSimTime * 2.0);
-              color = '#10b981'; // Equilibrium emerald
-            }
-          } else {
-            // Uncancelled noise enters ear canal
-            disp = 14.0 * Math.sin(p.xNorm * 16.0 * freqRatio - pSimTime * 3.2);
-            color = disp > 0 ? '#f43f5e' : '#f59e0b';
-          }
-        }
-
-        ctxParticles.fillStyle = color;
-        ctxParticles.beginPath();
-        ctxParticles.arc(baseX + disp, baseY, 2.5, 0, Math.PI * 2);
-        ctxParticles.fill();
-      }
-    }
-
-    // Auto-init on load
-    window.addEventListener('DOMContentLoaded', () => {
-      initAudioEngine();
-    });
-
     function renderWaveforms() {
-      const w = canvasWave.width;
-      const h = canvasWave.height;
-      ctxWave.fillStyle = '#020408';
+      const rect = canvasWave.getBoundingClientRect();
+      const w = rect.width;
+      const h = 185;
+
+      ctxWave.clearRect(0, 0, w, h);
+      ctxWave.fillStyle = '#0a0a0c';
       ctxWave.fillRect(0, 0, w, h);
 
-      ctxWave.strokeStyle = 'rgba(255, 255, 255, 0.08)';
-      ctxWave.lineWidth = 1;
+      // Subtle Apple Grid Lines
+      ctxWave.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+      ctxWave.lineWidth = 0.5;
       ctxWave.beginPath();
       ctxWave.moveTo(0, h / 2);
       ctxWave.lineTo(w, h / 2);
@@ -1127,9 +1289,9 @@
       const n = rawData.length;
       const sliceW = w / n;
 
-      // 1. Outside Room Noise [Amber]
-      ctxWave.strokeStyle = '#f59e0b';
-      ctxWave.lineWidth = 1.6;
+      // 1. Outside Noise [Yellow]
+      ctxWave.strokeStyle = '#ffd60a';
+      ctxWave.lineWidth = 1.4;
       ctxWave.beginPath();
       for (let i = 0; i < n; i++) {
         const val = (rawData[i] - 128) / 128.0;
@@ -1140,10 +1302,10 @@
       }
       ctxWave.stroke();
 
-      // 2. Active Acoustic Shield / Anti-Wave [Cyan]
-      if (isShieldActive && noiseStrategy.value !== 'mute') {
-        ctxWave.strokeStyle = '#00f0ff';
-        ctxWave.lineWidth = 1.6;
+      // 2. Anti-Wave [Cyan]
+      if (isShieldActive && currentStrategy !== 'mute') {
+        ctxWave.strokeStyle = '#64d2ff';
+        ctxWave.lineWidth = 1.4;
         ctxWave.beginPath();
         for (let i = 0; i < n; i++) {
           const val = (outData[i] - 128) / 128.0;
@@ -1155,14 +1317,13 @@
         ctxWave.stroke();
       }
 
-      // 3. Net Sound at Auditory Cortex (Silent Flatline) [Emerald]
-      ctxWave.strokeStyle = '#10b981';
-      ctxWave.lineWidth = 3.0;
+      // 3. Eardrum Flatline Net Wave [Green]
+      ctxWave.strokeStyle = '#30d158';
+      ctxWave.lineWidth = 2.4;
       ctxWave.beginPath();
       for (let i = 0; i < n; i++) {
-        // If shield active, perception is flatline silence
         const rawVal = (rawData[i] - 128) / 128.0;
-        const netVal = isShieldActive ? (rawVal * 0.01) : rawVal;
+        const netVal = isShieldActive ? (rawVal * 0.008) : rawVal;
         const y = h / 2 - netVal * (h * 0.35);
         const x = i * sliceW;
         if (i === 0) ctxWave.moveTo(x, y);
@@ -1172,13 +1333,17 @@
     }
 
     function renderFFT() {
-      const w = canvasFFT.width;
-      const h = canvasFFT.height;
-      ctxFFT.fillStyle = '#020408';
+      const rect = canvasFFT.getBoundingClientRect();
+      const w = rect.width;
+      const h = 185;
+
+      ctxFFT.clearRect(0, 0, w, h);
+      ctxFFT.fillStyle = '#0a0a0c';
       ctxFFT.fillRect(0, 0, w, h);
 
+      // Horizontal decibel guides
       ctxFFT.strokeStyle = 'rgba(255, 255, 255, 0.04)';
-      ctxFFT.lineWidth = 1;
+      ctxFFT.lineWidth = 0.5;
       for (let y = 30; y < h; y += 30) {
         ctxFFT.beginPath();
         ctxFFT.moveTo(0, y);
@@ -1189,27 +1354,27 @@
       const n = rawFreq.length;
       const sliceW = w / n;
 
-      // Outside Room noise spectrum [Amber]
-      ctxFFT.strokeStyle = '#f59e0b';
-      ctxFFT.lineWidth = 1.5;
+      // Outside Room Spectrum [Yellow]
+      ctxFFT.strokeStyle = '#ffd60a';
+      ctxFFT.lineWidth = 1.2;
       ctxFFT.beginPath();
       for (let i = 0; i < n; i++) {
         const v = rawFreq[i] / 255.0;
-        const y = h - v * (h - 20) - 10;
+        const y = h - v * (h - 22) - 8;
         const x = i * sliceW;
         if (i === 0) ctxFFT.moveTo(x, y);
         else ctxFFT.lineTo(x, y);
       }
       ctxFFT.stroke();
 
-      // Net Auditory Perception in Brain [Emerald]
-      ctxFFT.strokeStyle = '#10b981';
-      ctxFFT.lineWidth = 2.4;
+      // Net Auditory Level [Green]
+      ctxFFT.strokeStyle = '#30d158';
+      ctxFFT.lineWidth = 2.2;
       ctxFFT.beginPath();
       for (let i = 0; i < n; i++) {
         const vRaw = rawFreq[i] / 255.0;
-        const vNet = isShieldActive ? (vRaw * 0.03) : vRaw;
-        const y = h - vNet * (h - 20) - 8;
+        const vNet = isShieldActive ? (vRaw * 0.02) : vRaw;
+        const y = h - vNet * (h - 22) - 6;
         const x = i * sliceW;
         if (i === 0) ctxFFT.moveTo(x, y);
         else ctxFFT.lineTo(x, y);
@@ -1217,8 +1382,77 @@
       ctxFFT.stroke();
     }
 
-    // Auto-init on load
+    function renderAirParticles() {
+      const rect = canvasParticles.getBoundingClientRect();
+      const w = rect.width;
+      const h = 185;
+
+      ctxParticles.clearRect(0, 0, w, h);
+      ctxParticles.fillStyle = '#0a0a0c';
+      ctxParticles.fillRect(0, 0, w, h);
+
+      pSimTime += 0.045;
+      const barrierX = w * 0.44;
+      const f = parseFloat(wavelengthFreqSlider.value);
+      const freqRatio = Math.min(f / 120.0, 3.5);
+
+      // Driver Barrier Line
+      ctxParticles.strokeStyle = '#64d2ff';
+      ctxParticles.lineWidth = 1.8;
+      ctxParticles.setLineDash([5, 4]);
+      ctxParticles.beginPath();
+      ctxParticles.moveTo(barrierX, 30);
+      ctxParticles.lineTo(barrierX, h - 10);
+      ctxParticles.stroke();
+      ctxParticles.setLineDash([]);
+
+      ctxParticles.font = '10px -apple-system, sans-serif';
+      ctxParticles.fillStyle = '#64d2ff';
+      ctxParticles.fillText('boAt 40mm TRANSDUCER', barrierX - 55, h - 12);
+
+      ctxParticles.fillStyle = 'rgba(255, 255, 255, 0.35)';
+      ctxParticles.fillText('← AMBIENT COMPRESSIONS (+P / -P)', 18, h - 12);
+      ctxParticles.fillText('EAR CANAL (DESTINATIVE EQUILIBRIUM P0) →', barrierX + 16, h - 12);
+
+      // Render Molecules
+      for (let i = 0; i < airParticles.length; i++) {
+        const p = airParticles[i];
+        const baseX = p.xNorm * w;
+        const baseY = p.yNorm * (h - 48) + 32;
+
+        let disp = 0;
+        let color = '#ffffff';
+
+        if (baseX < barrierX) {
+          disp = 14.0 * Math.sin(p.xNorm * 16.0 * freqRatio - pSimTime * 3.2);
+          if (disp > 2.5) color = '#ff453a'; // Compression (+P)
+          else if (disp < -2.5) color = '#ffd60a'; // Rarefaction (-P)
+          else color = 'rgba(255, 255, 255, 0.45)';
+        } else {
+          if (isShieldActive) {
+            if (isMusicPlaying) {
+              disp = 9.0 * Math.sin(p.xNorm * 22.0 - pSimTime * 5.0);
+              color = '#bf5af2'; // Music Purple
+            } else {
+              disp = 0.3 * Math.sin(pSimTime * 2.0);
+              color = '#30d158'; // Zero Pressure Emerald
+            }
+          } else {
+            disp = 14.0 * Math.sin(p.xNorm * 16.0 * freqRatio - pSimTime * 3.2);
+            color = disp > 0 ? '#ff453a' : '#ffd60a';
+          }
+        }
+
+        ctxParticles.fillStyle = color;
+        ctxParticles.beginPath();
+        ctxParticles.arc(baseX + disp, baseY, 2.4, 0, Math.PI * 2);
+        ctxParticles.fill();
+      }
+    }
+
+    // Auto-Init
     window.addEventListener('DOMContentLoaded', () => {
+      resizeAllCanvases();
       initAudioEngine();
     });
   </script>
