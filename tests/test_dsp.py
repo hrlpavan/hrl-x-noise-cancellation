@@ -20,6 +20,7 @@ from hrl_noise_cancellation.dsp.adaptive_eq import AdaptiveEQ, PsychoacousticMas
 from hrl_noise_cancellation.dsp.anti_phase import AntiPhaseInverter
 from hrl_noise_cancellation.dsp.echo_cancellation import AcousticEchoKiller
 from hrl_noise_cancellation.dsp.fan_vacuum import FanNoiseVacuum
+from hrl_noise_cancellation.dsp.boat_rockerz_411 import BoatRockerz411ANC
 from hrl_noise_cancellation.silicon.h1_chip import H1AudioSilicon
 
 
@@ -183,6 +184,39 @@ class TestDSPAlgorithms(unittest.TestCase):
         # Check telemetry
         telemetry = h1.get_silicon_telemetry()
         self.assertIn("10 Parallel RISC/DSP Units", telemetry["Active Cores"])
+
+    def test_boat_rockerz_411_anc(self):
+        """
+        Validates custom boAt Rockerz 411 hardware profile, delay matching (131us),
+        cushion leak overdrive, and acoustic cancellation performance (>40dB).
+        """
+        anc = BoatRockerz411ANC(sample_rate=48000, vacuum_power=1.0)
+        profile = anc.get_hardware_profile()
+
+        self.assertIn("boAt Rockerz 411", profile["Headphone Model"])
+        self.assertIn("40mm", profile["Acoustic Transducer"])
+        self.assertAlmostEqual(anc.delay_us, 131.2, delta=2.0)
+        self.assertGreater(anc.seal_compensation_gain, 1.15)
+
+        # Generate test room noise (120 Hz fan tone)
+        room_noise = [0.3 * math.sin(2 * math.pi * 120 * i / 48000) for i in range(2400)]
+        anti_wave = anc.generate_anti_noise_wave(room_noise)
+        self.assertEqual(len(anti_wave), len(room_noise))
+
+        # Check anti-noise wave is active and phase-inverted
+        max_anti = max(abs(x) for x in anti_wave)
+        self.assertGreater(max_anti, 0.25)
+        self.assertLess(max_anti, 1.01)
+
+        # Simulate acoustic arrival at eardrum with 131us flight delay
+        delay_samples = int((anc.delay_ms / 1000.0) * 48000)
+        penetrating = [
+            room_noise[i - delay_samples] * anc.vacuum_power if i >= delay_samples else 0.0
+            for i in range(2400)
+        ]
+        sound_in_ear, atten_db = anc.cancel_environmental_sound(penetrating, anti_wave)
+        self.assertEqual(len(sound_in_ear), len(room_noise))
+        self.assertGreater(atten_db, 40.0, f"Expected > 40 dB cancellation, got {atten_db:.2f} dB")
 
 
 if __name__ == "__main__":

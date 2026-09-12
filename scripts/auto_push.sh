@@ -45,8 +45,9 @@ fi
 
 # 4. Check if remote origin exists and push
 if GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_NOSYSTEM=1 git remote | grep -q "origin"; then
-    echo "🚀 Pushing commits to origin main..."
+    echo "🚀 Pushing commits to origin main and gh-pages..."
     GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_NOSYSTEM=1 git push origin main || echo "⚠️  Push requires remote credentials/setup."
+    GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_NOSYSTEM=1 git push origin main:gh-pages || echo "⚠️  Push to gh-pages failed."
 fi
 
 echo "=================================================================="

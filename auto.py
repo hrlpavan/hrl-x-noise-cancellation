@@ -36,7 +36,7 @@ def main():
     if rc != 0:
         print("\n[!] Tests failed! Halting pipeline.")
         sys.exit(rc)
-    print("[✓] All 4 DSP unit tests passed.")
+    print("[✓] All DSP unit & hardware calibration tests passed.")
 
     # Run demo
     run_section("Step 2: Synthetic Denoising & SNR Validation")

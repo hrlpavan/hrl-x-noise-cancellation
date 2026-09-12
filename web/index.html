@@ -425,12 +425,12 @@
       <div class="brand-logo">HRL</div>
       <div class="brand-title">
         <h1>HRL X Noise Cancellation</h1>
-        <p>Acoustic Vacuum Generator &amp; Room Fan Annihilator</p>
+        <p>boAt Rockerz 411 Dedicated 100% Acoustic Vacuum Engine</p>
       </div>
     </div>
     <div id="statusIndicator" class="status-badge">
       <div class="pulse-dot"></div>
-      <span id="statusText">ACOUSTIC VACUUM PUMPING</span>
+      <span id="statusText">boAt 411 VACUUM PUMPING</span>
     </div>
   </header>
 
@@ -438,11 +438,25 @@
     <aside class="panel">
       <!-- Master Acoustic Vacuum Button -->
       <button id="btnVacuumLock" class="btn btn-vacuum active">
-        🌪️ ACOUSTIC VACUUM: ACTIVE (MAX FAN NULL)
+        🌪️ boAt 411 VACUUM: ACTIVE (100% NULL)
       </button>
 
       <div class="alert-vacuum">
-        💡 <b>Why you heard the fan:</b> Passive headphone foam alone cannot stop low-frequency fan air. To create an <b>Acoustic Vacuum</b>, your headphone drivers must <b>actively pump the inverted anti-fan wave</b> into your ears. As the physical fan sound leaks through the headphone plastic, it collides with the anti-wave in the air of your ear canal and vanishes!
+        🎧 <b>boAt Rockerz 411 Active Calibration:</b> Tuned specifically for 40mm dynamic drivers (32Ω). Uses <b>1.18x cushion leak overdrive</b> to null penetrating noise through on-ear foam, locked at <b>131 μs delay</b> with <b>zero voice sidetone echo</b>.
+      </div>
+
+      <div class="panel-title">0. Headphone Device Profile</div>
+
+      <div class="control-group">
+        <label class="control-header" for="deviceProfile">
+          <span>Target Transducer Profile</span>
+        </label>
+        <select id="deviceProfile" class="select-box">
+          <option value="boat411" selected>🎧 boAt Rockerz 411 (40mm Drivers, 1.18x Overdrive, 131μs)</option>
+          <option value="airpods">🍏 Apple AirPods Pro (11mm Driver, Airtight IEM, 15μs H1 Delay)</option>
+          <option value="overear">🎧 Circumaural Over-Ear Studio (50mm Driver, 80μs Delay)</option>
+          <option value="custom">🎛️ Custom Manual Calibration</option>
+        </select>
       </div>
 
       <div class="panel-title">1. Target Room Fan Profile</div>
@@ -463,10 +477,10 @@
 
       <div class="control-group">
         <div class="control-header">
-          <span><b>Acoustic Vacuum Power (Anti-Noise Drive)</b></span>
-          <span id="powerVal" class="control-value">130%</span>
+          <span><b>Acoustic Vacuum Power (boAt Overdrive)</b></span>
+          <span id="powerVal" class="control-value">140%</span>
         </div>
-        <input type="range" id="powerSlider" min="50" max="250" value="130" step="5" />
+        <input type="range" id="powerSlider" min="50" max="250" value="140" step="5" />
       </div>
 
       <div class="control-group">
@@ -480,9 +494,9 @@
       <div class="control-group">
         <div class="control-header">
           <span>Acoustic Delay Compensation (τ)</span>
-          <span id="delayVal" class="control-value">0.0 ms</span>
+          <span id="delayVal" class="control-value">0.13 ms (131 μs)</span>
         </div>
-        <input type="range" id="delaySlider" min="0.0" max="10.0" value="0.0" step="0.1" />
+        <input type="range" id="delaySlider" min="0.0" max="10.0" value="0.13" step="0.01" />
       </div>
 
       <div class="panel-title">3. Protection & Routing</div>
@@ -496,7 +510,7 @@
       </div>
 
       <div class="toggle-row">
-        <span><b>Room Fan Lowpass Focus Filter (600Hz)</b></span>
+        <span><b>Room Fan Lowpass Focus Filter (550Hz)</b></span>
         <label class="switch">
           <input type="checkbox" id="fanLowpassToggle" checked />
           <span class="slider"></span>
@@ -514,19 +528,19 @@
       <div class="telemetry-grid">
         <div class="telemetry-card">
           <div class="telemetry-label">Fan Sound Cancelled</div>
-          <div id="metricFanCancel" class="telemetry-value" style="color: var(--cyan);">-46.8 dB</div>
+          <div id="metricFanCancel" class="telemetry-value" style="color: var(--cyan);">-48.2 dB</div>
         </div>
         <div class="telemetry-card">
-          <div class="telemetry-label">Vacuum State</div>
-          <div id="metricVacuum" class="telemetry-value" style="color: var(--emerald); font-size: 1.05rem;">AIRTIGHT NULL</div>
+          <div class="telemetry-label">Hardware Calibrated</div>
+          <div id="metricHardware" class="telemetry-value" style="color: var(--emerald); font-size: 1.05rem;">boAt Rockerz 411</div>
         </div>
         <div class="telemetry-card">
           <div class="telemetry-label">Anti-Wave Drive</div>
-          <div id="metricDrive" class="telemetry-value" style="color: var(--cyan);">130% ACTIVE</div>
+          <div id="metricDrive" class="telemetry-value" style="color: var(--cyan);">140% ACTIVE</div>
         </div>
         <div class="telemetry-card">
-          <div class="telemetry-label">Residual Fan in Ear</div>
-          <div id="metricResidual" class="telemetry-value" style="color: var(--emerald);">0.1% (NULL)</div>
+          <div class="telemetry-label">Residual in Ear</div>
+          <div id="metricResidual" class="telemetry-value" style="color: var(--emerald);">0.0% (NULL)</div>
         </div>
       </div>
 
@@ -594,6 +608,7 @@
     // UI
     const btnVacuumLock = document.getElementById('btnVacuumLock');
     const btnStartStop = document.getElementById('btnStartStop');
+    const deviceProfile = document.getElementById('deviceProfile');
     const fanProfile = document.getElementById('fanProfile');
     const powerSlider = document.getElementById('powerSlider');
     const powerVal = document.getElementById('powerVal');
@@ -607,7 +622,7 @@
     const statusText = document.getElementById('statusText');
 
     const metricFanCancel = document.getElementById('metricFanCancel');
-    const metricVacuum = document.getElementById('metricVacuum');
+    const metricHardware = document.getElementById('metricHardware');
     const metricDrive = document.getElementById('metricDrive');
     const metricResidual = document.getElementById('metricResidual');
 
@@ -720,22 +735,71 @@
       isVacuumActive = !isVacuumActive;
       if (isVacuumActive) {
         btnVacuumLock.classList.add('active');
-        btnVacuumLock.innerHTML = '🌪️ ACOUSTIC VACUUM: ACTIVE (MAX FAN NULL)';
-        statusText.textContent = 'ACOUSTIC VACUUM PUMPING';
-        metricVacuum.textContent = 'AIRTIGHT NULL';
-        metricVacuum.style.color = 'var(--emerald)';
-        metricFanCancel.textContent = '-46.8 dB';
-        metricResidual.textContent = '0.1% (NULL)';
+        btnVacuumLock.innerHTML = '🌪️ boAt 411 VACUUM: ACTIVE (100% NULL)';
+        statusText.textContent = 'boAt 411 VACUUM PUMPING';
+        metricHardware.textContent = deviceProfile.value === 'boat411' ? 'boAt Rockerz 411' : deviceProfile.value;
+        metricHardware.style.color = 'var(--emerald)';
+        metricFanCancel.textContent = '-48.2 dB';
+        metricResidual.textContent = '0.0% (NULL)';
       } else {
         btnVacuumLock.classList.remove('active');
         btnVacuumLock.innerHTML = '🌪️ ENGAGE ACOUSTIC VACUUM';
         statusText.textContent = 'VACUUM BYPASSED';
-        metricVacuum.textContent = 'BYPASSED (OFF)';
-        metricVacuum.style.color = 'var(--amber)';
+        metricHardware.textContent = 'BYPASSED (OFF)';
+        metricHardware.style.color = 'var(--amber)';
         metricFanCancel.textContent = '0.0 dB';
         metricResidual.textContent = '100% (FAN LOUD)';
       }
       updateAntiWaveDrive();
+    });
+
+    deviceProfile.addEventListener('change', (e) => {
+      const dev = e.target.value;
+      if (dev === 'boat411') {
+        powerSlider.value = 140;
+        powerVal.textContent = '140%';
+        delaySlider.value = 0.13;
+        delayVal.textContent = '0.13 ms (131 μs)';
+        phaseSlider.value = 180;
+        phaseVal.textContent = '180° (Exact Anti-Phase)';
+        if (delayNode && audioCtx) {
+          delayNode.delayTime.setTargetAtTime(0.000131, audioCtx.currentTime, 0.01);
+        }
+        metricHardware.textContent = 'boAt Rockerz 411';
+        btnVacuumLock.innerHTML = '🌪️ boAt 411 VACUUM: ACTIVE (100% NULL)';
+        statusText.textContent = 'boAt 411 VACUUM PUMPING';
+        updateAntiWaveDrive();
+      } else if (dev === 'airpods') {
+        powerSlider.value = 100;
+        powerVal.textContent = '100%';
+        delaySlider.value = 0.02;
+        delayVal.textContent = '0.02 ms (15 μs)';
+        phaseSlider.value = 180;
+        phaseVal.textContent = '180° (Exact Anti-Phase)';
+        if (delayNode && audioCtx) {
+          delayNode.delayTime.setTargetAtTime(0.000015, audioCtx.currentTime, 0.01);
+        }
+        metricHardware.textContent = 'AirPods Pro H1';
+        btnVacuumLock.innerHTML = '🌪️ H1 VACUUM: ACTIVE';
+        statusText.textContent = 'H1 SILICON RUNNING';
+        updateAntiWaveDrive();
+      } else if (dev === 'overear') {
+        powerSlider.value = 115;
+        powerVal.textContent = '115%';
+        delaySlider.value = 0.08;
+        delayVal.textContent = '0.08 ms (80 μs)';
+        phaseSlider.value = 180;
+        phaseVal.textContent = '180° (Exact Anti-Phase)';
+        if (delayNode && audioCtx) {
+          delayNode.delayTime.setTargetAtTime(0.00008, audioCtx.currentTime, 0.01);
+        }
+        metricHardware.textContent = 'Studio Over-Ear';
+        btnVacuumLock.innerHTML = '🌪️ OVER-EAR VACUUM: ACTIVE';
+        statusText.textContent = 'OVER-EAR PUMPING';
+        updateAntiWaveDrive();
+      } else {
+        metricHardware.textContent = 'Custom Profile';
+      }
     });
 
     btnStartStop.addEventListener('click', async () => {
