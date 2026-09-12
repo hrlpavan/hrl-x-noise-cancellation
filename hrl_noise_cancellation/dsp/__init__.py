@@ -13,6 +13,7 @@ from .anti_phase import AntiPhaseInverter
 from .echo_cancellation import AcousticEchoKiller
 from .fan_vacuum import FanNoiseVacuum
 from .boat_rockerz_411 import BoatRockerz411ANC
+from .acoustic_barrier import AcousticBlackoutBarrier
 from .audio_io import AudioIO, generate_synthetic_benchmark, calculate_snr
 
 __all__ = [
@@ -26,6 +27,7 @@ __all__ = [
     "AcousticEchoKiller",
     "FanNoiseVacuum",
     "BoatRockerz411ANC",
+    "AcousticBlackoutBarrier",
     "AudioIO",
     "generate_synthetic_benchmark",
     "calculate_snr",

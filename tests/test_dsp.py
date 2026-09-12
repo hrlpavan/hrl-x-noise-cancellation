@@ -21,6 +21,7 @@ from hrl_noise_cancellation.dsp.anti_phase import AntiPhaseInverter
 from hrl_noise_cancellation.dsp.echo_cancellation import AcousticEchoKiller
 from hrl_noise_cancellation.dsp.fan_vacuum import FanNoiseVacuum
 from hrl_noise_cancellation.dsp.boat_rockerz_411 import BoatRockerz411ANC
+from hrl_noise_cancellation.dsp.acoustic_barrier import AcousticBlackoutBarrier
 from hrl_noise_cancellation.silicon.h1_chip import H1AudioSilicon
 
 
@@ -217,6 +218,40 @@ class TestDSPAlgorithms(unittest.TestCase):
         sound_in_ear, atten_db = anc.cancel_environmental_sound(penetrating, anti_wave)
         self.assertEqual(len(sound_in_ear), len(room_noise))
         self.assertGreater(atten_db, 40.0, f"Expected > 40 dB cancellation, got {atten_db:.2f} dB")
+
+    def test_acoustic_blackout_barrier(self):
+        """
+        Validates the AcousticBlackoutBarrier:
+        - 0.0% mic passthrough (environmental noise blocked from headphones)
+        - Synthesizes deep velvet blackout blanket
+        - Synthesizes pure anti-harmonic sinewave with zero mic noise
+        - Measures >90% psychoacoustic masking ratio
+        """
+        barrier = AcousticBlackoutBarrier(sample_rate=48000, shield_intensity=0.85)
+
+        # 1. Test environmental noise analysis (WITHOUT passthrough)
+        mic_room_noise = [0.25 * math.sin(2 * math.pi * 120 * i / 48000) for i in range(2400)]
+        profile = barrier.detect_room_noise_profile(mic_room_noise)
+        self.assertEqual(profile["leakage_allowed"], 0.0, "Mic pass-through must be 0.0%")
+        self.assertAlmostEqual(profile["peak_hz"], 120.0, delta=15.0)
+
+        # 2. Test blackout blanket generation
+        blanket = barrier.generate_blackout_blanket(num_samples=2400)
+        self.assertEqual(len(blanket), 2400)
+        self.assertGreater(max(abs(x) for x in blanket), 0.01)
+
+        # 3. Test pure anti-harmonic synthesis
+        anti_tone = barrier.generate_pure_anti_harmonic(fundamental_hz=120.0, num_samples=2400)
+        self.assertEqual(len(anti_tone), 2400)
+        # Anti-tone must be smooth (no sudden discontinuities / noise spikes)
+        diffs = [abs(anti_tone[i] - anti_tone[i - 1]) for i in range(1, len(anti_tone))]
+        self.assertLess(max(diffs), 0.1)
+
+        # 4. Isolation evaluation
+        iso = barrier.evaluate_isolation(mic_room_noise, blanket)
+        self.assertEqual(iso["passthrough_pct"], 0.0)
+        self.assertGreater(iso["masking_pct"], 80.0)
+        self.assertGreater(iso["attenuation_db"], 40.0)
 
 
 if __name__ == "__main__":
