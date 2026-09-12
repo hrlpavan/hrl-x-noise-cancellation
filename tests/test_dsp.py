@@ -18,6 +18,7 @@ from hrl_noise_cancellation.dsp.adaptive import NLMSFilter
 from hrl_noise_cancellation.dsp.fxlms import FxLMSFilter
 from hrl_noise_cancellation.dsp.adaptive_eq import AdaptiveEQ, PsychoacousticMasker
 from hrl_noise_cancellation.dsp.anti_phase import AntiPhaseInverter
+from hrl_noise_cancellation.dsp.echo_cancellation import AcousticEchoKiller
 
 
 class TestDSPAlgorithms(unittest.TestCase):
@@ -111,20 +112,34 @@ class TestDSPAlgorithms(unittest.TestCase):
 
     def test_anti_phase_destructive_cancellation(self):
         """
-        Validates 180° phase-inversion destructive acoustic collision:
-        Incoming environmental noise + 180° inverted anti-noise wave = complete silence.
+        Validates 180° phase-inversion destructive acoustic collision.
         """
         inverter = AntiPhaseInverter(sample_rate=self.sr, phase_degrees=180.0, delay_ms=0.0)
         anti_noise = inverter.generate_anti_noise(self.noise)
         residual = inverter.collide_and_cancel(self.noise, anti_noise)
 
-        # Destructive collision attenuation
         attenuation_db = inverter.compute_attenuation_db(self.noise, residual)
         self.assertGreater(attenuation_db, 50.0, f"Expected > 50 dB destructive cancellation, got {attenuation_db:.1f} dB")
 
-        # Verify max residual amplitude is practically zero
         max_res = max(abs(x) for x in residual)
         self.assertLess(max_res, 1e-6, "Destructive wave collision failed to zero-out noise")
+
+    def test_acoustic_echo_killer(self):
+        """
+        Validates that user speech formants are suppressed from the headphone monitor loopback,
+        preventing delayed auditory feedback and voice echo in headphones.
+        """
+        echo_killer = AcousticEchoKiller(speech_threshold_db=-30.0, voice_attenuation_db=-40.0)
+        # Speech input with high amplitude
+        speech_input = [0.4 * math.sin(2 * math.pi * 220 * i / self.sr) for i in range(1600)]
+        anti_wave = [0.1 * math.sin(2 * math.pi * 50 * i / self.sr) for i in range(1600)]
+
+        echo_free, erle = echo_killer.process(speech_input, anti_wave)
+        self.assertEqual(len(echo_free), len(anti_wave))
+
+        # Check that voice formants are suppressed by at least 30 dB
+        max_output = max(abs(x) for x in echo_free)
+        self.assertLess(max_output, 0.01, f"Expected echo output < 0.01, got {max_output}")
 
 
 if __name__ == "__main__":
