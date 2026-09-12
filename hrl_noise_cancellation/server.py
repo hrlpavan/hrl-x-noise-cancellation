@@ -38,7 +38,7 @@ def start_server(port: int = 8080, open_browser: bool = True) -> int:
         with socketserver.TCPServer(("", port), DashboardHandler) as httpd:
             url = f"http://localhost:{port}"
             print("=" * 64)
-            print("  HRL X NOISE CANCELLATION // REAL-TIME WEB DASHBOARD")
+            print("  ANUSH X HRL // REAL-TIME WEB DASHBOARD")
             print("=" * 64)
             print(f"[*] Serving web dashboard at: {url}")
             print("[*] Press Ctrl+C to stop server.")

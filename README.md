@@ -95,7 +95,7 @@ python3 -m hrl_noise_cancellation demo
 Output:
 ```
 ====================================================================
-      HRL X NOISE CANCELLATION // SYNTHETIC DSP BENCHMARK
+      ANUSH X HRL // SYNTHETIC DSP BENCHMARK
 ====================================================================
 [*] Generating synthetic test stream: 2.5s @ 16000Hz...
 [*] Base Degraded Input SNR: +3.00 dB
