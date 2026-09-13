@@ -675,6 +675,251 @@
       color: var(--text-primary);
     }
 
+    /* =========================================================================
+       4-Step Real-Time Architecture Pipeline (Apple Process Flow)
+       ========================================================================= */
+    .anc-pipeline-steps {
+      display: grid;
+      grid-template-columns: 1.15fr auto 1.35fr auto 1.35fr auto 1.2fr;
+      align-items: center;
+      gap: 0.5rem;
+      background: #fafafc;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 960px) {
+      .anc-pipeline-steps {
+        grid-template-columns: 1fr;
+        gap: 0.7rem;
+      }
+      .p-step-connector {
+        display: none;
+      }
+    }
+
+    .pipeline-step {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.65rem 0.85rem;
+      border-radius: var(--radius-sm);
+      background: #ffffff;
+      border: 1px solid var(--border-hairline);
+      transition: all 0.25s var(--spring);
+    }
+
+    .pipeline-step.active-step-1 {
+      border-color: rgba(0, 113, 227, 0.45);
+      background: rgba(0, 113, 227, 0.04);
+      box-shadow: 0 1px 6px rgba(0, 113, 227, 0.08);
+    }
+
+    .pipeline-step.active-step-2 {
+      border-color: rgba(217, 119, 6, 0.45);
+      background: rgba(217, 119, 6, 0.04);
+      box-shadow: 0 1px 6px rgba(217, 119, 6, 0.08);
+    }
+
+    .pipeline-step.active-step-3 {
+      border-color: rgba(52, 199, 89, 0.45);
+      background: rgba(52, 199, 89, 0.04);
+      box-shadow: 0 1px 6px rgba(52, 199, 89, 0.08);
+    }
+
+    .pipeline-step.normal-stop {
+      border-color: var(--border-hairline);
+      background: #f5f5f7;
+    }
+
+    .pipeline-step.normal-stop.active {
+      border-color: rgba(0, 0, 0, 0.25);
+      background: #ffffff;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+    }
+
+    .p-step-badge {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      font-size: 0.74rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .pipeline-step.active-step-1 .p-step-badge {
+      background: var(--apple-blue);
+      color: #ffffff;
+    }
+
+    .pipeline-step.active-step-2 .p-step-badge {
+      background: var(--apple-amber);
+      color: #ffffff;
+    }
+
+    .pipeline-step.active-step-3 .p-step-badge {
+      background: var(--apple-green);
+      color: #ffffff;
+    }
+
+    .pipeline-step.normal-stop.active .p-step-badge {
+      background: var(--text-primary);
+      color: #ffffff;
+    }
+
+    .p-step-content {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .p-step-header-inline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.3rem;
+    }
+
+    .p-step-title {
+      font-size: 0.80rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    .p-step-sub {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .p-step-connector {
+      width: 12px;
+      height: 2px;
+      background: var(--border-hairline);
+      position: relative;
+    }
+
+    .p-step-connector::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: -3px;
+      width: 0;
+      height: 0;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+      border-left: 5px solid var(--border-hairline);
+    }
+
+    .p-step-connector.active {
+      background: var(--apple-blue);
+    }
+
+    .p-step-connector.active::after {
+      border-left-color: var(--apple-blue);
+    }
+
+    /* Live Microphone VU Meter */
+    .mic-vu-container {
+      width: 38px;
+      height: 6px;
+      background: rgba(0, 0, 0, 0.08);
+      border-radius: 3px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .vu-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #34c759, #d97706, #d60000);
+      border-radius: 3px;
+      transition: width 0.04s linear;
+    }
+
+    /* Source Selector segment */
+    .source-selector-segment {
+      display: flex;
+      gap: 0.4rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .source-btn {
+      flex: 1;
+      padding: 0.52rem 0.75rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+      background: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .source-btn.active {
+      background: var(--apple-blue);
+      color: #ffffff;
+      border-color: var(--apple-blue);
+      font-weight: 600;
+      box-shadow: 0 1px 4px rgba(0, 113, 227, 0.25);
+    }
+
+    /* Lifecycle Alert Banner */
+    .condition-alert {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.78rem;
+      padding: 0.65rem 1rem;
+      border-radius: var(--radius-sm);
+      background: #f5f5f7;
+      border: 1px solid var(--border-hairline);
+      color: var(--text-secondary);
+      margin-bottom: 1.2rem;
+      line-height: 1.4;
+      transition: all 0.25s ease;
+    }
+
+    .condition-alert.active-anc {
+      background: rgba(52, 199, 89, 0.08);
+      border-color: rgba(52, 199, 89, 0.3);
+      color: #156627;
+    }
+
+    .condition-alert.active-anc strong {
+      color: #0e4c1c;
+    }
+
+    .condition-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .condition-alert.active-anc .condition-dot {
+      background: var(--apple-green);
+      box-shadow: 0 0 6px rgba(52, 199, 89, 0.6);
+    }
+
         /* Main Studio Visualizer Card */
     .studio-card {
       background: var(--bg-primary);
@@ -1527,9 +1772,57 @@
       </div>
     </div>
 
-    <!-- Clear Guidance Banner -->
-    <div class="audio-hint-pill">
-      <span>💡 <strong>Real-Time Acoustic Test:</strong> Listen through your speakers or headphones. When ANC is <strong>ACTIVE</strong>, the 180° inverted anti-wave destroys the fan sound to silence. Toggle to <strong>OFF</strong> to hear the raw ambient fan drone!</span>
+    <!-- 4-Step Interactive Real-Time Architecture Pipeline -->
+    <div class="anc-pipeline-steps" id="ancPipelineSteps">
+      <!-- Step 1: Activate ANC -->
+      <div class="pipeline-step active-step-1" id="pStep1">
+        <div class="p-step-badge" id="pBadge1">1</div>
+        <div class="p-step-content">
+          <span class="p-step-title">1. Activate ANC</span>
+          <span class="p-step-sub" id="pStep1Sub">H1 Silicon Core Active</span>
+        </div>
+      </div>
+      <div class="p-step-connector active" id="pConn1"></div>
+
+      <!-- Step 2: Realtime Mic Input -->
+      <div class="pipeline-step active-step-2" id="pStep2">
+        <div class="p-step-badge" id="pBadge2">2</div>
+        <div class="p-step-content">
+          <div class="p-step-header-inline">
+            <span class="p-step-title">2. Realtime Noise</span>
+            <div class="mic-vu-container" id="micVuContainer">
+              <div class="vu-bar" id="vuBar"></div>
+            </div>
+          </div>
+          <span class="p-step-sub" id="pStep2Sub">🎙️ Sampling Mic Noise x(t)</span>
+        </div>
+      </div>
+      <div class="p-step-connector active" id="pConn2"></div>
+
+      <!-- Step 3: Create Anti-Wave -->
+      <div class="pipeline-step active-step-3" id="pStep3">
+        <div class="p-step-badge" id="pBadge3">3</div>
+        <div class="p-step-content">
+          <span class="p-step-title">3. Create Anti-Wave</span>
+          <span class="p-step-sub" id="pStep3Sub">⚡ 180° Inversion -x(t)</span>
+        </div>
+      </div>
+      <div class="p-step-connector" id="pConn3"></div>
+
+      <!-- Step 4: Normal Stopped Condition -->
+      <div class="pipeline-step normal-stop" id="pStep4">
+        <div class="p-step-badge" id="pBadge4">↺</div>
+        <div class="p-step-content">
+          <span class="p-step-title">Turn Off: Normal State</span>
+          <span class="p-step-sub" id="pStep4Sub">Revert to Stopped Condition</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Status & Guidance Banner -->
+    <div class="condition-alert active-anc" id="conditionAlert">
+      <span class="condition-dot" id="conditionDot"></span>
+      <span id="conditionText"><strong>Step Pipeline Active:</strong> 1. ANC Active → 2. Sampling realtime noise from microphone x(t) → 3. Synthesizing 180° anti-wave -x(t) to annihilate noise. Turn OFF to return to normal stopped condition.</span>
     </div>
 
     <!-- Main Studio Card -->
@@ -1601,12 +1894,26 @@
             <button data-device="reference">Reference Studio</button>
           </div>
 
-          <div class="control-group-title">Acoustic Noise Source</div>
-          <div class="card-segment" id="segmentFan">
-            <button class="active" data-fan="ceiling">Ceiling (120Hz)</button>
-            <button data-fan="table">Table (220Hz)</button>
-            <button data-fan="ac">AC (65Hz)</button>
-            <button data-fan="pc">PC (450Hz)</button>
+          <div class="control-group-title">Real-Time Noise Input Source</div>
+          <div class="source-selector-segment" id="segmentSource">
+            <button class="source-btn active" data-source="mic" id="btnSourceMic">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+              Real-Time Mic
+            </button>
+            <button class="source-btn" data-source="fan" id="btnSourceFan">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              Fan Simulation
+            </button>
+          </div>
+
+          <div id="fanPresetsContainer" style="display: none;">
+            <div class="control-group-title">Fan Frequency Preset</div>
+            <div class="card-segment" id="segmentFan">
+              <button class="active" data-fan="ceiling">Ceiling (120Hz)</button>
+              <button data-fan="table">Table (220Hz)</button>
+              <button data-fan="ac">AC (65Hz)</button>
+              <button data-fan="pc">PC (450Hz)</button>
+            </div>
           </div>
         </div>
       </div>
@@ -2062,11 +2369,19 @@
         power: 1.30,
         volume: 0.30,
         musicActive: false,
-        micActive: false,
         fanFreq: 120,
         fanName: 'Ceiling Fan (120 Hz)',
+        activeSource: 'mic', // 'mic' (default live microphone) or 'fan'
+        micActive: false,
+        micLevel: 0.0,
+        micPermission: 'prompt', // 'prompt', 'granted', 'denied'
         baseAtten: -48.2
       };
+
+      // Microphone Audio Nodes
+      let micStream = null;
+      let micSourceNode = null;
+      let micGainNode = null;
 
       // --- DOM Cache ---
       const btnAncToggle = document.getElementById('btnAncToggle');
@@ -2245,10 +2560,75 @@
           fanOscHarmonic2.start();
           fanNoiseSource.start();
 
+          // If starting with mic, initially duck synthetic fan
+          if (state.activeSource === 'mic') {
+            fanMasterGain.gain.setValueAtTime(0.0, audioCtx.currentTime);
+          }
+
           console.log('[✓] Real Web Audio 180° Destructive Interference Engine Online at 48 kHz');
         } catch (e) {
           console.warn('AudioContext initialization notice:', e);
         }
+      }
+
+      // --- Real-Time Microphone Capture Pipeline ---
+      async function startMicrophone() {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          console.warn('getUserMedia is not supported on this device/browser.');
+          return false;
+        }
+        try {
+          unlockAudio();
+          micStream = await navigator.mediaDevices.getUserMedia({
+            audio: {
+              echoCancellation: false,
+              noiseSuppression: false,
+              autoGainControl: false
+            }
+          });
+          if (!audioCtx) initAudio();
+          if (audioCtx && audioCtx.state === 'suspended') await audioCtx.resume();
+
+          if (micSourceNode) {
+            try { micSourceNode.disconnect(); } catch (e) {}
+          }
+          micSourceNode = audioCtx.createMediaStreamSource(micStream);
+          if (!micGainNode) {
+            micGainNode = audioCtx.createGain();
+            micGainNode.gain.setValueAtTime(1.0, audioCtx.currentTime);
+          }
+          micSourceNode.connect(micGainNode);
+
+          // Route microphone into Raw Analyser (for live Amber waveform and spectrum)
+          micGainNode.connect(rawFanAnalyser);
+
+          // Route microphone into 180° Anti-Wave Inversion Path
+          micGainNode.connect(antiWaveGain);
+
+          state.micActive = true;
+          state.micPermission = 'granted';
+          return true;
+        } catch (err) {
+          console.warn('Microphone permission denied or unavailable:', err);
+          state.micPermission = 'denied';
+          state.micActive = false;
+          return false;
+        }
+      }
+
+      function stopMicrophone() {
+        if (micStream) {
+          micStream.getTracks().forEach(t => t.stop());
+          micStream = null;
+        }
+        if (micSourceNode) {
+          try { micSourceNode.disconnect(); } catch (e) {}
+          micSourceNode = null;
+        }
+        state.micActive = false;
+        state.micLevel = 0.0;
+        const vuBar = document.getElementById('vuBar');
+        if (vuBar) vuBar.style.width = '0%';
       }
 
       function unlockAudio() {
@@ -2260,6 +2640,82 @@
 
       document.addEventListener('click', unlockAudio, { once: true });
       document.addEventListener('touchstart', unlockAudio, { once: true });
+
+      // --- 4-Step Architecture Lifecycle Controller ---
+      function updateStepFlowUI() {
+        const pStep1 = document.getElementById('pStep1');
+        const pStep2 = document.getElementById('pStep2');
+        const pStep3 = document.getElementById('pStep3');
+        const pStep4 = document.getElementById('pStep4');
+        const pConn1 = document.getElementById('pConn1');
+        const pConn2 = document.getElementById('pConn2');
+        const pConn3 = document.getElementById('pConn3');
+
+        const pStep1Sub = document.getElementById('pStep1Sub');
+        const pStep2Sub = document.getElementById('pStep2Sub');
+        const pStep3Sub = document.getElementById('pStep3Sub');
+        const pStep4Sub = document.getElementById('pStep4Sub');
+
+        const condAlert = document.getElementById('conditionAlert');
+        const condText = document.getElementById('conditionText');
+        const micVu = document.getElementById('micVuContainer');
+
+        if (state.ancActive) {
+          if (pStep1) pStep1.className = 'pipeline-step active-step-1';
+          if (pStep2) pStep2.className = 'pipeline-step active-step-2';
+          if (pStep3) pStep3.className = 'pipeline-step active-step-3';
+          if (pStep4) pStep4.className = 'pipeline-step normal-stop';
+
+          if (pConn1) pConn1.classList.add('active');
+          if (pConn2) pConn2.classList.add('active');
+          if (pConn3) pConn3.classList.remove('active');
+
+          if (pStep1Sub) pStep1Sub.textContent = 'H1 Silicon Core Active';
+          if (pStep2Sub) {
+            if (state.activeSource === 'mic' && state.micActive) {
+              pStep2Sub.textContent = '🎙️ Live 48 kHz Mic Feed';
+              if (micVu) micVu.style.display = 'block';
+            } else if (state.activeSource === 'mic' && state.micPermission === 'denied') {
+              pStep2Sub.textContent = '⚠️ Mic Denied (Fallback)';
+              if (micVu) micVu.style.display = 'none';
+            } else {
+              pStep2Sub.textContent = '💨 ' + state.fanName;
+              if (micVu) micVu.style.display = 'none';
+            }
+          }
+          if (pStep3Sub) pStep3Sub.textContent = '⚡ 180° Inverted Anti-Wave';
+          if (pStep4Sub) pStep4Sub.textContent = 'Click Switch to Stop';
+
+          if (condAlert) condAlert.className = 'condition-alert active-anc';
+          if (condText) {
+            condText.innerHTML = '<strong>Step Pipeline Active:</strong> 1. ANC Active → 2. Sampling realtime noise ' +
+              (state.activeSource === 'mic' ? 'from microphone x(t)' : 'from fan simulator x(t)') +
+              ' → 3. Synthesizing 180° anti-wave -x(t) to annihilate noise. Turn OFF to return to normal stopped condition.';
+          }
+        } else {
+          // NORMAL STOPPED CONDITION
+          // "while turn of it must go back to normal condition almost stoped condition."
+          if (pStep1) pStep1.className = 'pipeline-step';
+          if (pStep2) pStep2.className = 'pipeline-step';
+          if (pStep3) pStep3.className = 'pipeline-step';
+          if (pStep4) pStep4.className = 'pipeline-step normal-stop active';
+
+          if (pConn1) pConn1.classList.remove('active');
+          if (pConn2) pConn2.classList.remove('active');
+          if (pConn3) pConn3.classList.remove('active');
+
+          if (pStep1Sub) pStep1Sub.textContent = 'Silicon Core Idle';
+          if (pStep2Sub) pStep2Sub.textContent = 'Microphone Idle (Stopped)';
+          if (pStep3Sub) pStep3Sub.textContent = 'Anti-Wave Stopped (0.0°)';
+          if (pStep4Sub) pStep4Sub.textContent = '● Normal Condition (At Rest)';
+
+          if (micVu) micVu.style.display = 'none';
+          if (condAlert) condAlert.className = 'condition-alert';
+          if (condText) {
+            condText.innerHTML = '<strong>Normal Stopped Condition:</strong> Silicon core idle, microphone capture released, and anti-wave stopped. Toggle switch above to activate real-time ANC.';
+          }
+        }
+      }
 
       // --- Synchronized Master ANC Switch Update ---
       function updateAncUI() {
@@ -2299,29 +2755,66 @@
           // Studio HUD Switch
           studioAncBtn.classList.remove('active');
           studioSwitch.classList.remove('active');
-          studioAncStatus.textContent = '○ BYPASSED — Raw Ambient Drone Passing Through';
+          studioAncStatus.textContent = '○ Normal Condition — Silicon Idle & Anti-Wave Stopped';
           studioAncStatus.className = 'anc-sub-status inactive';
 
           // Telemetry
-          telemetryAtten.textContent = '0.0 dB (Pass-Through)';
+          telemetryAtten.textContent = '0.0 dB (Stopped)';
           telemetryAtten.className = 'telemetry-val';
-          telemetryPhase.textContent = '0.0° In-Phase';
+          telemetryPhase.textContent = '0.0° (Deactivated)';
           telemetryPhase.className = 'telemetry-val';
         }
+
+        updateStepFlowUI();
+      }
+
+      // --- Unified Master Toggle: Step 1 -> Step 2 -> Step 3 -> Turn OFF Normal Condition ---
+      async function handleAncToggle() {
+        unlockAudio();
+        state.ancActive = !state.ancActive;
+
+        if (state.ancActive) {
+          // STEP 1: Activate ANC
+          // STEP 2: Takes realtime noise from microphone
+          if (state.activeSource === 'mic') {
+            const ok = await startMicrophone();
+            if (ok) {
+              if (fanMasterGain) fanMasterGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.03);
+            } else {
+              // Fallback to fan simulator
+              state.activeSource = 'fan';
+              updateSourceButtons();
+              if (fanMasterGain) fanMasterGain.gain.setTargetAtTime(0.40, audioCtx.currentTime, 0.03);
+            }
+          } else {
+            if (fanMasterGain) fanMasterGain.gain.setTargetAtTime(0.40, audioCtx.currentTime, 0.03);
+          }
+
+          // STEP 3: Creates anti-wave
+          if (audioCtx && antiWaveGain) {
+            antiWaveGain.gain.setTargetAtTime(-1.0 * state.power, audioCtx.currentTime, 0.015);
+          }
+        } else {
+          // WHILE TURN OFF: Go back to normal condition, almost stopped condition!
+          stopMicrophone();
+
+          // Anti-wave stops immediately
+          if (audioCtx && antiWaveGain) {
+            antiWaveGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.015);
+          }
+
+          // Audio returns to resting normal condition
+          if (audioCtx && fanMasterGain) {
+            fanMasterGain.gain.setTargetAtTime(0.02, audioCtx.currentTime, 0.05);
+          }
+        }
+
+        updateAncUI();
       }
 
       // Synchronized Click Listeners
-      toggleWrapper.addEventListener('click', () => {
-        unlockAudio();
-        state.ancActive = !state.ancActive;
-        updateAncUI();
-      });
-
-      studioAncBtn.addEventListener('click', () => {
-        unlockAudio();
-        state.ancActive = !state.ancActive;
-        updateAncUI();
-      });
+      toggleWrapper.addEventListener('click', handleAncToggle);
+      studioAncBtn.addEventListener('click', handleAncToggle);
 
       // --- Audio Monitor Mute/Unmute ---
       btnAudioMonitor.addEventListener('click', () => {
@@ -2396,6 +2889,47 @@
           switchView(btn.dataset.view);
         });
       });
+
+      // --- Source Selector (Real-Time Mic vs Fan Simulation) ---
+      const segmentSource = document.getElementById('segmentSource');
+      const btnSourceMic = document.getElementById('btnSourceMic');
+      const btnSourceFan = document.getElementById('btnSourceFan');
+      const fanPresetsContainer = document.getElementById('fanPresetsContainer');
+
+      function updateSourceButtons() {
+        if (btnSourceMic) btnSourceMic.classList.toggle('active', state.activeSource === 'mic');
+        if (btnSourceFan) btnSourceFan.classList.toggle('active', state.activeSource === 'fan');
+        if (fanPresetsContainer) fanPresetsContainer.style.display = state.activeSource === 'fan' ? 'block' : 'none';
+        studioFreqBadge.textContent = state.activeSource === 'mic' ? '48 kHz • Real-Time Mic' : '48 kHz • ' + state.fanName;
+      }
+
+      if (btnSourceMic) {
+        btnSourceMic.addEventListener('click', async () => {
+          unlockAudio();
+          state.activeSource = 'mic';
+          updateSourceButtons();
+          if (state.ancActive) {
+            const ok = await startMicrophone();
+            if (ok && fanMasterGain) {
+              fanMasterGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.03);
+            }
+          }
+          updateStepFlowUI();
+        });
+      }
+
+      if (btnSourceFan) {
+        btnSourceFan.addEventListener('click', () => {
+          unlockAudio();
+          state.activeSource = 'fan';
+          stopMicrophone();
+          updateSourceButtons();
+          if (state.ancActive && fanMasterGain) {
+            fanMasterGain.gain.setTargetAtTime(0.40, audioCtx.currentTime, 0.03);
+          }
+          updateStepFlowUI();
+        });
+      }
 
       // --- Hardware Device Selector ---
       function selectDevice(device) {
@@ -2544,7 +3078,7 @@
         return { width, height };
       }
 
-      // 1. Waveform Superposition Renderer
+      // 1. Real-Time Waveform Superposition Renderer (Microphone + Anti-Wave + Stopped Equilibrium)
       function renderWaveforms(time) {
         const { width, height } = configureRetina(canvasWaveform);
         const ctx = canvasWaveform.getContext('2d');
@@ -2566,47 +3100,103 @@
         const omega = (cycles * 2 * Math.PI) / width;
         const phase = time * 0.005 * (freq / 60);
 
-        // Ambient Noise Wave (Amber)
-        ctx.strokeStyle = '#d97706';
-        ctx.lineWidth = 2.2;
-        ctx.beginPath();
-        for (let x = 0; x < width; x++) {
-          const y = midY - 65 * Math.sin(omega * x - phase) - 15 * Math.sin(omega * 2 * x - phase * 1.5);
-          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
+        // Live Microphone Analyser Stream
+        let micData = null;
+        const isLiveMicStreaming = state.ancActive && state.activeSource === 'mic' && state.micActive && rawFanAnalyser;
+        if (isLiveMicStreaming) {
+          micData = new Float32Array(rawFanAnalyser.fftSize);
+          rawFanAnalyser.getFloatTimeDomainData(micData);
 
-        // 180° Inverted Anti-Noise Wave (Apple Blue)
+          // Real-time RMS for microphone VU meter
+          let sumSq = 0;
+          for (let i = 0; i < micData.length; i++) {
+            sumSq += micData[i] * micData[i];
+          }
+          const rms = Math.sqrt(sumSq / micData.length);
+          const vuBar = document.getElementById('vuBar');
+          if (vuBar) {
+            const pct = Math.min(100, Math.round(rms * 450));
+            vuBar.style.width = pct + '%';
+          }
+        }
+
         if (state.ancActive) {
+          // 1. Ambient Noise Wave x(t) (Amber)
+          ctx.strokeStyle = '#d97706';
+          ctx.lineWidth = 2.2;
+          ctx.beginPath();
+          for (let x = 0; x < width; x++) {
+            let y;
+            if (isLiveMicStreaming && micData) {
+              const idx = Math.floor((x / width) * micData.length);
+              const sample = micData[idx] || 0;
+              y = midY - sample * 110;
+            } else {
+              y = midY - 65 * Math.sin(omega * x - phase) - 15 * Math.sin(omega * 2 * x - phase * 1.5);
+            }
+            if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+
+          // 2. 180° Inverted Anti-Noise Wave -x(t) (Apple Blue)
           ctx.strokeStyle = '#0071e3';
           ctx.lineWidth = 2.2;
           ctx.beginPath();
           const powerFactor = state.power;
           for (let x = 0; x < width; x++) {
-            const y = midY + 65 * powerFactor * Math.sin(omega * x - phase) + 15 * powerFactor * Math.sin(omega * 2 * x - phase * 1.5);
+            let y;
+            if (isLiveMicStreaming && micData) {
+              const idx = Math.floor((x / width) * micData.length);
+              const sample = micData[idx] || 0;
+              // Inverted: + sample * powerFactor
+              y = midY + sample * 110 * powerFactor;
+            } else {
+              y = midY + 65 * powerFactor * Math.sin(omega * x - phase) + 15 * powerFactor * Math.sin(omega * 2 * x - phase * 1.5);
+            }
             if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
           }
           ctx.stroke();
-        }
 
-        // Resultant Wave in Ear Canal (Green Silence flatline or leak)
-        ctx.strokeStyle = state.ancActive ? '#34c759' : '#d60000';
-        ctx.lineWidth = 2.8;
-        ctx.beginPath();
-        for (let x = 0; x < width; x++) {
-          let y = midY;
-          if (!state.ancActive) {
-            y = midY - 65 * Math.sin(omega * x - phase) - 15 * Math.sin(omega * 2 * x - phase * 1.5);
-          } else {
-            const leak = 3.5 * Math.sin(omega * x * 3 + time * 0.01) * (1.0 - Math.min(state.power, 1.0) * 0.95);
-            y = midY + leak;
+          // 3. Resultant Wave in Ear Canal (Green Silence flatline or leak)
+          ctx.strokeStyle = '#34c759';
+          ctx.lineWidth = 2.8;
+          ctx.beginPath();
+          for (let x = 0; x < width; x++) {
+            let y;
+            if (isLiveMicStreaming && micData) {
+              const idx = Math.floor((x / width) * micData.length);
+              const sample = micData[idx] || 0;
+              const residual = sample * (1.0 - Math.min(powerFactor, 1.0) * 0.98);
+              y = midY - residual * 110;
+            } else {
+              const leak = 3.5 * Math.sin(omega * x * 3 + time * 0.01) * (1.0 - Math.min(powerFactor, 1.0) * 0.95);
+              y = midY + leak;
+            }
+            if (state.musicActive) {
+              y += 28 * Math.sin(omega * 4.5 * x + time * 0.02);
+            }
+            if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
           }
-          if (state.musicActive) {
-            y += 28 * Math.sin(omega * 4.5 * x + time * 0.02);
+          ctx.stroke();
+        } else {
+          // NORMAL STOPPED CONDITION
+          // "while turn of it must go back to normal condition almost stoped condition."
+          // Amber wave: calm resting baseline ripple
+          ctx.strokeStyle = '#86868b';
+          ctx.lineWidth = 1.6;
+          ctx.beginPath();
+          for (let x = 0; x < width; x++) {
+            // Calm, near-flat resting baseline representing stopped equilibrium
+            const y = midY - 3.2 * Math.sin(x * 0.015 + time * 0.001);
+            if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
           }
-          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          ctx.stroke();
+
+          // Subtle Status Watermark
+          ctx.font = '500 11px -apple-system, BlinkMacSystemFont, sans-serif';
+          ctx.fillStyle = '#86868b';
+          ctx.fillText('NORMAL CONDITION (STOPPED) — Anti-Wave Inactive • Silicon Core at Rest', 24, midY - 14);
         }
-        ctx.stroke();
 
         // Center Axis
         ctx.strokeStyle = 'rgba(0, 0, 0, 0.15)';
