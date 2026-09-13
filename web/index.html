@@ -69,7 +69,7 @@
     }
 
     /* =========================================================================
-       1. Apple Developer Global Navigation (#globalnav)
+       1. Apple Developer Global Navigation (#globalnav) - Uncluttered, Pure Apple
        ========================================================================= */
     #globalnav {
       background: #1d1d1f;
@@ -101,35 +101,15 @@
       font-size: 0.88rem;
       font-weight: 500;
       letter-spacing: -0.01em;
+      white-space: nowrap;
     }
 
-    /* Pixel-perfect fixed Apple Vector Logo */
+    /* Pixel-perfect canonical Apple Vector Logo */
     .globalnav-apple-logo {
       width: 16px;
       height: 16px;
       fill: currentColor;
       display: block;
-    }
-
-    .globalnav-links {
-      display: flex;
-      align-items: center;
-      gap: 1.8rem;
-      list-style: none;
-    }
-
-    .globalnav-links a {
-      color: #a1a1a6;
-      text-decoration: none;
-      font-size: 0.76rem;
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      transition: color 0.15s ease;
-    }
-
-    .globalnav-links a:hover,
-    .globalnav-links a.active {
-      color: #ffffff;
     }
 
     .globalnav-partner {
@@ -140,6 +120,7 @@
       padding: 0.25rem 0.65rem;
       border-radius: var(--radius-pill);
       border: 0.5px solid rgba(255, 255, 255, 0.15);
+      white-space: nowrap;
     }
 
     .globalnav-partner img.anush {
@@ -171,7 +152,7 @@
     }
 
     /* =========================================================================
-       2. Apple Product Framework Navigation Bar (#localnav)
+       2. Apple Product Framework Navigation Bar (#localnav) - Single-Line, Pristine
        ========================================================================= */
     #localnav {
       background: rgba(255, 255, 255, 0.82);
@@ -192,12 +173,15 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 1.5rem;
     }
 
     .localnav-left {
       display: flex;
-      align-items: baseline;
-      gap: 0.8rem;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .localnav-title {
@@ -206,27 +190,41 @@
       color: var(--text-primary);
       letter-spacing: -0.02em;
       text-decoration: none;
+      white-space: nowrap;
     }
 
-    .localnav-subtitle {
-      font-size: 0.8rem;
+    .localnav-tag {
+      font-size: 0.75rem;
       font-weight: 500;
       color: var(--text-muted);
-      letter-spacing: -0.01em;
+      background: #f0f0f4;
+      padding: 2px 7px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .localnav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+      white-space: nowrap;
     }
 
     .localnav-menu {
       display: flex;
       align-items: center;
-      gap: 1.4rem;
+      gap: 1.5rem;
       list-style: none;
+      white-space: nowrap;
     }
 
     .localnav-menu a {
       color: var(--text-secondary);
       text-decoration: none;
-      font-size: 0.78rem;
+      font-size: 0.82rem;
       font-weight: 400;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
       transition: color 0.15s ease;
     }
 
@@ -237,7 +235,9 @@
     .localnav-actions {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.9rem;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .localnav-status-chip {
@@ -248,9 +248,10 @@
       font-family: var(--font-mono);
       color: var(--text-secondary);
       background: var(--bg-secondary);
-      padding: 0.25rem 0.75rem;
+      padding: 0.22rem 0.65rem;
       border-radius: var(--radius-pill);
       border: 1px solid var(--border-light);
+      white-space: nowrap;
     }
 
     .status-dot {
@@ -260,6 +261,7 @@
       background: var(--apple-green);
       box-shadow: 0 0 6px rgba(52, 199, 89, 0.6);
       transition: background-color 0.2s, box-shadow 0.2s;
+      flex-shrink: 0;
     }
 
     .status-dot.inactive {
@@ -278,6 +280,8 @@
       padding: 2px 3px;
       cursor: pointer;
       user-select: none;
+      white-space: nowrap;
+      flex-shrink: 0;
       transition: all 0.25s var(--spring);
     }
 
@@ -293,6 +297,7 @@
       border-radius: 50%;
       box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
       transition: transform 0.25s var(--spring);
+      flex-shrink: 0;
     }
 
     .master-anc-pill.active .toggle-knob {
@@ -305,6 +310,7 @@
       letter-spacing: 0.02em;
       color: #1d1d1f;
       padding: 0 8px;
+      white-space: nowrap;
       transition: color 0.2s;
     }
 
@@ -1201,7 +1207,7 @@
 <body>
 
   <!-- =======================================================================
-       1. Apple Developer Global Navigation Bar
+       1. Apple Developer Global Navigation Bar (Uncluttered, Pristine)
        ======================================================================= -->
   <nav id="globalnav">
     <div class="globalnav-content">
@@ -1213,15 +1219,7 @@
         <span>Developer</span>
       </a>
 
-      <ul class="globalnav-links">
-        <li><a href="#overview">Overview</a></li>
-        <li><a href="#swift-api">Swift API</a></li>
-        <li><a href="#studio">Acoustic Studio</a></li>
-        <li><a href="#physics">Physics</a></li>
-        <li><a href="#specs">Hardware Specs</a></li>
-        <li><a href="https://github.com/hrlpavan/hrl-x-noise-cancellation" target="_blank">GitHub</a></li>
-      </ul>
-
+      <!-- Anush Atmos × HRL Co-Branding Lockup -->
       <div class="globalnav-partner" title="Anush Atmos × HRL Acoustic Engineering Partnership">
         <img src="assets/anush_atmos_tight.png" alt="Anush Atmos" class="anush" />
         <span class="divider">×</span>
@@ -1232,33 +1230,35 @@
   </nav>
 
   <!-- =======================================================================
-       2. Apple Product Framework Navigation Bar (#localnav)
+       2. Apple Product Framework Navigation Bar (#localnav) (Single-Line, Zero-Clutter)
        ======================================================================= -->
   <nav id="localnav">
     <div class="localnav-content">
       <div class="localnav-left">
         <a href="#overview" class="localnav-title">ANC Software</a>
-        <span class="localnav-subtitle">Framework & Audio Silicon Core</span>
+        <span class="localnav-tag">Silicon Core</span>
       </div>
 
-      <ul class="localnav-menu">
-        <li><a href="#overview">Overview</a></li>
-        <li><a href="#swift-api">Swift Architecture</a></li>
-        <li><a href="#studio">Acoustic Studio</a></li>
-        <li><a href="#physics">Branch Physics</a></li>
-        <li><a href="#specs">boAt 411 Calibration</a></li>
-      </ul>
+      <div class="localnav-right">
+        <ul class="localnav-menu">
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#swift-api">Swift API</a></li>
+          <li><a href="#studio">Studio</a></li>
+          <li><a href="#physics">Physics</a></li>
+          <li><a href="#specs">boAt 411</a></li>
+        </ul>
 
-      <div class="localnav-actions">
-        <div class="localnav-status-chip">
-          <span class="status-dot" id="localNavDot"></span>
-          <span id="localNavStatusText">HRL-H1 CORE: ACTIVE • 12.4μs • 48 kHz</span>
-        </div>
+        <div class="localnav-actions">
+          <div class="localnav-status-chip" title="Silicon Hardware Clock & Latency">
+            <span class="status-dot" id="localNavDot"></span>
+            <span id="localNavStatusText">48 kHz • 12.4μs</span>
+          </div>
 
-        <!-- Master ANC Apple Pill Switch -->
-        <div class="master-anc-pill active" id="btnAncToggle" title="Toggle Active Noise Cancellation System">
-          <div class="toggle-knob"></div>
-          <span class="toggle-label" id="statusText">ANC ACTIVE</span>
+          <!-- Master ANC Apple Pill Switch -->
+          <div class="master-anc-pill active" id="btnAncToggle" title="Toggle Active Noise Cancellation System">
+            <div class="toggle-knob"></div>
+            <span class="toggle-label" id="statusText">ANC ACTIVE</span>
+          </div>
         </div>
       </div>
     </div>
@@ -1955,7 +1955,7 @@
           btnAncToggle.classList.add('active');
           statusText.textContent = 'ANC ACTIVE';
           localNavDot.classList.remove('inactive');
-          localNavStatusText.textContent = 'HRL-H1 CORE: ACTIVE • 12.4μs • 48 kHz';
+          localNavStatusText.textContent = '48 kHz • 12.4μs';
           telemetryAtten.textContent = (state.baseAtten * (state.power / 1.30)).toFixed(1) + ' dB';
           telemetryAtten.className = 'telemetry-val green';
           telemetryPhase.textContent = '180.0° Anti-Phase';
@@ -1964,7 +1964,7 @@
           btnAncToggle.classList.remove('active');
           statusText.textContent = 'ANC OFF';
           localNavDot.classList.add('inactive');
-          localNavStatusText.textContent = 'HRL-H1 CORE: BYPASSED • 0.0μs • 48 kHz';
+          localNavStatusText.textContent = 'BYPASSED • 0.0μs';
           telemetryAtten.textContent = '0.0 dB (Pass-Through)';
           telemetryAtten.className = 'telemetry-val';
           telemetryPhase.textContent = '0.0° In-Phase';
