@@ -69,7 +69,7 @@
     }
 
     /* =========================================================================
-       1. Apple Developer Global Navigation (#globalnav) - Uncluttered, Pure Apple
+       1. Apple Developer Global Navigation (#globalnav) - Authentic Apple Standard
        ========================================================================= */
     #globalnav {
       background: #1d1d1f;
@@ -95,20 +95,18 @@
     .globalnav-brand {
       display: flex;
       align-items: center;
-      gap: 0.55rem;
-      color: #f5f5f7;
       text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 500;
-      letter-spacing: -0.01em;
-      white-space: nowrap;
+      transition: opacity 0.15s ease;
     }
 
-    /* Pixel-perfect canonical Apple Vector Logo */
-    .globalnav-apple-logo {
-      width: 16px;
-      height: 16px;
-      fill: currentColor;
+    .globalnav-brand:hover {
+      opacity: 0.85;
+    }
+
+    /* Official Apple Developer Brandmark Vector */
+    .apple-developer-brandmark {
+      height: 20px;
+      width: auto;
       display: block;
     }
 
@@ -116,43 +114,36 @@
       display: flex;
       align-items: center;
       gap: 0.65rem;
-      background: rgba(255, 255, 255, 0.08);
-      padding: 0.25rem 0.65rem;
-      border-radius: var(--radius-pill);
-      border: 0.5px solid rgba(255, 255, 255, 0.15);
       white-space: nowrap;
     }
 
-    .globalnav-partner img.anush {
-      height: 16px;
-      width: auto;
-      filter: brightness(0) invert(1);
+    .partner-title {
+      color: #e5e5ea;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
     }
 
-    .globalnav-partner .divider {
-      color: #6e6e73;
-      font-size: 0.7rem;
+    .partner-x {
+      color: #86868b;
+      font-weight: 300;
+      padding: 0 0.15rem;
     }
 
-    .globalnav-partner img.hrl {
-      height: 16px;
-      width: auto;
-      filter: brightness(0) invert(1);
-    }
-
-    .globalnav-partner .chip {
-      font-size: 0.65rem;
+    .chip {
+      font-size: 0.68rem;
       font-weight: 600;
+      font-family: var(--font-mono);
       color: #34c759;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      background: rgba(52, 199, 89, 0.15);
-      padding: 2px 6px;
-      border-radius: 4px;
+      background: rgba(52, 199, 89, 0.14);
+      border: 1px solid rgba(52, 199, 89, 0.28);
+      padding: 2px 7px;
+      border-radius: 5px;
+      letter-spacing: 0.02em;
     }
 
     /* =========================================================================
-       2. Apple Product Framework Navigation Bar (#localnav) - Single-Line, Pristine
+       2. Apple Product Framework Navigation Bar (#localnav) - Authentic Apple Switch
        ========================================================================= */
     #localnav {
       background: rgba(255, 255, 255, 0.82);
@@ -179,7 +170,7 @@
     .localnav-left {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
       white-space: nowrap;
       flex-shrink: 0;
     }
@@ -194,19 +185,20 @@
     }
 
     .localnav-tag {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 500;
       color: var(--text-muted);
       background: #f0f0f4;
       padding: 2px 7px;
       border-radius: 6px;
       white-space: nowrap;
+      border: 1px solid var(--border-light);
     }
 
     .localnav-right {
       display: flex;
       align-items: center;
-      gap: 1.6rem;
+      gap: 1.8rem;
       white-space: nowrap;
     }
 
@@ -235,7 +227,7 @@
     .localnav-actions {
       display: flex;
       align-items: center;
-      gap: 0.9rem;
+      gap: 1rem;
       white-space: nowrap;
       flex-shrink: 0;
     }
@@ -269,53 +261,60 @@
       box-shadow: none;
     }
 
-    /* Master Apple Pill Toggle Switch */
-    .master-anc-pill {
-      display: flex;
+    /* Authentic Apple iOS/macOS Toggle Switch Control */
+    .apple-toggle-wrapper {
+      display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      background: #e5e5ea;
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-pill);
-      padding: 2px 3px;
-      cursor: pointer;
+      gap: 0.6rem;
       user-select: none;
       white-space: nowrap;
-      flex-shrink: 0;
-      transition: all 0.25s var(--spring);
+      cursor: pointer;
     }
 
-    .master-anc-pill.active {
-      background: var(--apple-blue);
-      border-color: var(--apple-blue);
-    }
-
-    .master-anc-pill .toggle-knob {
-      width: 22px;
-      height: 22px;
-      background: #ffffff;
-      border-radius: 50%;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
-      transition: transform 0.25s var(--spring);
-      flex-shrink: 0;
-    }
-
-    .master-anc-pill.active .toggle-knob {
-      transform: translateX(38px);
-    }
-
-    .master-anc-pill .toggle-label {
-      font-size: 0.72rem;
+    .apple-toggle-label {
+      font-size: 0.78rem;
       font-weight: 600;
-      letter-spacing: 0.02em;
-      color: #1d1d1f;
-      padding: 0 8px;
-      white-space: nowrap;
+      color: var(--text-primary);
+      letter-spacing: 0.01em;
       transition: color 0.2s;
     }
 
-    .master-anc-pill.active .toggle-label {
-      color: #ffffff;
+    .apple-switch {
+      position: relative;
+      width: 44px;
+      height: 25px;
+      border-radius: 999px;
+      background-color: #e5e5ea;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      cursor: pointer;
+      outline: none;
+      transition: background-color 0.25s var(--spring), border-color 0.25s ease;
+      padding: 0;
+      display: block;
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
+
+    .apple-switch.active {
+      background-color: var(--apple-blue);
+      border-color: var(--apple-blue);
+    }
+
+    .apple-switch-thumb {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 19px;
+      height: 19px;
+      border-radius: 50%;
+      background-color: #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), 0 0 1px rgba(0, 0, 0, 0.2);
+      transition: transform 0.25s var(--spring);
+      pointer-events: none;
+    }
+
+    .apple-switch.active .apple-switch-thumb {
+      transform: translateX(19px);
     }
 
     /* =========================================================================
@@ -1207,30 +1206,37 @@
 <body>
 
   <!-- =======================================================================
-       1. Apple Developer Global Navigation Bar (Uncluttered, Pristine)
+       1. Apple Developer Global Navigation Bar (Official Brandmark & Partner Lockup)
        ======================================================================= -->
   <nav id="globalnav">
     <div class="globalnav-content">
       <a href="https://developer.apple.com/" class="globalnav-brand" title="Apple Developer Home">
-        <!-- Canonical Apple Vector Logo (Flawless 24x24 standard) -->
-        <svg class="globalnav-apple-logo" viewBox="0 0 24 24" width="16" height="16">
-          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.36c.64-.78 1.08-1.86.96-2.95-1 .04-2.14.67-2.81 1.46-.59.68-1.1 1.77-.96 2.84 1.12.09 2.17-.57 2.81-1.35z"/>
+        <!-- Official Apple Developer Brandmark Vector (developer.apple.com) -->
+        <svg class="apple-developer-brandmark" viewBox="0 0 520 98" width="115" height="21" fill="#ffffff" aria-label="Apple Developer">
+          <path fill="#ffffff" d="M104.386,5.511c21.72,0,34.579,13.366,34.579,36.402c0,23.087-12.81,36.655-34.579,36.655H78.615V5.511H104.386z M89.956,68.747h13.366c15.492,0,24.049-9.467,24.049-26.731c0-17.214-8.607-26.732-24.049-26.732H89.956V68.747z"/>
+          <path fill="#ffffff" d="M192.603,62.925c-1.519,9.721-10.733,16.657-22.935,16.657c-15.645,0-25.111-10.581-25.111-27.391c0-16.707,9.619-27.846,24.656-27.846c14.783,0,23.997,10.43,23.997,26.58v3.747h-37.616v0.658c0,9.265,5.568,15.391,14.327,15.391c6.228,0,10.835-3.139,12.303-7.797H192.603z M155.644,47.027h26.631c-0.253-8.15-5.417-13.872-13.062-13.872C161.568,33.155,156.201,38.977,155.644,47.027z"/>
+          <path fill="#ffffff" d="M226.184,78.569h-11.746l-19.188-53.262h11.645l13.366,42.579h0.203l13.365-42.579h11.442L226.184,78.569z"/>
+          <path fill="#ffffff" d="M294.317,62.925c-1.519,9.721-10.733,16.657-22.935,16.657c-15.644,0-25.111-10.581-25.111-27.391c0-16.707,9.619-27.846,24.656-27.846c14.783,0,23.997,10.43,23.997,26.58v3.747h-37.616v0.658c0,9.265,5.568,15.391,14.327,15.391c6.228,0,10.835-3.139,12.303-7.797H294.317z M257.359,47.027h26.63c-0.253-8.15-5.417-13.872-13.062-13.872C263.282,33.155,257.916,38.977,257.359,47.027z"/>
+          <path fill="#ffffff" d="M302.651,5.511h10.936v73.058h-10.936V5.511z"/>
+          <path fill="#ffffff" d="M320.998,51.938c0-17.112,10.075-27.593,25.264-27.593s25.264,10.48,25.264,27.593c0,17.163-10.024,27.644-25.264,27.644S320.998,69.101,320.998,51.938z M360.386,51.938c0-11.796-5.569-18.58-14.125-18.58c-8.557,0-14.126,6.784-14.126,18.58c0,11.848,5.569,18.632,14.126,18.632C354.868,70.57,360.386,63.786,360.386,51.938z"/>
+          <path fill="#ffffff" d="M428.915,51.938c0,16.859-8.859,27.542-22.226,27.542c-7.645,0-13.721-3.746-16.758-9.67h-0.253v26.378h-10.937V25.307h10.582v9.164h0.202c3.139-6.126,9.265-10.024,16.961-10.024C420.005,24.447,428.915,35.079,428.915,51.938z M417.676,51.938c0-11.138-5.417-18.276-14.074-18.276c-8.354,0-13.974,7.29-13.974,18.276c0,11.088,5.568,18.277,13.974,18.277C412.259,70.216,417.676,63.128,417.676,51.938z"/>
+          <path fill="#ffffff" d="M482.372,62.925c-1.519,9.721-10.733,16.657-22.935,16.657c-15.645,0-25.111-10.581-25.111-27.391c0-16.707,9.619-27.846,24.656-27.846c14.783,0,23.997,10.43,23.997,26.58v3.747h-37.616v0.658c0,9.265,5.568,15.391,14.327,15.391c6.228,0,10.835-3.139,12.303-7.797H482.372z M445.413,47.027h26.631c-0.253-8.15-5.417-13.872-13.062-13.872C451.337,33.155,445.97,38.977,445.413,47.027z"/>
+          <path fill="#ffffff" d="M490.923,25.307h10.43v9.062h0.253c1.772-6.227,6.531-9.923,12.81-9.923c1.569,0,2.937,0.253,3.746,0.405v10.176c-0.86-0.354-2.784-0.607-4.911-0.607c-7.037,0-11.391,4.709-11.391,12.252v31.896h-10.937V25.307z"/>
+          <path fill="#ffffff" d="M47.896,19.129c-6.518-0.482-12.048,3.641-15.133,3.641c-3.13,0-7.956-3.537-13.073-3.44c-6.719,0.098-12.912,3.91-16.377,9.926C-3.667,41.37,1.53,59.32,8.328,69.15c3.325,4.803,7.291,10.216,12.5,10.019c5.014-0.197,6.911-3.243,12.972-3.243c6.057,0,7.766,3.243,13.068,3.146c5.397-0.1,8.816-4.903,12.117-9.733c3.82-5.575,5.389-10.973,5.482-11.259c-0.119-0.045-10.52-4.036-10.624-16.019c-0.094-10.018,8.177-14.834,8.553-15.066C57.703,20.081,50.45,19.318,47.896,19.129z"/>
+          <path fill="#ffffff" d="M43.874,12.64C46.642,9.294,48.505,4.635,47.992,0c-3.984,0.158-8.803,2.654-11.661,5.998c-2.559,2.962-4.807,7.706-4.196,12.246C36.575,18.586,41.108,15.988,43.874,12.64z"/>
         </svg>
-        <span>Developer</span>
       </a>
 
       <!-- Anush Atmos × HRL Co-Branding Lockup -->
       <div class="globalnav-partner" title="Anush Atmos × HRL Acoustic Engineering Partnership">
-        <img src="assets/anush_atmos_tight.png" alt="Anush Atmos" class="anush" />
-        <span class="divider">×</span>
-        <img src="assets/hrl_logo_tight.png" alt="HRL" class="hrl" />
+        <span class="partner-title">Anush Atmos <span class="partner-x">×</span> HRL</span>
         <span class="chip">Swift 6</span>
       </div>
     </div>
   </nav>
 
   <!-- =======================================================================
-       2. Apple Product Framework Navigation Bar (#localnav) (Single-Line, Zero-Clutter)
+       2. Apple Product Framework Navigation Bar (#localnav) (Genuine Apple Switch)
        ======================================================================= -->
   <nav id="localnav">
     <div class="localnav-content">
@@ -1254,10 +1260,12 @@
             <span id="localNavStatusText">48 kHz • 12.4μs</span>
           </div>
 
-          <!-- Master ANC Apple Pill Switch -->
-          <div class="master-anc-pill active" id="btnAncToggle" title="Toggle Active Noise Cancellation System">
-            <div class="toggle-knob"></div>
-            <span class="toggle-label" id="statusText">ANC ACTIVE</span>
+          <!-- Genuine Apple iOS/macOS Toggle Control -->
+          <div class="apple-toggle-wrapper" id="toggleWrapper" title="Toggle Active Noise Cancellation System">
+            <span class="apple-toggle-label" id="statusText">ANC Active</span>
+            <button class="apple-switch active" id="btnAncToggle" role="switch" aria-checked="true" aria-label="Active Noise Cancellation Toggle">
+              <span class="apple-switch-thumb"></span>
+            </button>
           </div>
         </div>
       </div>
@@ -1953,7 +1961,8 @@
       function updateAncUI() {
         if (state.ancActive) {
           btnAncToggle.classList.add('active');
-          statusText.textContent = 'ANC ACTIVE';
+          btnAncToggle.setAttribute('aria-checked', 'true');
+          statusText.textContent = 'ANC Active';
           localNavDot.classList.remove('inactive');
           localNavStatusText.textContent = '48 kHz • 12.4μs';
           telemetryAtten.textContent = (state.baseAtten * (state.power / 1.30)).toFixed(1) + ' dB';
@@ -1962,9 +1971,10 @@
           telemetryPhase.className = 'telemetry-val blue';
         } else {
           btnAncToggle.classList.remove('active');
-          statusText.textContent = 'ANC OFF';
+          btnAncToggle.setAttribute('aria-checked', 'false');
+          statusText.textContent = 'ANC Off';
           localNavDot.classList.add('inactive');
-          localNavStatusText.textContent = 'BYPASSED • 0.0μs';
+          localNavStatusText.textContent = 'Bypassed';
           telemetryAtten.textContent = '0.0 dB (Pass-Through)';
           telemetryAtten.className = 'telemetry-val';
           telemetryPhase.textContent = '0.0° In-Phase';
@@ -1972,7 +1982,8 @@
         }
       }
 
-      btnAncToggle.addEventListener('click', () => {
+      const toggleWrapper = document.getElementById('toggleWrapper');
+      toggleWrapper.addEventListener('click', () => {
         state.ancActive = !state.ancActive;
         updateAncUI();
       });
