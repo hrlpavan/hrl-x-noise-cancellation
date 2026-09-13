@@ -40,3 +40,11 @@ demo_*.wav
 output_*.wav
 temp_*.wav
 benchmark_*.json
+
+# Swift build artifacts & binaries
+bin/
+.build/
+*.dylib
+*.swiftdoc
+*.swiftmodule
+
