@@ -521,7 +521,161 @@
       max-width: 720px;
     }
 
-    /* Main Studio Visualizer Card */
+    /* =========================================================================
+       Apple Studio Easy-to-Use Control Bar & Live Audio HUD
+       ========================================================================= */
+    .studio-dashboard-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.4rem;
+      margin-bottom: 1.2rem;
+      box-shadow: var(--shadow-sm);
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .studio-master-anc {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.9rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .anc-power-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(0, 113, 227, 0.1);
+      color: var(--apple-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    .studio-master-anc.active .anc-power-badge {
+      background: var(--apple-blue);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 113, 227, 0.35);
+    }
+
+    .anc-text-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .anc-main-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+
+    .anc-sub-status {
+      font-size: 0.76rem;
+      font-weight: 500;
+      color: var(--apple-green);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .anc-sub-status.inactive {
+      color: var(--text-muted);
+    }
+
+    /* Live Audio Output Monitor Controls */
+    .studio-audio-monitor {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: #fafafc;
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-light);
+    }
+
+    .audio-monitor-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: transparent;
+      border: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--apple-blue);
+      cursor: pointer;
+      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+
+    .audio-monitor-btn.muted {
+      color: var(--text-muted);
+    }
+
+    .audio-monitor-btn:hover {
+      background: rgba(0, 113, 227, 0.08);
+    }
+
+    .volume-control {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      border-left: 1px solid var(--border-light);
+      padding-left: 0.75rem;
+    }
+
+    .vol-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    input[type="range"].apple-slider.mini {
+      width: 65px;
+      height: 3px;
+    }
+
+    input[type="range"].apple-slider.mini::-webkit-slider-thumb {
+      width: 13px;
+      height: 13px;
+    }
+
+    .vol-val {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      width: 30px;
+    }
+
+    /* Helpful Guidance Banner */
+    .audio-hint-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(0, 113, 227, 0.06);
+      border: 1px solid rgba(0, 113, 227, 0.15);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 1rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.2rem;
+    }
+
+    .audio-hint-pill strong {
+      color: var(--text-primary);
+    }
+
+        /* Main Studio Visualizer Card */
     .studio-card {
       background: var(--bg-primary);
       border-radius: var(--radius-lg);
@@ -1345,6 +1499,39 @@
       </p>
     </div>
 
+    <!-- Easy-to-Use Studio Control Bar & Live Audio HUD -->
+    <div class="studio-dashboard-bar">
+      <!-- Master ANC Control -->
+      <div class="studio-master-anc active" id="studioAncBtn" title="Toggle Active Noise Cancellation">
+        <div class="anc-power-badge">⏻</div>
+        <div class="anc-text-group">
+          <span class="anc-main-title">Active Noise Cancellation</span>
+          <span class="anc-sub-status" id="studioAncStatus">● ACTIVE — -48.2 dB Noise Cancellation</span>
+        </div>
+        <div class="apple-switch active" id="studioSwitch">
+          <span class="apple-switch-thumb"></span>
+        </div>
+      </div>
+
+      <!-- Live Audio Monitor & Volume -->
+      <div class="studio-audio-monitor">
+        <button class="audio-monitor-btn" id="btnAudioMonitor" title="Mute/Unmute Live Sound Output">
+          <span id="speakerIcon">🔊</span>
+          <span id="audioMonitorText">Live Audio: ON</span>
+        </button>
+        <div class="volume-control">
+          <span class="vol-label">Volume:</span>
+          <input type="range" class="apple-slider mini" id="volSlider" min="0" max="1" step="0.05" value="0.30" />
+          <span class="vol-val" id="volVal">30%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Clear Guidance Banner -->
+    <div class="audio-hint-pill">
+      <span>💡 <strong>Real-Time Acoustic Test:</strong> Listen through your speakers or headphones. When ANC is <strong>ACTIVE</strong>, the 180° inverted anti-wave destroys the fan sound to silence. Toggle to <strong>OFF</strong> to hear the raw ambient fan drone!</span>
+    </div>
+
     <!-- Main Studio Card -->
     <div class="studio-card">
       <div class="studio-card-header">
@@ -1868,11 +2055,14 @@
       // --- State Management ---
       const state = {
         ancActive: true,
+        soundEnabled: true,
         currentView: 'waveform',
         device: 'boat',
         fan: 'ceiling',
         power: 1.30,
+        volume: 0.30,
         musicActive: false,
+        micActive: false,
         fanFreq: 120,
         fanName: 'Ceiling Fan (120 Hz)',
         baseAtten: -48.2
@@ -1880,6 +2070,11 @@
 
       // --- DOM Cache ---
       const btnAncToggle = document.getElementById('btnAncToggle');
+      const toggleWrapper = document.getElementById('toggleWrapper');
+      const studioAncBtn = document.getElementById('studioAncBtn');
+      const studioSwitch = document.getElementById('studioSwitch');
+      const studioAncStatus = document.getElementById('studioAncStatus');
+
       const statusText = document.getElementById('statusText');
       const localNavDot = document.getElementById('localNavDot');
       const localNavStatusText = document.getElementById('localNavStatusText');
@@ -1887,6 +2082,12 @@
       const studioFreqBadge = document.getElementById('studioFreqBadge');
       const studioLegend = document.getElementById('studioLegend');
       const legendMusic = document.getElementById('legendMusic');
+
+      const btnAudioMonitor = document.getElementById('btnAudioMonitor');
+      const speakerIcon = document.getElementById('speakerIcon');
+      const audioMonitorText = document.getElementById('audioMonitorText');
+      const volSlider = document.getElementById('volSlider');
+      const volVal = document.getElementById('volVal');
 
       const canvasWaveform = document.getElementById('canvasWaveform');
       const canvasFFT = document.getElementById('canvasFFT');
@@ -1906,45 +2107,147 @@
       const powerValue = document.getElementById('powerValue');
       const btnToggleMusic = document.getElementById('btnToggleMusic');
 
-      // --- Web Audio Graph ---
+      // =======================================================================
+      // Real Web Audio Physical Superposition & Anti-Wave Engine
+      // =======================================================================
       let audioCtx = null;
+
+      // Audio Nodes
+      let fanMasterGain = null;
+      let fanOscFundamental = null;
+      let fanOscHarmonic1 = null;
+      let fanOscHarmonic2 = null;
+      let fanNoiseSource = null;
+
+      // Destructive Collision Nodes
+      let directPathGain = null;   // +1.0 gain (Direct noise path)
+      let antiWaveGain = null;     // -1.0 * power (180° Inverted Anti-Wave)
+      let earCanalBus = null;      // Floating-point acoustic superposition point
+      let masterMonitorGain = null;// User speaker output volume
+
+      // Music Nodes
+      let musicOscRoot = null;
+      let musicOscThird = null;
+      let musicGain = null;
+
+      // Analysers for 60fps Visualizers
       let rawFanAnalyser = null;
       let postAncAnalyser = null;
-      let roomFanOsc = null;
-      let roomFanHarmonic = null;
-      let musicOsc = null;
-      let musicGain = null;
+
+      function createTurbulenceBuffer(ctx) {
+        const bufferSize = ctx.sampleRate * 2;
+        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        let lastOut = 0.0;
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          // Brownian low-frequency integration for air turbulence
+          data[i] = (lastOut + (0.02 * white)) / 1.02;
+          lastOut = data[i];
+          data[i] *= 3.5;
+        }
+        return buffer;
+      }
 
       function initAudio() {
         if (audioCtx) return;
         try {
           const AudioContext = window.AudioContext || window.webkitAudioContext;
-          audioCtx = new AudioContext();
+          audioCtx = new AudioContext({ sampleRate: 48000 });
+
+          // 1. Master Buses & Analysers
           rawFanAnalyser = audioCtx.createAnalyser();
           rawFanAnalyser.fftSize = 2048;
+          rawFanAnalyser.smoothingTimeConstant = 0.85;
+
           postAncAnalyser = audioCtx.createAnalyser();
           postAncAnalyser.fftSize = 2048;
+          postAncAnalyser.smoothingTimeConstant = 0.85;
 
-          // Room Fan acoustic generator
-          roomFanOsc = audioCtx.createOscillator();
-          roomFanOsc.type = 'sine';
-          roomFanOsc.frequency.setValueAtTime(state.fanFreq, audioCtx.currentTime);
+          earCanalBus = audioCtx.createGain();
+          earCanalBus.gain.setValueAtTime(1.0, audioCtx.currentTime);
 
-          roomFanHarmonic = audioCtx.createOscillator();
-          roomFanHarmonic.type = 'sine';
-          roomFanHarmonic.frequency.setValueAtTime(state.fanFreq * 2, audioCtx.currentTime);
+          masterMonitorGain = audioCtx.createGain();
+          masterMonitorGain.gain.setValueAtTime(state.soundEnabled ? state.volume : 0.0, audioCtx.currentTime);
 
-          const fanGain = audioCtx.createGain();
-          fanGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+          // 2. Direct Acoustic Path (+1.0)
+          directPathGain = audioCtx.createGain();
+          directPathGain.gain.setValueAtTime(1.0, audioCtx.currentTime);
 
-          roomFanOsc.connect(fanGain);
-          roomFanHarmonic.connect(fanGain);
-          fanGain.connect(rawFanAnalyser);
+          // 3. Dedicated 180° Anti-Wave Inversion Path (-1.0 * power)
+          antiWaveGain = audioCtx.createGain();
+          const targetAnti = state.ancActive ? -1.0 * state.power : 0.0;
+          antiWaveGain.gain.setValueAtTime(targetAnti, audioCtx.currentTime);
 
-          roomFanOsc.start();
-          roomFanHarmonic.start();
+          // 4. Ambient Fan Acoustic Source
+          fanMasterGain = audioCtx.createGain();
+          fanMasterGain.gain.setValueAtTime(0.40, audioCtx.currentTime);
+
+          // Fundamental Sine (e.g. 120 Hz)
+          fanOscFundamental = audioCtx.createOscillator();
+          fanOscFundamental.type = 'sine';
+          fanOscFundamental.frequency.setValueAtTime(state.fanFreq, audioCtx.currentTime);
+
+          // 2nd Harmonic (240 Hz)
+          fanOscHarmonic1 = audioCtx.createOscillator();
+          fanOscHarmonic1.type = 'sine';
+          fanOscHarmonic1.frequency.setValueAtTime(state.fanFreq * 2, audioCtx.currentTime);
+          const harm1Gain = audioCtx.createGain();
+          harm1Gain.gain.setValueAtTime(0.35, audioCtx.currentTime);
+          fanOscHarmonic1.connect(harm1Gain);
+          harm1Gain.connect(fanMasterGain);
+
+          // 3rd Harmonic (360 Hz)
+          fanOscHarmonic2 = audioCtx.createOscillator();
+          fanOscHarmonic2.type = 'sine';
+          fanOscHarmonic2.frequency.setValueAtTime(state.fanFreq * 3, audioCtx.currentTime);
+          const harm2Gain = audioCtx.createGain();
+          harm2Gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+          fanOscHarmonic2.connect(harm2Gain);
+          harm2Gain.connect(fanMasterGain);
+
+          fanOscFundamental.connect(fanMasterGain);
+
+          // Air turbulence noise
+          const turbBuffer = createTurbulenceBuffer(audioCtx);
+          fanNoiseSource = audioCtx.createBufferSource();
+          fanNoiseSource.buffer = turbBuffer;
+          fanNoiseSource.loop = true;
+          const noiseFilter = audioCtx.createBiquadFilter();
+          noiseFilter.type = 'lowpass';
+          noiseFilter.frequency.setValueAtTime(320, audioCtx.currentTime);
+          const noiseGain = audioCtx.createGain();
+          noiseGain.gain.setValueAtTime(0.20, audioCtx.currentTime);
+          fanNoiseSource.connect(noiseFilter);
+          noiseFilter.connect(noiseGain);
+          noiseGain.connect(fanMasterGain);
+
+          // 5. Connect Acoustic Collision Graph
+          // Fan connects to raw input analyser (for amber waveform & spectrum)
+          fanMasterGain.connect(rawFanAnalyser);
+
+          // Fan connects simultaneously to Direct Path and Anti-Wave Path
+          fanMasterGain.connect(directPathGain);
+          fanMasterGain.connect(antiWaveGain);
+
+          // Both paths collide at Ear Canal Bus (Physical Superposition: y = x + (-x) = 0)
+          directPathGain.connect(earCanalBus);
+          antiWaveGain.connect(earCanalBus);
+
+          // Ear Canal Bus feeds Post-ANC Analyser and Speaker Output
+          earCanalBus.connect(postAncAnalyser);
+          earCanalBus.connect(masterMonitorGain);
+          masterMonitorGain.connect(audioCtx.destination);
+
+          // Start Oscillators
+          fanOscFundamental.start();
+          fanOscHarmonic1.start();
+          fanOscHarmonic2.start();
+          fanNoiseSource.start();
+
+          console.log('[✓] Real Web Audio 180° Destructive Interference Engine Online at 48 kHz');
         } catch (e) {
-          console.warn('Web Audio initialized in simulation mode:', e);
+          console.warn('AudioContext initialization notice:', e);
         }
       }
 
@@ -1954,27 +2257,52 @@
           audioCtx.resume();
         }
       }
+
       document.addEventListener('click', unlockAudio, { once: true });
       document.addEventListener('touchstart', unlockAudio, { once: true });
 
-      // --- Master ANC Toggle ---
+      // --- Synchronized Master ANC Switch Update ---
       function updateAncUI() {
+        // Update Web Audio Anti-Wave Inversion in Real Time
+        if (audioCtx && antiWaveGain) {
+          const targetGain = state.ancActive ? -1.0 * state.power : 0.0;
+          antiWaveGain.gain.setTargetAtTime(targetGain, audioCtx.currentTime, 0.015);
+        }
+
         if (state.ancActive) {
+          // Nav Switch
           btnAncToggle.classList.add('active');
           btnAncToggle.setAttribute('aria-checked', 'true');
           statusText.textContent = 'ANC Active';
           localNavDot.classList.remove('inactive');
           localNavStatusText.textContent = '48 kHz • 12.4μs';
+
+          // Studio HUD Switch
+          studioAncBtn.classList.add('active');
+          studioSwitch.classList.add('active');
+          studioAncStatus.textContent = '● ACTIVE — -48.2 dB Noise Annihilation';
+          studioAncStatus.className = 'anc-sub-status';
+
+          // Telemetry
           telemetryAtten.textContent = (state.baseAtten * (state.power / 1.30)).toFixed(1) + ' dB';
           telemetryAtten.className = 'telemetry-val green';
           telemetryPhase.textContent = '180.0° Anti-Phase';
           telemetryPhase.className = 'telemetry-val blue';
         } else {
+          // Nav Switch
           btnAncToggle.classList.remove('active');
           btnAncToggle.setAttribute('aria-checked', 'false');
           statusText.textContent = 'ANC Off';
           localNavDot.classList.add('inactive');
           localNavStatusText.textContent = 'Bypassed';
+
+          // Studio HUD Switch
+          studioAncBtn.classList.remove('active');
+          studioSwitch.classList.remove('active');
+          studioAncStatus.textContent = '○ BYPASSED — Raw Ambient Drone Passing Through';
+          studioAncStatus.className = 'anc-sub-status inactive';
+
+          // Telemetry
           telemetryAtten.textContent = '0.0 dB (Pass-Through)';
           telemetryAtten.className = 'telemetry-val';
           telemetryPhase.textContent = '0.0° In-Phase';
@@ -1982,15 +2310,51 @@
         }
       }
 
-      const toggleWrapper = document.getElementById('toggleWrapper');
+      // Synchronized Click Listeners
       toggleWrapper.addEventListener('click', () => {
+        unlockAudio();
         state.ancActive = !state.ancActive;
         updateAncUI();
+      });
+
+      studioAncBtn.addEventListener('click', () => {
+        unlockAudio();
+        state.ancActive = !state.ancActive;
+        updateAncUI();
+      });
+
+      // --- Audio Monitor Mute/Unmute ---
+      btnAudioMonitor.addEventListener('click', () => {
+        unlockAudio();
+        state.soundEnabled = !state.soundEnabled;
+        if (masterMonitorGain && audioCtx) {
+          masterMonitorGain.gain.setTargetAtTime(state.soundEnabled ? state.volume : 0.0, audioCtx.currentTime, 0.02);
+        }
+        if (state.soundEnabled) {
+          btnAudioMonitor.classList.remove('muted');
+          speakerIcon.textContent = '🔊';
+          audioMonitorText.textContent = 'Live Audio: ON';
+        } else {
+          btnAudioMonitor.classList.add('muted');
+          speakerIcon.textContent = '🔇';
+          audioMonitorText.textContent = 'Live Audio: MUTED';
+        }
+      });
+
+      // Volume Slider
+      volSlider.addEventListener('input', (e) => {
+        unlockAudio();
+        state.volume = parseFloat(e.target.value);
+        volVal.textContent = Math.round(state.volume * 100) + '%';
+        if (state.soundEnabled && masterMonitorGain && audioCtx) {
+          masterMonitorGain.gain.setTargetAtTime(state.volume, audioCtx.currentTime, 0.015);
+        }
       });
 
       // --- Strategy Controller in Hero ---
       heroSegment.querySelectorAll('.hero-tab').forEach(tab => {
         tab.addEventListener('click', () => {
+          unlockAudio();
           heroSegment.querySelectorAll('.hero-tab').forEach(t => t.classList.remove('active'));
           tab.classList.add('active');
           const strategy = tab.dataset.strategy;
@@ -2005,6 +2369,7 @@
           } else if (strategy === 'vdsp') {
             switchView('spectrum');
           }
+          updateAncUI();
         });
       });
 
@@ -2026,7 +2391,10 @@
       }
 
       viewTabs.querySelectorAll('.view-btn').forEach(btn => {
-        btn.addEventListener('click', () => switchView(btn.dataset.view));
+        btn.addEventListener('click', () => {
+          unlockAudio();
+          switchView(btn.dataset.view);
+        });
       });
 
       // --- Hardware Device Selector ---
@@ -2044,12 +2412,16 @@
       }
 
       segmentDevice.querySelectorAll('button').forEach(btn => {
-        btn.addEventListener('click', () => selectDevice(btn.dataset.device));
+        btn.addEventListener('click', () => {
+          unlockAudio();
+          selectDevice(btn.dataset.device);
+        });
       });
 
       // --- Fan Profile Selector ---
       segmentFan.querySelectorAll('button').forEach(btn => {
         btn.addEventListener('click', () => {
+          unlockAudio();
           segmentFan.querySelectorAll('button').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
           const fan = btn.dataset.fan;
@@ -2068,15 +2440,17 @@
             state.fanName = 'PC Fan (450 Hz)';
           }
           studioFreqBadge.textContent = '48 kHz • ' + state.fanName;
-          if (roomFanOsc && audioCtx) {
-            roomFanOsc.frequency.setValueAtTime(state.fanFreq, audioCtx.currentTime);
-            roomFanHarmonic.frequency.setValueAtTime(state.fanFreq * 2, audioCtx.currentTime);
+          if (audioCtx && fanOscFundamental && fanOscHarmonic1 && fanOscHarmonic2) {
+            fanOscFundamental.frequency.setValueAtTime(state.fanFreq, audioCtx.currentTime);
+            fanOscHarmonic1.frequency.setValueAtTime(state.fanFreq * 2, audioCtx.currentTime);
+            fanOscHarmonic2.frequency.setValueAtTime(state.fanFreq * 3, audioCtx.currentTime);
           }
         });
       });
 
       // --- Anti-Wave Drive Power Slider ---
       powerSlider.addEventListener('input', (e) => {
+        unlockAudio();
         state.power = parseFloat(e.target.value);
         powerValue.textContent = state.power.toFixed(2) + '× (' + (state.power >= 1.2 ? 'Overdrive' : 'Attenuated') + ')';
         updateAncUI();
@@ -2084,31 +2458,45 @@
 
       // --- Superposition Music Test ---
       btnToggleMusic.addEventListener('click', () => {
-        state.musicActive = !state.musicActive;
         unlockAudio();
+        state.musicActive = !state.musicActive;
         if (state.musicActive) {
           btnToggleMusic.classList.add('active');
           btnToggleMusic.querySelector('span').textContent = 'Stop 440 Hz Harmonic Signal';
           legendMusic.style.display = 'flex';
 
-          if (audioCtx) {
-            musicOsc = audioCtx.createOscillator();
-            musicOsc.type = 'triangle';
-            musicOsc.frequency.setValueAtTime(440, audioCtx.currentTime);
+          if (audioCtx && earCanalBus) {
+            musicOscRoot = audioCtx.createOscillator();
+            musicOscRoot.type = 'triangle';
+            musicOscRoot.frequency.setValueAtTime(440, audioCtx.currentTime); // Concert A
+
+            musicOscThird = audioCtx.createOscillator();
+            musicOscThird.type = 'sine';
+            musicOscThird.frequency.setValueAtTime(554.37, audioCtx.currentTime); // C# major third
+
             musicGain = audioCtx.createGain();
-            musicGain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-            musicOsc.connect(musicGain);
-            musicGain.connect(audioCtx.destination);
-            musicOsc.start();
+            musicGain.gain.setValueAtTime(0.20, audioCtx.currentTime);
+
+            musicOscRoot.connect(musicGain);
+            musicOscThird.connect(musicGain);
+            musicGain.connect(earCanalBus); // Connected into the ear canal bus!
+
+            musicOscRoot.start();
+            musicOscThird.start();
           }
         } else {
           btnToggleMusic.classList.remove('active');
           btnToggleMusic.querySelector('span').textContent = 'Play 440 Hz Harmonic Signal';
           legendMusic.style.display = 'none';
-          if (musicOsc) {
-            musicOsc.stop();
-            musicOsc.disconnect();
-            musicOsc = null;
+          if (musicOscRoot) {
+            musicOscRoot.stop();
+            musicOscRoot.disconnect();
+            musicOscRoot = null;
+          }
+          if (musicOscThird) {
+            musicOscThird.stop();
+            musicOscThird.disconnect();
+            musicOscThird = null;
           }
         }
       });
@@ -2140,7 +2528,7 @@
       });
 
       // =======================================================================
-      // 10. High-DPI Retina Canvas Rendering Engine
+      // High-DPI Retina Canvas Rendering Engine (60 FPS)
       // =======================================================================
       function configureRetina(canvas) {
         const dpr = window.devicePixelRatio || 1;
@@ -2214,7 +2602,7 @@
             y = midY + leak;
           }
           if (state.musicActive) {
-            y += 25 * Math.sin(omega * 4.5 * x + time * 0.02);
+            y += 28 * Math.sin(omega * 4.5 * x + time * 0.02);
           }
           if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
