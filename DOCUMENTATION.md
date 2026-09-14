@@ -717,3 +717,113 @@ $$\text{ATH}(f) = 3.64 \left(\frac{f}{1000}\right)^{-0.8} - 6.5 e^{-0.6 (f/1000 
 - At $40 \text{ Hz}$, the human hearing threshold is approximately $52.0 \text{ dB SPL}$.
 - At $1,000 \text{ Hz}$, the threshold drops to $3.6 \text{ dB SPL}$.
 - When ambient room noise falls below the audible threshold for a given critical band, the anti-wave drive power in that band is smoothly attenuated, eliminating unnecessary acoustic pressure and preserving natural ear canal comfort.
+
+---
+
+## 8. Apple Human Interface Guidelines (HIG) & Privacy Architecture
+
+### 8.1 The 8 Apple HIG Design Principles in HRL-X
+The user experience and visual architecture of the HRL-X Studio interface (`index.html` and `web/index.html`) adhere strictly to the **Apple Human Interface Guidelines (HIG)**:
+
+```
++-------------------------------------------------------------------------------+
+|                   APPLE HUMAN INTERFACE GUIDELINES MATRIX                     |
++-------------------------------------------------------------------------------+
+|  1. PURPOSE         Clear singular objective: active noise cancellation       |
+|  2. AGENCY          Total user sovereignty over audio stream and permissions  |
+|  3. RESPONSIBILITY  Automatic hearing safety limiting and eardrum protection  |
+|  4. FAMILIARITY     Native macOS Sequoia / iOS 18 materials & navigation      |
+|  5. FLEXIBILITY     Adaptive responsive layout across mobile and desktop      |
+|  6. SIMPLICITY      Unified 4-step workflow with one primary action toggle    |
+|  7. CRAFT           Ultra-thin glassmorphic materials and SF typography       |
+|  8. DELIGHT         High-precision 60 FPS Retina wave and kinetic physics     |
++-------------------------------------------------------------------------------+
+```
+
+#### Detailed Principle Implementations
+
+1. **Purpose**:
+   Every visual surface is purposeful. Rather than ornamental decoration, every card, readout, and canvas directly reflects an acoustic state: the incident sound pressure, the synthesized anti-wave, the concha residual, and the particle velocity of air molecules.
+
+2. **Agency**:
+   The user exercises explicit sovereign control. Audio capture does not activate automatically; the user must click the master tactile toggle to request microphone access. When deactivated, audio processing halts immediately and resources are released.
+
+3. **Responsibility**:
+   The engine enforces strict acoustic safety guards. Transducer outputs are clamped at 0 dBFS to prevent voice coil clipping or sudden volume bursts. Low-frequency pressure relief prevents eardrum fatigue.
+
+4. **Familiarity**:
+   The interface follows Apple's native design vocabulary:
+   - System standard dark-mode color tokens (`#0a84ff` System Blue, `#30d158` System Green, `#ffd60a` System Yellow, `#ff453a` System Red).
+   - Standard macOS Sequoia segmented pill pickers for Mode, Hardware, and Room selection.
+   - Dynamic Island style telemetry capsules floating in the visual hierarchy.
+
+5. **Flexibility**:
+   Built with flexible CSS grid and fluid flexbox systems that gracefully adapt from multi-monitor studio workstations to iPhone displays, maintaining full legibility and touch target ergonomics (minimum 44x44 pt tap targets).
+
+6. **Simplicity**:
+   Complex multi-core DSP mathematics, FxLMS convergence loops, and SIMD pipelines are unified into an effortless 4-step interactive flow: Activate ANC, Capture Microphone, Synthesize Anti-Wave, and Revert to Normal.
+
+7. **Craft**:
+   Crafted with pixel-level precision:
+   - Multi-layer glassmorphism using `backdrop-filter: blur(40px) saturate(200%)`.
+   - Sub-pixel hairline borders: `0.5px solid rgba(255, 255, 255, 0.14)`.
+   - Spring dynamics: Apple standard `cubic-bezier(0.32, 0.72, 0, 1)` easing curves with `scale(0.97)` tactile press compression.
+
+8. **Delight**:
+   Interactive, scientifically accurate visualizations bring invisible acoustics to life. Users observe real-time longitudinal air molecule collisions and glowing multi-trace oscilloscopes rendering at 60 frames per second on Retina displays.
+
+---
+
+### 8.2 Official San Francisco (SF) Typography System
+The typography uses Apple's official system font stack with strict semantic roles:
+
+```css
+:root {
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+  --font-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+  --font-mono: "SF Mono", SFMono-Regular, ui-monospace, Menlo, Consolas, monospace;
+}
+```
+
+| Type Role | Font Family | Size | Weight | Tracking | Purpose |
+|---|---|---|---|---|---|
+| **Large Title** | SF Pro Display | 26px | 700 (Bold) | -0.022em | Main application identity & hero headings |
+| **Section Title** | SF Pro Display | 17px | 600 (Semibold) | -0.015em | Panel and card headers |
+| **Body / Subhead** | SF Pro Text | 14px | 400 (Regular) | -0.011em | Explanatory descriptions and labels |
+| **Footnote / Badge** | SF Pro Text | 12px | 500 (Medium) | +0.005em | Mode status indicators and metadata |
+| **Telemetry / Data** | SF Mono | 12px | 500 (Medium) | 0.000em | Numbers, decibels, frequencies, registers (`tnum`) |
+
+Numerical values utilize OpenType tabular lining figures (`font-variant-numeric: tabular-nums`) to prevent horizontal jitter during high-speed real-time telemetry updates.
+
+---
+
+### 8.3 Zero-Emoji Compliance & Vector Iconography
+In accordance with strict professional design standards, the interface completely eliminates emoji characters. In their place, the UI employs precision, inline vector SVG iconography:
+
+- **Acoustic Waveform**: Curved sine trace representing the oscilloscope.
+- **Acoustic Shield**: Shield icon denoting the active cancellation barrier.
+- **Hardware Profile**: Circumaural headphone icon representing boAt Rockerz 411.
+- **Vortex Vacuum**: Triple-blade fan SVG for aeroacoustic targets.
+- **Linear Superposition**: Dual eighth-note music symbol for clean audio injection.
+- **Zero Passthrough**: Slotted microphone guard symbol for privacy and isolation.
+
+---
+
+### 8.4 On-Device Privacy Architecture
+Audio captured from the user's environment represents sensitive personal data. HRL-X guarantees absolute acoustic privacy:
+
+```
+[ User Microphone ] ---> Web Audio API (Volatile Float32Array in RAM)
+                               |
+                               +---> 180° Inversion (In-Memory Buffer)
+                               |
+                               +---> Speaker Output (Annihilation in Air)
+                               |
+                               X (NO Local Disk Storage)
+                               X (NO Server Transmission)
+                               X (NO Third-Party Analytics)
+```
+
+1. **100% On-Device Processing**: All DSP algorithms (FxLMS, NLMS, Spectral Subtraction, and vDSP emulation) execute entirely inside the client device CPU/GPU and local volatile memory.
+2. **Zero Audio Persistence**: Audio sample buffers (`Float32Array`) are immediately overwritten during each audio frame. No WAV, MP3, or raw audio files are written to persistent storage without explicit user export.
+3. **Zero Network Transmission**: The application makes zero external API requests, carries zero analytics trackers, and connects to zero third-party cloud services.
