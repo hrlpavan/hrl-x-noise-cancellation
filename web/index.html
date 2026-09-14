@@ -4,7 +4,69 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Introducing ANC Software - Apple Developer | Anush Atmos × HRL</title>
+  <!-- Apple Official San Francisco Web Fonts (SF Pro & SF Mono) -->
+  <link rel="stylesheet" href="https://www.apple.com/wss/fonts?families=SF+Pro,v3|SF+Mono,v1" referrerpolicy="origin-when-cross-origin" />
+  <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/sf-pro-display" />
   <style>
+    /* =========================================================================
+       Apple San Francisco Typography System (SF Pro Display, SF Pro Text, SF Mono)
+       ========================================================================= */
+    @font-face {
+      font-family: "SF Pro Display";
+      font-weight: 400;
+      src: local("SF Pro Display Regular"), local("SF Pro Display"), local(".SFUIDisplay-Regular"),
+           url("https://cdn.jsdelivr.net/npm/@native-elements/core@0.4.0/dist/fonts/SFProDisplay-Regular.woff2") format("woff2");
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "SF Pro Display";
+      font-weight: 600;
+      src: local("SF Pro Display Semibold"), local(".SFUIDisplay-Semibold"),
+           url("https://cdn.jsdelivr.net/npm/@native-elements/core@0.4.0/dist/fonts/SFProDisplay-Semibold.woff2") format("woff2");
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "SF Pro Display";
+      font-weight: 700;
+      src: local("SF Pro Display Bold"), local(".SFUIDisplay-Bold"),
+           url("https://cdn.jsdelivr.net/npm/@native-elements/core@0.4.0/dist/fonts/SFProDisplay-Bold.woff2") format("woff2");
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "SF Pro Text";
+      font-weight: 400;
+      src: local("SF Pro Text Regular"), local("SF Pro Text"), local(".SFUIText-Regular"),
+           url("https://cdn.jsdelivr.net/npm/@native-elements/core@0.4.0/dist/fonts/SFProText-Regular.woff2") format("woff2");
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "SF Pro Text";
+      font-weight: 500;
+      src: local("SF Pro Text Medium"), local(".SFUIText-Medium"),
+           url("https://cdn.jsdelivr.net/npm/@native-elements/core@0.4.0/dist/fonts/SFProText-Medium.woff2") format("woff2");
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "SF Pro Text";
+      font-weight: 600;
+      src: local("SF Pro Text Semibold"), local(".SFUIText-Semibold"),
+           url("https://cdn.jsdelivr.net/npm/@native-elements/core@0.4.0/dist/fonts/SFProText-Semibold.woff2") format("woff2");
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "SF Mono";
+      font-weight: 400;
+      src: local("SF Mono Regular"), local("SF Mono"), local(".SFUIMono-Regular"),
+           url("https://cdn.jsdelivr.net/npm/@native-elements/core@0.4.0/dist/fonts/SFMono-Regular.woff2") format("woff2");
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "SF Mono";
+      font-weight: 600;
+      src: local("SF Mono Semibold"), local(".SFUIMono-Semibold"),
+           url("https://cdn.jsdelivr.net/npm/@native-elements/core@0.4.0/dist/fonts/SFMono-Semibold.woff2") format("woff2");
+      font-display: swap;
+    }
     /* =========================================================================
        Apple Developer Unified Design System & Typography
        ========================================================================= */
@@ -33,9 +95,9 @@
       --apple-purple: #af52de;
       --apple-cyan: #32ade6;
 
-      --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      --font-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      --font-mono: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
+      --font-display: "SF Pro Display", "SF Pro", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --font-text: "SF Pro Text", "SF Pro", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --font-mono: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
 
       --radius-sm: 8px;
       --radius-md: 12px;
@@ -1600,6 +1662,159 @@
       .globalnav-links { display: none; }
       .localnav-menu { display: none; }
     }
+
+    /* =========================================================================
+       Apple Human Interface Guidelines: Design Principles Architecture
+       (developer.apple.com/design/human-interface-guidelines/design-principles)
+       ========================================================================= */
+    .principles-section {
+      padding: 5rem 1.5rem;
+      background: var(--bg-primary);
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .principles-container {
+      max-width: 1080px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.4rem;
+      margin-top: 2.8rem;
+    }
+
+    @media (max-width: 1024px) {
+      .principles-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .principles-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .principle-card {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      padding: 1.6rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.25s var(--spring);
+    }
+
+    .principle-card:hover {
+      background: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(0, 113, 227, 0.25);
+    }
+
+    .principle-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .principle-icon-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .principle-icon-circle.purpose { background: rgba(0, 113, 227, 0.1); color: var(--apple-blue); }
+    .principle-icon-circle.agency { background: rgba(52, 199, 89, 0.1); color: var(--apple-green); }
+    .principle-icon-circle.responsibility { background: rgba(175, 82, 222, 0.1); color: var(--apple-purple); }
+    .principle-icon-circle.familiarity { background: rgba(217, 119, 6, 0.1); color: var(--apple-amber); }
+    .principle-icon-circle.flexibility { background: rgba(50, 173, 230, 0.1); color: var(--apple-cyan); }
+    .principle-icon-circle.simplicity { background: rgba(29, 29, 31, 0.08); color: var(--text-primary); }
+    .principle-icon-circle.craft { background: rgba(0, 113, 227, 0.1); color: var(--apple-blue); }
+    .principle-icon-circle.delight { background: rgba(214, 0, 0, 0.1); color: var(--apple-red); }
+
+    .principle-tag {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    .principle-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.015em;
+      margin-bottom: 0.25rem;
+    }
+
+    .principle-mantra {
+      font-family: var(--font-text);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--apple-blue);
+      margin-bottom: 0.65rem;
+    }
+
+    .principle-body {
+      font-family: var(--font-text);
+      font-size: 0.82rem;
+      line-height: 1.48;
+      color: var(--text-secondary);
+      flex: 1;
+    }
+
+    /* Privacy Banner under Principles */
+    .privacy-callout-card {
+      margin-top: 2.2rem;
+      background: #ffffff;
+      border: 1px solid var(--border-primary);
+      border-radius: var(--radius-md);
+      padding: 1.4rem 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .privacy-badge-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(52, 199, 89, 0.12);
+      color: var(--apple-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .privacy-text-title {
+      font-family: var(--font-display);
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.2rem;
+    }
+
+    .privacy-text-desc {
+      font-family: var(--font-text);
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.42;
+    }
+
   </style>
 </head>
 <body>
@@ -1647,8 +1862,9 @@
       <div class="localnav-right">
         <ul class="localnav-menu">
           <li><a href="#overview">Overview</a></li>
-          <li><a href="#swift-api">Swift API</a></li>
           <li><a href="#studio">Studio</a></li>
+          <li><a href="#principles">Principles</a></li>
+          <li><a href="#swift-api">Swift API</a></li>
           <li><a href="#physics">Physics</a></li>
           <li><a href="#specs">boAt 411</a></li>
         </ul>
@@ -1954,6 +2170,158 @@
         </div>
         <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 1rem;">
           Demonstrates acoustic linearity: noise cancels to zero while music passes untouched to the cochlea.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       Apple Human Interface Guidelines: Design Principles Architecture
+       (developer.apple.com/design/human-interface-guidelines/design-principles)
+       ======================================================================= -->
+  <section class="principles-section" id="principles">
+    <div class="principles-container">
+      <div class="section-header">
+        <div class="section-eyebrow">HUMAN INTERFACE GUIDELINES</div>
+        <h2 class="section-title">Fundamental Apple Design Principles</h2>
+        <p class="section-desc">
+          The most successful and enduring designs are based on a deep understanding of how people think, feel, and interact with the world. Explore how ANC Software embodies Apple’s core design principles across software, silicon, and physical acoustics.
+        </p>
+      </div>
+
+      <!-- Principles 8-Card Grid -->
+      <div class="principles-grid">
+        <!-- 1. Purpose -->
+        <div class="principle-card">
+          <div class="principle-header">
+            <div class="principle-icon-circle purpose" title="Purpose">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            </div>
+            <span class="principle-tag">01 • FOUNDATION</span>
+          </div>
+          <h3 class="principle-title">Purpose</h3>
+          <p class="principle-mantra">Make something meaningful.</p>
+          <p class="principle-body">
+            Design starts with intention. ANC Software is purposefully engineered for acoustic nullification and auditory health (ISO 226). Eliminates ambient noise at the speed of sound without unnecessary abstractions or bloated complexity.
+          </p>
+        </div>
+
+        <!-- 2. Agency -->
+        <div class="principle-card">
+          <div class="principle-header">
+            <div class="principle-icon-circle agency" title="Agency">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="3"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="4" y1="10" x2="20" y2="10"/><line x1="8" y1="21" x2="12" y2="16"/><line x1="16" y1="21" x2="12" y2="16"/></svg>
+            </div>
+            <span class="principle-tag">02 • CONTROL</span>
+          </div>
+          <h3 class="principle-title">Agency</h3>
+          <p class="principle-mantra">Let people do things their own way.</p>
+          <p class="principle-body">
+            An interface exists to help people accomplish their goals. Users have complete freedom: toggle live microphone sampling, choose calibrated fan profiles, tune drive gain, and recover instantly back to normal stopped condition with a single tap.
+          </p>
+        </div>
+
+        <!-- 3. Responsibility -->
+        <div class="principle-card">
+          <div class="principle-header">
+            <div class="principle-icon-circle responsibility" title="Responsibility">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <span class="principle-tag">03 • INTEGRITY</span>
+          </div>
+          <h3 class="principle-title">Responsibility</h3>
+          <p class="principle-mantra">Act in people’s best interest.</p>
+          <p class="principle-body">
+            Strict privacy-first architecture. Microphone audio is processed entirely in local volatile Web Audio memory buffers. Zero bytes are ever recorded, saved to disk, or sent across networks. Hardware feedback loop decoupling prevents speaker howl.
+          </p>
+        </div>
+
+        <!-- 4. Familiarity -->
+        <div class="principle-card">
+          <div class="principle-header">
+            <div class="principle-icon-circle familiarity" title="Familiarity">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <span class="principle-tag">04 • INTUITION</span>
+          </div>
+          <h3 class="principle-title">Familiarity</h3>
+          <p class="principle-mantra">Build on what people know.</p>
+          <p class="principle-body">
+            Grounding the experience in standard Apple design patterns: native 44×25px HIG switches, tactile segmented controls, frosted-glass localnav, and real-time physical waveform superposition matching acoustic textbook physics.
+          </p>
+        </div>
+
+        <!-- 5. Flexibility -->
+        <div class="principle-card">
+          <div class="principle-header">
+            <div class="principle-icon-circle flexibility" title="Flexibility">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+            </div>
+            <span class="principle-tag">05 • ADAPTIVE</span>
+          </div>
+          <h3 class="principle-title">Flexibility</h3>
+          <p class="principle-mantra">Adapt to diverse contexts and needs.</p>
+          <p class="principle-body">
+            Responsive across macOS, iOS, iPadOS, and desktop browsers. Adapts seamlessly between physical hardware microphones and synthetic room fan presets, with full keyboard ARIA navigation and accessibility labels.
+          </p>
+        </div>
+
+        <!-- 6. Simplicity -->
+        <div class="principle-card">
+          <div class="principle-header">
+            <div class="principle-icon-circle simplicity" title="Simplicity">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+            </div>
+            <span class="principle-tag">06 • CLARITY</span>
+          </div>
+          <h3 class="principle-title">Simplicity</h3>
+          <p class="principle-mantra">Be clear and direct.</p>
+          <p class="principle-body">
+            A focused experience removes the unnecessary. Transparent 4-step pipeline: 1. Activate ANC → 2. Realtime Noise → 3. Create Anti-Wave → 4. Normal Condition. Every pixel and control earns its place without confusing clutter.
+          </p>
+        </div>
+
+        <!-- 7. Craft -->
+        <div class="principle-card">
+          <div class="principle-header">
+            <div class="principle-icon-circle craft" title="Craft">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+            </div>
+            <span class="principle-tag">07 • PRECISION</span>
+          </div>
+          <h3 class="principle-title">Craft</h3>
+          <p class="principle-mantra">Care about every detail.</p>
+          <p class="principle-body">
+            Sub-12.4 μs execution headroom, 60 FPS High-DPI Retina canvas rendering, SIMD vectorization via Apple Accelerate vDSP in Swift 6, and authentic typography in Apple’s SF Pro Display, SF Pro Text, and SF Mono.
+          </p>
+        </div>
+
+        <!-- 8. Delight -->
+        <div class="principle-card">
+          <div class="principle-header">
+            <div class="principle-icon-circle delight" title="Delight">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <span class="principle-tag">08 • HUMAN</span>
+          </div>
+          <h3 class="principle-title">Delight</h3>
+          <p class="principle-mantra">Make it human.</p>
+          <p class="principle-body">
+            The defining magic moment: watching the live microphone waveform and the synthesized inverted anti-wave visually collide on the canvas and annihilate into absolute silence right in your headphones.
+          </p>
+        </div>
+      </div>
+
+      <!-- Privacy & Security Transparency Callout (Responsibility) -->
+      <div class="privacy-callout-card">
+        <div class="privacy-badge-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <div class="privacy-text-title">On-Device Processing & Privacy Guarantee (Apple Standard)</div>
+          <div class="privacy-text-desc">
+            Microphone audio is processed entirely within local volatile Web Audio memory buffers on your device. Audio samples are never cached to disk, logged, or transmitted across the network, adhering to Apple’s stringent privacy and security guidelines.
+          </div>
         </div>
       </div>
     </div>
@@ -3193,7 +3561,7 @@
           ctx.stroke();
 
           // Subtle Status Watermark
-          ctx.font = '500 11px -apple-system, BlinkMacSystemFont, sans-serif';
+          ctx.font = '500 11px "SF Pro Display", -apple-system, sans-serif';
           ctx.fillStyle = '#86868b';
           ctx.fillText('NORMAL CONDITION (STOPPED) — Anti-Wave Inactive • Silicon Core at Rest', 24, midY - 14);
         }
@@ -3226,7 +3594,7 @@
 
         // ISO Frequency Grid
         const gridFreqs = [50, 100, 200, 500, 1000, 1200, 2000];
-        ctx.font = '10px -apple-system, sans-serif';
+        ctx.font = '10px "SF Mono", ui-monospace, Menlo, monospace';
         ctx.fillStyle = '#86868b';
         ctx.strokeStyle = '#e5e5ea';
         ctx.lineWidth = 1;
@@ -3289,7 +3657,7 @@
           ctx.fillStyle = '#34c759';
           ctx.fillRect(peakX - 35, 40, 70, 20);
           ctx.fillStyle = '#ffffff';
-          ctx.font = 'bold 10px -apple-system, sans-serif';
+          ctx.font = '600 10px "SF Pro Text", -apple-system, sans-serif';
           ctx.fillText('-48 dB Notch', peakX - 30, 54);
         }
       }
@@ -3333,7 +3701,7 @@
         });
 
         // Label
-        ctx.font = '12px -apple-system, sans-serif';
+        ctx.font = '500 12px "SF Pro Text", -apple-system, sans-serif';
         ctx.fillStyle = state.ancActive ? '#34c759' : '#1d1d1f';
         ctx.fillText(state.ancActive ? 'Acoustic Equilibrium: Ambient Air Pressure Equalized' : 'Air Pressure Waves Traveling Towards Ear Canal', 20, 30);
       }
