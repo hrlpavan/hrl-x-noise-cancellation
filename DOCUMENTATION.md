@@ -1038,3 +1038,208 @@ python3 -m hrl_noise_cancellation cancel \
 # Start the local development server on port 8080
 python3 -m hrl_noise_cancellation server --port 8080
 ```
+
+---
+
+## 11. Complete API Reference & Symbol Index
+
+### 11.1 Python API (`hrl_noise_cancellation`)
+
+#### Module: `hrl_noise_cancellation.dsp.audio_io`
+- `class AudioIO`
+  - `static read_wav(file_path: str) -> Tuple[List[float], int]`
+    Reads 16-bit PCM mono or stereo WAV files, normalizing audio amplitudes to the range $[-1.0, +1.0]$.
+  - `static write_wav(file_path: str, samples: List[float], sample_rate: int = 16000) -> None`
+    Writes floating-point audio samples to standard 16-bit PCM WAV format with hard clipping protection.
+- `def calculate_snr(clean_signal: List[float], processed_signal: List[float]) -> float`
+  Computes the Signal-to-Noise Ratio (SNR) in decibels: $10 \log_{10}(P_{\text{clean}} / P_{\text{noise}})$.
+- `def generate_synthetic_benchmark(sample_rate: int = 16000, duration_sec: float = 3.0, target_snr_db: float = 3.0, seed: int = 42) -> Tuple[List[float], List[float], List[float], int]`
+  Synthesizes reference clean multi-harmonic speech, room fan noise, and calibrated noisy composite audio.
+
+#### Module: `hrl_noise_cancellation.dsp.anti_phase`
+- `class AntiPhaseInverter(sample_rate: int = 48000, phase_degrees: float = 180.0, delay_ms: float = 0.0)`
+  - `generate_anti_noise(noise_samples: List[float]) -> List[float]`
+    Generates phase-inverted anti-wave with fractional delay interpolation.
+  - `collide_and_cancel(noise_samples: List[float], anti_noise_samples: List[float]) -> List[float]`
+    Executes acoustic wave superposition: $p_{\text{res}}[n] = p_{\text{noise}}[n] + p_{\text{anti}}[n]$.
+  - `compute_attenuation_db(noise_samples: List[float], residual_samples: List[float]) -> float`
+    Calculates acoustic attenuation achieved across the audio buffer.
+
+#### Module: `hrl_noise_cancellation.dsp.fxlms`
+- `class FxLMSFilter(filter_length: int = 64, secondary_path_length: int = 16, mu: float = 0.02)`
+  - `process(primary_noise: List[float], reference_noise: List[float]) -> Tuple[List[float], List[float]]`
+    Executes Filtered-X adaptive LMS filtering, returning synthesized anti-noise and concha residual error.
+  - `step(ref_sample: float, error_sample: float) -> float`
+    Executes a single-sample FxLMS weight update step.
+
+#### Module: `hrl_noise_cancellation.dsp.adaptive`
+- `class NLMSFilter(filter_length: int = 64, mu: float = 0.2, leak: float = 0.9999)`
+  - `process(input_audio: List[float], reference_audio: List[float] = None) -> List[float]`
+    Runs Normalized LMS adaptive filtering with energy normalization and leaky stabilization.
+
+#### Module: `hrl_noise_cancellation.dsp.spectral`
+- `class SpectralSubtraction(frame_size: int = 512, hop_size: int = 256, alpha: float = 2.0, beta: float = 0.05)`
+  - `process(noisy_audio: List[float], noise_reference: List[float] = None) -> List[float]`
+    Executes STFT-domain spectral over-subtraction with musical noise suppression.
+- `class SpectralGate(frame_size: int = 512, hop_size: int = 256, threshold_db: float = -36.0, attenuation_db: float = -24.0)`
+  - `process(audio_samples: List[float]) -> List[float]`
+    Applies adaptive downward multi-band spectral expansion to eliminate low-level background noise.
+
+#### Module: `hrl_noise_cancellation.dsp.fan_vacuum`
+- `class FanNoiseVacuum(sample_rate: int = 48000, fan_type: str = 'ceiling_fan', vacuum_power: float = 1.0)`
+  - `generate_vacuum_wave(room_sound: List[float]) -> List[float]`
+    Extracts blade-pass harmonics and synthesizes an inverted vacuum wave.
+  - `simulate_acoustic_annihilation(room_sound: List[float], vacuum_wave: List[float]) -> Tuple[List[float], float]`
+    Simulates destructive wave collision and computes net attenuation in decibels.
+
+#### Module: `hrl_noise_cancellation.dsp.acoustic_barrier`
+- `class AcousticBlackoutBarrier(sample_rate: int = 48000, shield_intensity: float = 0.85)`
+  - `detect_room_noise_profile(mic_samples: List[float]) -> Dict[str, Any]`
+    Analyzes room noise spectrum and returns peak frequency, energy, and zero-leakage confirmation.
+  - `generate_blackout_blanket(num_samples: int) -> List[float]`
+    Synthesizes deep velvet pink noise carpet matching the human threshold of hearing.
+  - `generate_pure_anti_harmonic(fundamental_hz: float, num_samples: int) -> List[float]`
+    Synthesizes pristine anti-phase sinusoid without replaying microphone noise or hiss.
+  - `evaluate_isolation(mic_samples: List[float], output_samples: List[float]) -> Dict[str, float]`
+    Calculates passthrough percentage (0.0%), masking ratio (>80%), and net isolation attenuation.
+
+#### Module: `hrl_noise_cancellation.dsp.echo_cancellation`
+- `class AcousticEchoKiller(speech_threshold_db: float = -30.0, voice_attenuation_db: float = -40.0)`
+  - `process(speech_mic: List[float], anti_wave: List[float]) -> Tuple[List[float], float]`
+    Detects user speech formants and attenuates monitor loopback to eliminate ear-cup howling.
+
+#### Module: `hrl_noise_cancellation.dsp.predictive_anc`
+- `class UltraFastPredictiveANC(sample_rate: int = 48000, mic_to_driver_distance_cm: float = 4.5)`
+  - `get_latency_metrics() -> Dict[str, str]`
+    Returns comparative flight time vs auditory brainstem latency analysis.
+  - `generate_preemptive_anti_wave(room_noise: List[float], vacuum_drive: float = 1.0) -> List[float]`
+    Employs autoregressive linear forecasting to pre-empt incoming acoustic waves.
+  - `pre_emptive_collision(penetrating_sound: List[float], anti_wave: List[float]) -> Tuple[List[float], float]`
+    Evaluates pre-eardrum wavefront collision attenuation.
+
+#### Module: `hrl_noise_cancellation.dsp.branch_physics`
+- `class BranchAcousticPhysics`
+  - `calculate_wavelength(freq_hz: float) -> float`
+  - `calculate_phase_error(freq_hz: float, delay_seconds: float) -> float`
+  - `calculate_interference_power(freq_hz: float, delay_seconds: float) -> Tuple[str, float, float]`
+  - `calculate_coherence_limit(delay_seconds: float, max_phase_error_deg: float = 60.0) -> float`
+  - `anti_constructive_filter(samples: List[float], sample_rate: int, cutoff_hz: float = 1200.0) -> List[float]`
+  - `superposition_audio_mix(music_samples: List[float], ambient_noise_samples: List[float], anti_noise_samples: List[float]) -> Dict[str, Any]`
+
+#### Module: `hrl_noise_cancellation.dsp.boat_rockerz_411`
+- `class BoatRockerz411ANC(sample_rate: int = 48000, vacuum_power: float = 1.0)`
+  - `get_hardware_profile() -> Dict[str, str]`
+  - `generate_anti_noise_wave(room_noise: List[float]) -> List[float]`
+  - `cancel_environmental_sound(penetrating_sound: List[float], anti_wave: List[float]) -> Tuple[List[float], float]`
+
+#### Module: `hrl_noise_cancellation.dsp.adaptive_eq`
+- `class AdaptiveEQ(sample_rate: int = 16000)`
+  - `estimate_seal_integrity(reference_audio: List[float], concha_mic_audio: List[float]) -> float`
+- `class PsychoacousticMasker`
+  - `hearing_threshold_db(frequency_hz: float) -> float`
+  - `apply_pressure_relief(anti_noise: List[float], ambient_noise_level_db: float) -> List[float]`
+
+#### Module: `hrl_noise_cancellation.silicon.h1_chip`
+- `class H1AudioSilicon(clock_hz: int = 48000, num_cores: int = 10)`
+  - `write_reg(offset: int, value: int) -> None`
+  - `read_reg(offset: int) -> int`
+  - `clock_cycle(mic_feedforward: float, mic_feedback: float = 0.0) -> float`
+  - `process_stream(mic_stream: List[float], feedback_stream: List[float] = None) -> List[float]`
+  - `get_silicon_telemetry() -> Dict[str, str]`
+
+---
+
+### 11.2 Swift 6 Native API (`ANCSoftware`)
+
+#### Module: `ANCSoftware.AcousticPhysics`
+```swift
+public enum AcousticPhysics {
+    public static let speedOfSound: Float // 343.0 m/s
+    public static func wavelength(frequency: Float) -> Float
+    public static func transitTimeMicroseconds(distanceMM: Float) -> Float
+    public static func invertPhase(_ buffer: [Float]) -> [Float] // vDSP_vneg
+    public static func superimpose(noise: [Float], antiNoise: [Float]) -> [Float] // vDSP_vadd
+    public static func rms(_ buffer: [Float]) -> Float // vDSP_rmsqv
+    public static func attenuationDB(input: [Float], output: [Float]) -> Float
+}
+```
+
+#### Module: `ANCSoftware.ANCEngine`
+```swift
+public final class ANCEngine {
+    public let silicon: H1SiliconCore
+    public let adaptiveFilter: FxLMSFilter
+    public var isEnabled: Bool
+    public var profile: BoAtRockerz411Profile.Type
+    public private(set) var latestAttenuationDB: Float
+    public private(set) var latestExecutionLatencyMicroseconds: Float
+
+    public func processBuffer(noiseBuffer: [Float], musicBuffer: [Float]?) -> (residual: [Float], antiNoise: [Float])
+    public func benchmark(sampleCount: Int) -> (samplesPerSec: Double, avgLatencyMicros: Float)
+}
+```
+
+#### Module: `ANCSoftware.H1SiliconCore`
+```swift
+public final class H1SiliconCore {
+    public static let clockFrequencyHz: Int // 48,000 Hz
+    public static let cycleBudgetMicroseconds: Float // 20.833 us
+    public struct MMIO {
+        public static let REG_CTRL: UInt32
+        public static let REG_STATUS: UInt32
+        public static let REG_PHASE_DEG: UInt32
+        public static let REG_DELAY_US: UInt32
+        public static let REG_DRIVE_GAIN_Q15: UInt32
+        public static let REG_ADC_FEEDFORWARD: UInt32
+        public static let REG_DAC_ANTI_NOISE: UInt32
+        public static let REG_ATTENUATION_DB: UInt32
+    }
+    public func processCycle(inputSample: Float) -> Float
+}
+```
+
+#### Module: `ANCSoftware.BoAtRockerz411Profile`
+```swift
+public struct BoAtRockerz411Profile {
+    public static let modelName: String // "boAt Rockerz 411 ANC"
+    public static let driverDiameterMM: Float // 40.0 mm
+    public static let driverImpedanceOhms: Float // 32.0 Ohms
+    public static let micToSpeakerDistanceMM: Float // 45.0 mm
+    public static let acousticDelayMicroseconds: Float // 131.195 us
+    public static let delaySamples48kHz: Float // 6.297 samples
+    public static func expectedAttenuationDB(forFrequency frequency: Float) -> Float
+}
+```
+
+#### Module: `ANCSoftware.FxLMSFilter`
+```swift
+public final class FxLMSFilter {
+    public let filterLength: Int
+    public var weights: [Float]
+    public var stepSize: Float
+    public var leakage: Float
+
+    public func filter(sample: Float) -> Float // vDSP_dotpr
+    public func adapt(error: Float) // vDSP_svesq
+    public func reset()
+}
+```
+
+---
+
+### 11.3 JavaScript Web Audio Studio API (`index.html`)
+
+- `setupRetinaCanvas(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): void`
+  Supersamples canvas buffers based on `window.devicePixelRatio` for anti-aliased Retina rendering.
+- `toggleMasterANC(): Promise<void>`
+  Executes the 4-step pipeline: user gesture unlock, `getUserMedia` capture, 180° graph construction, or safe gain ramp-down.
+- `initAudioEngine(): Promise<void>`
+  Initializes the `AudioContext`, builds lowpass biquad guards, and connects real-time analyzers.
+- `stopAudioEngine(): void`
+  Ramps down anti-wave gain, closes microphone stream tracks, and returns UI to stopped condition.
+- `drawWaveform(): void`
+  Renders incident ambient noise, 180° anti-wave, and residual concha pressure traces at 60 FPS.
+- `drawFFT(): void`
+  Renders logarithmic 2048-point frequency spectrum with peak-hold decay.
+- `drawParticles(): void`
+  Executes physical particle physics simulation of longitudinal air molecule compressions and rarefactions.

@@ -10,6 +10,8 @@
 [![Latency: Real-Time](https://img.shields.io/badge/RTF-%3C_0.10x-brightgreen.svg)]()
 [![Web Visualizer](https://img.shields.io/badge/UI-Interactive_Dashboard-cyan.svg)]()
 
+> **Full Technical Documentation**: For the complete architectural specification, physical acoustic derivations ($c=343\text{ m/s}$, wave superposition), H1 silicon MMIO registers, Swift 6 Accelerate vDSP SIMD benchmarks, boAt Rockerz 411 hardware calibration, Apple HIG principles, and complete API reference, see [DOCUMENTATION.md](DOCUMENTATION.md).
+
 ---
 
 ## Architecture Overview
