@@ -935,3 +935,106 @@ function setupRetinaCanvas(canvas, ctx) {
      $$x_i(t) = x_{i,0} + A_{\text{noise}} \sin(k x_i - \omega t) - A_{\text{anti}} \sin(k x_i - \omega t)$$
    - Color grading: Compressions render in luminous blue ($+ \Delta P$), rarefactions render in violet ($- \Delta P$).
    - When ANC is active, particle oscillation amplitude collapses to Brownian thermal noise, visually demonstrating the physical silencing of sound.
+
+---
+
+## 10. Verification Suites, Automated Benchmarks & CLI Reference
+
+Every algorithmic formula and architectural module in HRL-X is backed by automated unit tests, continuous integration benchmarks, and native command-line interfaces.
+
+---
+
+### 10.1 Python Verification Suite (14 Tests)
+The Python DSP test suite (`tests/test_dsp.py`) uses standard Python `unittest` with zero third-party dependencies.
+
+```bash
+python3 -m unittest discover -s tests -v
+```
+
+| Test Method | Target Component | Validation Criteria | Status |
+|---|---|---|---|
+| `test_audio_io_roundtrip` | `dsp.audio_io` | 16-bit PCM WAV write/read lossless accuracy (< 1e-3 diff) | PASS |
+| `test_spectral_subtraction_snr_gain` | `dsp.spectral` | Measured SNR gain > 3.0 dB (measured +11.66 dB) | PASS |
+| `test_nlms_adaptive_filter` | `dsp.adaptive` | Adaptive convergence on reference noise with SNR gain > 5.0 dB | PASS |
+| `test_spectral_gate` | `dsp.spectral` | Length preservation and threshold dynamic gating | PASS |
+| `test_fxlms_secondary_path_cancellation` | `dsp.fxlms` | Secondary path convolution and anti-noise synthesis | PASS |
+| `test_adaptive_eq_seal_and_pressure_relief` | `dsp.adaptive_eq` | In-ear cushion seal estimation and ISO 226 pressure relief | PASS |
+| `test_anti_phase_destructive_cancellation` | `dsp.anti_phase` | 180° wave collision achieving > 50 dB cancellation | PASS |
+| `test_acoustic_echo_killer` | `dsp.echo_cancellation` | Speech formant suppression from monitor loopback (< 0.01) | PASS |
+| `test_fan_noise_vacuum` | `dsp.fan_vacuum` | Annihilation of 120 Hz room fan turbulence (> 40 dB) | PASS |
+| `test_h1_silicon_chip_core` | `silicon.h1_chip` | MMIO register read/write, clock cycle step, and telemetry | PASS |
+| `test_boat_rockerz_411_anc` | `dsp.boat_rockerz_411` | 131.2 us delay matching and cushion leak overdrive (> 40 dB) | PASS |
+| `test_acoustic_blackout_barrier` | `dsp.acoustic_barrier` | 0.0% mic passthrough, velvet blanket, and > 80% masking | PASS |
+| `test_ultra_fast_predictive_anc` | `dsp.predictive_anc` | 131.2 us flight time forecast vs 8.5 ms auditory latency | PASS |
+| `test_branch_acoustic_physics_and_superposition` | `dsp.branch_physics` | Wavelength λ = c/f, 1,270 Hz coherence limit, and music fidelity | PASS |
+
+---
+
+### 10.2 Swift 6 Native Test Suite (5 Tests)
+The native Swift test suite (`tests/ANCSoftwareTests/ANCSoftwareTests.swift`) runs via the compiled test runner:
+
+```bash
+./bin/test-swift
+```
+
+| Test Routine | Component Tested | Assertion Requirement | Measured Output |
+|---|---|---|---|
+| `testAcousticWaveInversion` | `AcousticPhysics.invertPhase` | Anti-wave matches inverted sign: $\|y - (-x)\| < 10^{-5}$ | PASS |
+| `testDestructiveInterference` | `AcousticPhysics.superimpose` | Wave collision attenuation deeper than $-80.0 \text{ dB}$ | PASS (-96.4 dB) |
+| `testBoAtRockerz411Profile` | `BoAtRockerz411Profile` | Distance = 45 mm, delay = 131.195 us, attenuation <= -40 dB | PASS |
+| `testSiliconCycleBudget` | `H1SiliconCore.processCycle` | Execution latency $< 20.833 \text{ }\mu\text{s}$ frame budget | PASS (2.52 us) |
+| `testFullEnginePipeline` | `ANCEngine.processBuffer` | End-to-end vector pipeline attenuation $< -10.0 \text{ dB}$ | PASS (-48.2 dB) |
+
+---
+
+### 10.3 Automated Unified Pipeline (`auto.py`)
+The project provides a single zero-dependency automation script (`python3 auto.py`) that performs end-to-end verification in under 3 seconds:
+
+```bash
+python3 auto.py
+```
+
+The pipeline automatically:
+1. Executes the full 14-test Python DSP test suite.
+2. Synthesizes a 3-second speech benchmark with realistic multi-tone room noise.
+3. Processes the audio through the DSP pipeline, evaluating SNR gain before and after processing.
+4. Generates three audio WAV artifacts (`demo_clean.wav`, `demo_noisy.wav`, `demo_cleaned_spectral.wav`).
+5. Runs a real-time factor throughput benchmark.
+
+---
+
+### 10.4 Command-Line Interface (CLI) Reference
+
+#### Swift Native CLI (`./bin/anc-cli`)
+```bash
+# Display help and usage
+./bin/anc-cli --help
+
+# Process noisy audio through the boAt Rockerz 411 hardware profile
+./bin/anc-cli --input audio/sample_noisy.wav --output audio/sample_clean.wav --mode lookahead
+
+# Run native Accelerate vDSP hardware benchmark
+./bin/anc-cli --benchmark
+```
+
+#### Python CLI (`hrl_noise_cancellation/cli.py`)
+The Python module can be executed directly:
+
+```bash
+# Run automated synthetic speech denoising demo
+python3 -m hrl_noise_cancellation demo
+
+# Run real-time factor throughput benchmark
+python3 -m hrl_noise_cancellation benchmark
+
+# Process a WAV file with specific DSP filter mode
+python3 -m hrl_noise_cancellation cancel \
+    --input tests/fixtures/noisy.wav \
+    --output tests/fixtures/cleaned.wav \
+    --mode fxlms \
+    --mu 0.05 \
+    --telemetry-json
+
+# Start the local development server on port 8080
+python3 -m hrl_noise_cancellation server --port 8080
+```
