@@ -1964,10 +1964,10 @@
     <div class="studio-dashboard-bar">
       <!-- Master ANC Control -->
       <div class="studio-master-anc active" id="studioAncBtn" title="Toggle Active Noise Cancellation">
-        <div class="anc-power-badge">⏻</div>
+        <div class="anc-power-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg></div>
         <div class="anc-text-group">
           <span class="anc-main-title">Active Noise Cancellation</span>
-          <span class="anc-sub-status" id="studioAncStatus">● ACTIVE — -48.2 dB Noise Cancellation</span>
+          <span class="anc-sub-status" id="studioAncStatus">ACTIVE — -48.2 dB Noise Cancellation</span>
         </div>
         <div class="apple-switch active" id="studioSwitch">
           <span class="apple-switch-thumb"></span>
@@ -1977,7 +1977,7 @@
       <!-- Live Audio Monitor & Volume -->
       <div class="studio-audio-monitor">
         <button class="audio-monitor-btn" id="btnAudioMonitor" title="Mute/Unmute Live Sound Output">
-          <span id="speakerIcon">🔊</span>
+          <svg id="speakerSvg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
           <span id="audioMonitorText">Live Audio: ON</span>
         </button>
         <div class="volume-control">
@@ -2010,7 +2010,7 @@
               <div class="vu-bar" id="vuBar"></div>
             </div>
           </div>
-          <span class="p-step-sub" id="pStep2Sub">🎙️ Sampling Mic Noise x(t)</span>
+          <span class="p-step-sub" id="pStep2Sub">Sampling Mic Noise x(t)</span>
         </div>
       </div>
       <div class="p-step-connector active" id="pConn2"></div>
@@ -2020,14 +2020,14 @@
         <div class="p-step-badge" id="pBadge3">3</div>
         <div class="p-step-content">
           <span class="p-step-title">3. Create Anti-Wave</span>
-          <span class="p-step-sub" id="pStep3Sub">⚡ 180° Inversion -x(t)</span>
+          <span class="p-step-sub" id="pStep3Sub">180° Inversion -x(t)</span>
         </div>
       </div>
       <div class="p-step-connector" id="pConn3"></div>
 
       <!-- Step 4: Normal Stopped Condition -->
       <div class="pipeline-step normal-stop" id="pStep4">
-        <div class="p-step-badge" id="pBadge4">↺</div>
+        <div class="p-step-badge" id="pBadge4">4</div>
         <div class="p-step-content">
           <span class="p-step-title">Turn Off: Normal State</span>
           <span class="p-step-sub" id="pStep4Sub">Revert to Stopped Condition</span>
@@ -2608,37 +2608,37 @@
             <td><strong>Acoustic Transducer</strong></td>
             <td>40mm Neodymium Dynamic (32Ω)</td>
             <td>High-Excursion Apple Custom Driver</td>
-            <td><span class="badge-check">✓ Calibrated</span></td>
+            <td><span class="badge-check">Calibrated</span></td>
           </tr>
           <tr>
             <td><strong>Transit Air Gap Delay</strong></td>
             <td>131.195 μs (45 mm Mic-to-Speaker)</td>
             <td>~80 μs (Custom In-Ear Canal)</td>
-            <td><span class="badge-check">✓ Delay Matched</span></td>
+            <td><span class="badge-check">Delay Matched</span></td>
           </tr>
           <tr>
             <td><strong>Sampling Frequency / DAC</strong></td>
             <td>48,000 Hz / 24-bit Low-Noise ADC</td>
             <td>48,000 Hz / 24-bit Low-Noise ADC</td>
-            <td><span class="badge-check">✓ Bit-Perfect</span></td>
+            <td><span class="badge-check">Bit-Perfect</span></td>
           </tr>
           <tr>
             <td><strong>Silicon Pipeline Latency</strong></td>
             <td>12.4 μs (Swift vDSP MAC: 2.52 μs)</td>
             <td>&lt; 15.0 μs Real-Time Budget</td>
-            <td><span class="badge-check">✓ Sub-15μs Validated</span></td>
+            <td><span class="badge-check">Sub-15μs Validated</span></td>
           </tr>
           <tr>
             <td><strong>Ceiling Fan Attenuation (120 Hz)</strong></td>
             <td>-42.0 dB (Overdrive 1.30×)</td>
             <td>-40.0 dB</td>
-            <td><span class="badge-check">✓ Exceeds Standard</span></td>
+            <td><span class="badge-check">Exceeds Standard</span></td>
           </tr>
           <tr>
             <td><strong>Superposition Music Isolation</strong></td>
             <td>0.0 dB (Lossless Music Preservation)</td>
             <td>0.0 dB Lossless</td>
-            <td><span class="badge-check">✓ Audiophile Verified</span></td>
+            <td><span class="badge-check">Audiophile Verified</span></td>
           </tr>
         </tbody>
       </table>
@@ -2767,7 +2767,7 @@
       const legendMusic = document.getElementById('legendMusic');
 
       const btnAudioMonitor = document.getElementById('btnAudioMonitor');
-      const speakerIcon = document.getElementById('speakerIcon');
+      const speakerSvg = document.getElementById('speakerSvg');
       const audioMonitorText = document.getElementById('audioMonitorText');
       const volSlider = document.getElementById('volSlider');
       const volVal = document.getElementById('volVal');
@@ -2933,7 +2933,7 @@
             fanMasterGain.gain.setValueAtTime(0.0, audioCtx.currentTime);
           }
 
-          console.log('[✓] Real Web Audio 180° Destructive Interference Engine Online at 48 kHz');
+          console.log('[OK] Real Web Audio 180° Destructive Interference Engine Online at 48 kHz');
         } catch (e) {
           console.warn('AudioContext initialization notice:', e);
         }
@@ -3041,17 +3041,17 @@
           if (pStep1Sub) pStep1Sub.textContent = 'H1 Silicon Core Active';
           if (pStep2Sub) {
             if (state.activeSource === 'mic' && state.micActive) {
-              pStep2Sub.textContent = '🎙️ Live 48 kHz Mic Feed';
+              pStep2Sub.textContent = 'Live 48 kHz Mic Feed';
               if (micVu) micVu.style.display = 'block';
             } else if (state.activeSource === 'mic' && state.micPermission === 'denied') {
-              pStep2Sub.textContent = '⚠️ Mic Denied (Fallback)';
+              pStep2Sub.textContent = 'Mic Access Denied (Fallback)';
               if (micVu) micVu.style.display = 'none';
             } else {
-              pStep2Sub.textContent = '💨 ' + state.fanName;
+              pStep2Sub.textContent = state.fanName;
               if (micVu) micVu.style.display = 'none';
             }
           }
-          if (pStep3Sub) pStep3Sub.textContent = '⚡ 180° Inverted Anti-Wave';
+          if (pStep3Sub) pStep3Sub.textContent = '180° Inverted Anti-Wave';
           if (pStep4Sub) pStep4Sub.textContent = 'Click Switch to Stop';
 
           if (condAlert) condAlert.className = 'condition-alert active-anc';
@@ -3075,7 +3075,7 @@
           if (pStep1Sub) pStep1Sub.textContent = 'Silicon Core Idle';
           if (pStep2Sub) pStep2Sub.textContent = 'Microphone Idle (Stopped)';
           if (pStep3Sub) pStep3Sub.textContent = 'Anti-Wave Stopped (0.0°)';
-          if (pStep4Sub) pStep4Sub.textContent = '● Normal Condition (At Rest)';
+          if (pStep4Sub) pStep4Sub.textContent = 'Normal Condition (At Rest)';
 
           if (micVu) micVu.style.display = 'none';
           if (condAlert) condAlert.className = 'condition-alert';
@@ -3104,7 +3104,7 @@
           // Studio HUD Switch
           studioAncBtn.classList.add('active');
           studioSwitch.classList.add('active');
-          studioAncStatus.textContent = '● ACTIVE — -48.2 dB Noise Annihilation';
+          studioAncStatus.textContent = 'ACTIVE — -48.2 dB Noise Annihilation';
           studioAncStatus.className = 'anc-sub-status';
 
           // Telemetry
@@ -3123,7 +3123,7 @@
           // Studio HUD Switch
           studioAncBtn.classList.remove('active');
           studioSwitch.classList.remove('active');
-          studioAncStatus.textContent = '○ Normal Condition — Silicon Idle & Anti-Wave Stopped';
+          studioAncStatus.textContent = 'Normal Condition — Silicon Idle & Anti-Wave Stopped';
           studioAncStatus.className = 'anc-sub-status inactive';
 
           // Telemetry
@@ -3193,11 +3193,11 @@
         }
         if (state.soundEnabled) {
           btnAudioMonitor.classList.remove('muted');
-          speakerIcon.textContent = '🔊';
+          speakerSvg.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>';
           audioMonitorText.textContent = 'Live Audio: ON';
         } else {
           btnAudioMonitor.classList.add('muted');
-          speakerIcon.textContent = '🔇';
+          speakerSvg.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>';
           audioMonitorText.textContent = 'Live Audio: MUTED';
         }
       });
