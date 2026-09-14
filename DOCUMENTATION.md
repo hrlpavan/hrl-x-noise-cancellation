@@ -827,3 +827,111 @@ Audio captured from the user's environment represents sensitive personal data. H
 1. **100% On-Device Processing**: All DSP algorithms (FxLMS, NLMS, Spectral Subtraction, and vDSP emulation) execute entirely inside the client device CPU/GPU and local volatile memory.
 2. **Zero Audio Persistence**: Audio sample buffers (`Float32Array`) are immediately overwritten during each audio frame. No WAV, MP3, or raw audio files are written to persistent storage without explicit user export.
 3. **Zero Network Transmission**: The application makes zero external API requests, carries zero analytics trackers, and connects to zero third-party cloud services.
+
+---
+
+## 9. 4-Step Real-Time Web Audio Pipeline & Canvas Visualization
+
+### 9.1 The 4-Step Operational Pipeline
+To provide complete user agency and predictable acoustic behavior, HRL-X implements an explicit 4-step real-time audio pipeline:
+
+```
+[ Step 1: User Activation ]
+       |
+       v  Clicks master toggle; AudioContext resumed
+[ Step 2: Microphone Capture ]
+       |
+       v  getUserMedia stream acquired; live VU level activated
+[ Step 3: Anti-Wave Synthesis ]
+       |
+       v  180° inverted phase graph running; destructive collision
+[ Step 4: Normal Reversion ]
+          User deactivates; 50ms smooth ramp-down; mic tracks stopped
+```
+
+#### Detailed Step-by-Step Breakdown
+
+#### Step 1: User Initiates ANC Activation
+The user initiates the system by clicking the primary master button (`btnMasterANC`). The interface updates immediately:
+- The `AudioContext` is created or resumed within a user gesture event to satisfy browser autoplay policies.
+- System status transitions to `CALIBRATING`.
+- Dynamic Island status badge displays `180 Anti-Wave Emitting`.
+
+#### Step 2: Real-Time Microphone Capture
+The engine requests low-latency external audio input via `navigator.mediaDevices.getUserMedia`:
+```javascript
+const constraints = {
+  audio: {
+    echoCancellation: false, // Disable browser AEC to capture raw room noise
+    noiseSuppression: false, // Disable browser suppression to capture true acoustics
+    autoGainControl: false,  // Disable AGC to preserve linear amplitude
+    latency: { ideal: 0.005 } // Target 5 ms capture latency
+  }
+};
+const stream = await navigator.mediaDevices.getUserMedia(constraints);
+```
+- A `MediaStreamAudioSourceNode` wraps the input stream.
+- An input `AnalyserNode` monitors live ambient amplitude, feeding the green/yellow real-time VU meter.
+
+#### Step 3: Anti-Wave Generation & 180-Degree Inversion Graph
+The audio graph connects the microphone input directly into the real-time inversion network:
+
+```
+[ micSource ] ---> [ analyserAmbient ]
+      |
+      +---> [ inverterNode ] (Gain = -1.0)
+                  |
+                  +---> [ delayNode ] (Delay = 0.0001312 s / 131.2 us)
+                              |
+                              +---> [ guardFilter ] (Lowpass Butterworth 1,200 Hz)
+                                          |
+                                          +---> [ masterGainNode ]
+                                                      |
+                                                      +---> [ analyserAntiWave ]
+                                                      |
+                                                      +---> [ audioCtx.destination ]
+```
+
+- **Inversion Node**: A `GainNode` with `gain.setValueAtTime(-1.0, audioCtx.currentTime)` flips the sign of every incoming sample.
+- **Delay Matching Node**: A `DelayNode` set to `0.0001312` seconds aligns the anti-phase sound with the physical travel time across the ear cushion.
+- **Guard Filter**: A `BiquadFilterNode` lowpass filter (corner: `1200 Hz`, Q: `0.707`) ensures no high frequencies above the coherence limit can cause constructive interference.
+
+#### Step 4: Clean Reversion to Normal Condition
+When the user toggles ANC off:
+1. **Anti-Pop Gain Ramp**: `masterGain.gain.linearRampToValueAtTime(0.0, audioCtx.currentTime + 0.05)` smoothly mutes the anti-wave over 50 milliseconds, preventing acoustic clicks or popping transients.
+2. **Track Termination**: All audio tracks associated with the `MediaStream` are explicitly stopped: `track.stop()`.
+3. **Hardware Idle**: Canvases settle to a resting flatline, VU meter drops to zero, and the system enters the safe stopped state.
+
+---
+
+### 9.2 High-Performance 60 FPS Retina Canvas Rendering Engine
+To ensure pristine visual clarity on Apple Retina displays, all rendering canvases (`canvasWaveform`, `canvasFFT`, `canvasParticles`) are managed by a high-DPI scaling utility:
+
+```javascript
+function setupRetinaCanvas(canvas, ctx) {
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx.scale(dpr, dpr);
+}
+```
+
+#### Visualizer Engines
+
+1. **Time-Domain Oscilloscope (`canvasWaveform`)**:
+   - Renders 1024-point time-domain audio buffers with sub-pixel Bézier curve smoothing.
+   - **Amber Wave (#ff9f0a)**: Incident external ambient noise $P_{\text{noise}}(t)$.
+   - **Cyan Anti-Wave (#64d2ff)**: Inverted 180-degree anti-phase wave $P_{\text{anti}}(t) = -P_{\text{noise}}(t)$.
+   - **Emerald Residual Line (#30d158)**: Net destructive acoustic pressure at the eardrum $P_{\text{total}}(t) \approx 0 \text{ Pa}$.
+
+2. **Logarithmic Frequency Spectrum (`canvasFFT`)**:
+   - 2048-point Fast Fourier Transform (FFT) with logarithmic frequency distribution ($20 \text{ Hz}$ to $20,000 \text{ Hz}$).
+   - Displays energy distribution across ISO 226 acoustic bands.
+   - Features peak-hold memory with exponential gravity decay.
+
+3. **Kinetic Longitudinal Air Molecule Simulation (`canvasParticles`)**:
+   - Simulates 120 discrete air molecule parcels oscillating along the horizontal propagation axis:
+     $$x_i(t) = x_{i,0} + A_{\text{noise}} \sin(k x_i - \omega t) - A_{\text{anti}} \sin(k x_i - \omega t)$$
+   - Color grading: Compressions render in luminous blue ($+ \Delta P$), rarefactions render in violet ($- \Delta P$).
+   - When ANC is active, particle oscillation amplitude collapses to Brownian thermal noise, visually demonstrating the physical silencing of sound.
